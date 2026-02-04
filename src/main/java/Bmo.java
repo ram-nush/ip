@@ -17,14 +17,17 @@ public class Bmo {
         String[] parameters = userInput.split(" ");
         String command = parameters[0];
         while (!command.equals("bye")) {
-            if (command.equals("list")) {
+            switch (command) {
+            case "list":
                 System.out.println("____________________________________________________________");
                 for (int i = 1; i <= tasks.size(); i++) {
                     System.out.println(i + ". " + tasks.get(i - 1));
                 }
                 System.out.println("____________________________________________________________");
                 System.out.print("\n");
-            } else {
+                break;
+
+            default:
                 Task newTask = new Task(userInput);
                 tasks.add(newTask);
 
