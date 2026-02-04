@@ -5,7 +5,7 @@ import java.util.List;
 public class Bmo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List<String> tasks = new ArrayList<>();
+        List<Task> tasks = new ArrayList<Task>();
 
         System.out.println("____________________________________________________________");
         System.out.println("Hello! I'm BMO");
@@ -25,7 +25,8 @@ public class Bmo {
                 System.out.println("____________________________________________________________");
                 System.out.print("\n");
             } else {
-                tasks.add(userInput);
+                Task newTask = new Task(userInput);
+                tasks.add(newTask);
 
                 System.out.println("____________________________________________________________");
                 System.out.println("added: " + userInput);
