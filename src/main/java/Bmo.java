@@ -14,16 +14,22 @@ public class Bmo {
 
         String command = scanner.nextLine();
         while (!command.equals("bye")) {
-            tasks.add(command);
+            if (command.equals("list")) {
+                System.out.println("____________________________________________________________");
+                for (int i = 1; i <= tasks.size(); i++) {
+                    System.out.println(i + ". " + tasks.get(i - 1));
+                }
+                System.out.println("____________________________________________________________\n");
+            } else {
+                tasks.add(command);
 
-            System.out.println("____________________________________________________________");
-            System.out.println("added: " + command);
-            System.out.println("____________________________________________________________\n");
-
+                System.out.println("____________________________________________________________");
+                System.out.println("added: " + command);
+                System.out.println("____________________________________________________________\n");
+            }
             command = scanner.nextLine();
         }
 
-        System.out.println(tasks);
         System.out.println("____________________________________________________________");
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
