@@ -41,6 +41,20 @@ public class Bmo {
                 }
                 break;
 
+            case "unmark":
+                taskNo = Integer.parseInt(parameters[1]);
+                if (taskNo >= 1 && taskNo <= tasks.size()) {
+                    Task selectedTask = tasks.get(taskNo - 1);
+                    selectedTask.markAsUndone();
+
+                    System.out.println("____________________________________________________________");
+                    System.out.println("OK, I've marked this task as not done yet:");
+                    System.out.println(selectedTask);
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
+                }
+                break;
+
             default:
                 Task newTask = new Task(userInput);
                 tasks.add(newTask);
