@@ -27,6 +27,20 @@ public class Bmo {
                 System.out.print("\n");
                 break;
 
+            case "mark":
+                int taskNo = Integer.parseInt(parameters[1]);
+                if (taskNo >= 1 && taskNo <= tasks.size()) {
+                    Task selectedTask = tasks.get(taskNo - 1);
+                    selectedTask.markAsDone();
+
+                    System.out.println("____________________________________________________________");
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println(selectedTask);
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
+                }
+                break;
+
             default:
                 Task newTask = new Task(userInput);
                 tasks.add(newTask);
