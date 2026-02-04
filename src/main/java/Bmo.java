@@ -38,6 +38,11 @@ public class Bmo {
                     System.out.println(selectedTask);
                     System.out.println("____________________________________________________________");
                     System.out.print("\n");
+                } else {
+                    System.out.println("____________________________________________________________");
+                    System.out.println("No task with index " + taskNo + " exists!");
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
                 }
                 break;
 
@@ -50,6 +55,11 @@ public class Bmo {
                     System.out.println("____________________________________________________________");
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println(selectedTask);
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
+                } else {
+                    System.out.println("____________________________________________________________");
+                    System.out.println("No task with index " + taskNo + " exists!");
                     System.out.println("____________________________________________________________");
                     System.out.print("\n");
                 }
