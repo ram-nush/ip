@@ -45,7 +45,7 @@ public class Bmo {
                 taskNo = Integer.parseInt(parameters[1]);
                 if (taskNo >= 1 && taskNo <= tasks.size()) {
                     Task selectedTask = tasks.get(taskNo - 1);
-                    selectedTask.markAsUndone();
+                    selectedTask.markAsNotDone();
 
                     System.out.println("____________________________________________________________");
                     System.out.println("OK, I've marked this task as not done yet:");
