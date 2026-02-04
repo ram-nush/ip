@@ -10,9 +10,13 @@ public class Bmo {
         System.out.println("____________________________________________________________");
 
         String command = scanner.nextLine();
-        System.out.println("____________________________________________________________");
-        System.out.println(command);
-        System.out.println("____________________________________________________________");
+        while (!command.equals("bye")) {
+            System.out.println("____________________________________________________________");
+            System.out.println(command);
+            System.out.println("____________________________________________________________");
+
+            command = scanner.nextLine();
+        }
 
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
