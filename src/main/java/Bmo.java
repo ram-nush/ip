@@ -23,6 +23,7 @@ public class Bmo {
             command = scanner.nextLine();
         }
 
+        System.out.println(tasks);
         System.out.println("____________________________________________________________");
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println("____________________________________________________________");
