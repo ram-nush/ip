@@ -28,38 +28,38 @@ public class Bmo {
                 break;
 
             case "mark":
-                int taskNo = Integer.parseInt(parameters[1]);
-                if (taskNo >= 1 && taskNo <= tasks.size()) {
-                    Task selectedTask = tasks.get(taskNo - 1);
-                    selectedTask.markAsDone();
+                int markTaskNo = Integer.parseInt(parameters[1]);
+                if (markTaskNo >= 1 && markTaskNo <= tasks.size()) {
+                    Task markTask = tasks.get(markTaskNo - 1);
+                    markTask.markAsDone();
 
                     System.out.println("____________________________________________________________");
                     System.out.println("Nice! I've marked this task as done:");
-                    System.out.println(selectedTask);
+                    System.out.println(markTask);
                     System.out.println("____________________________________________________________");
                     System.out.print("\n");
                 } else {
                     System.out.println("____________________________________________________________");
-                    System.out.println("No task with index " + taskNo + " exists!");
+                    System.out.println("No task with index " + markTaskNo + " exists!");
                     System.out.println("____________________________________________________________");
                     System.out.print("\n");
                 }
                 break;
 
             case "unmark":
-                taskNo = Integer.parseInt(parameters[1]);
-                if (taskNo >= 1 && taskNo <= tasks.size()) {
-                    Task selectedTask = tasks.get(taskNo - 1);
-                    selectedTask.markAsNotDone();
+                int unmarkTaskNo = Integer.parseInt(parameters[1]);
+                if (unmarkTaskNo >= 1 && unmarkTaskNo <= tasks.size()) {
+                    Task unmarkTask = tasks.get(unmarkTaskNo - 1);
+                    unmarkTask.markAsNotDone();
 
                     System.out.println("____________________________________________________________");
                     System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println(selectedTask);
+                    System.out.println(unmarkTask);
                     System.out.println("____________________________________________________________");
                     System.out.print("\n");
                 } else {
                     System.out.println("____________________________________________________________");
-                    System.out.println("No task with index " + taskNo + " exists!");
+                    System.out.println("No task with index " + unmarkTaskNo + " exists!");
                     System.out.println("____________________________________________________________");
                     System.out.print("\n");
                 }
