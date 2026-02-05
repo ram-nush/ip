@@ -1,10 +1,12 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Bmo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Pattern numberMatch = Pattern.compile("\\d+");
         List<Task> tasks = new ArrayList<Task>();
 
         System.out.println("____________________________________________________________");
@@ -34,6 +36,17 @@ public class Bmo {
                     todoDescription += parameters[i];
                     todoDescription += " ";
                 }
+                
+                if (todoDescription.isEmpty()) {
+                    // handle error 1: todo description is empty
+                    System.out.println("____________________________________________________________");
+                    System.out.println("OOPS!!! The description of a todo cannot be empty.");
+                    System.out.println("To fix: Add a description after todo");
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
+                    break;
+                }
+                
                 Task todoTask = new Todo(todoDescription);
                 tasks.add(todoTask);
 
@@ -63,6 +76,25 @@ public class Bmo {
                         deadlineDescription += " ";
                     }
                 }
+
+                if (deadlineDescription.isEmpty()) {
+                    // handle error 2a: deadline description is empty
+                    System.out.println("____________________________________________________________");
+                    System.out.println("OOPS!!! The description of a deadline cannot be empty.");
+                    System.out.println("To fix: Add a description after deadline");
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
+                    break;
+                } else if (deadlineBy.isEmpty()) {
+                    // handle error 2b: deadline by is empty
+                    System.out.println("____________________________________________________________");
+                    System.out.println("OOPS!!! The due of a deadline cannot be empty.");
+                    System.out.println("To fix: Add a due after /by option");
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
+                    break;
+                }
+                
                 Task deadlineTask = new Deadline(deadlineDescription, deadlineBy);
                 tasks.add(deadlineTask);
 
@@ -102,6 +134,33 @@ public class Bmo {
                         eventDescription += " ";
                     }
                 }
+
+                if (eventDescription.isEmpty()) {
+                    // handle error 3a: event description is empty
+                    System.out.println("____________________________________________________________");
+                    System.out.println("OOPS!!! The description of an event cannot be empty.");
+                    System.out.println("To fix: Add a description after event");
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
+                    break;
+                } else if (eventFrom.isEmpty()) {
+                    // handle error 3b: event from is empty
+                    System.out.println("____________________________________________________________");
+                    System.out.println("OOPS!!! The start of an event cannot be empty.");
+                    System.out.println("To fix: Add a start after /from option");
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
+                    break;
+                } else if (eventTo.isEmpty()) {
+                    // handle error 3c: event to is empty
+                    System.out.println("____________________________________________________________");
+                    System.out.println("OOPS!!! The end of an event cannot be empty.");
+                    System.out.println("To fix: Add an end after /to option");
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
+                    break;
+                }
+                
                 Task eventTask = new Event(eventDescription, eventFrom, eventTo);
                 tasks.add(eventTask);
 
@@ -114,6 +173,16 @@ public class Bmo {
                 break;
 
             case "mark":
+                boolean isMarkNumber = numberMatch.matcher(parameters[1]).matches();
+                if (!isMarkNumber) {
+                    // handle error 4: mark task with invalid index
+                    System.out.println("____________________________________________________________");
+                    System.out.println(parameters[1] + " is not a number!");
+                    System.out.println("To fix: Enter a number");
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
+                }
+                
                 int markTaskNo = Integer.parseInt(parameters[1]);
                 if (markTaskNo >= 1 && markTaskNo <= tasks.size()) {
                     Task markTask = tasks.get(markTaskNo - 1);
@@ -125,14 +194,26 @@ public class Bmo {
                     System.out.println("____________________________________________________________");
                     System.out.print("\n");
                 } else {
+                    // handle error 4: mark task with invalid index
                     System.out.println("____________________________________________________________");
                     System.out.println("No task with index " + markTaskNo + " exists!");
+                    System.out.println("To fix: Enter a number between 1 and " + tasks.size());
                     System.out.println("____________________________________________________________");
                     System.out.print("\n");
                 }
                 break;
 
             case "unmark":
+                boolean isUnmarkNumber = numberMatch.matcher(parameters[1]).matches();
+                if (!isUnmarkNumber) {
+                    // handle error 5: unmark task with invalid index
+                    System.out.println("____________________________________________________________");
+                    System.out.println(parameters[1] + " is not a number!");
+                    System.out.println("To fix: Enter a number");
+                    System.out.println("____________________________________________________________");
+                    System.out.print("\n");
+                }
+
                 int unmarkTaskNo = Integer.parseInt(parameters[1]);
                 if (unmarkTaskNo >= 1 && unmarkTaskNo <= tasks.size()) {
                     Task unmarkTask = tasks.get(unmarkTaskNo - 1);
@@ -144,14 +225,29 @@ public class Bmo {
                     System.out.println("____________________________________________________________");
                     System.out.print("\n");
                 } else {
+                    // handle error 5: unmark task with invalid index
                     System.out.println("____________________________________________________________");
                     System.out.println("No task with index " + unmarkTaskNo + " exists!");
+                    System.out.println("To fix: Enter a number between 1 and " + tasks.size());
                     System.out.println("____________________________________________________________");
                     System.out.print("\n");
                 }
                 break;
 
             default:
+                // handle error 6: unknown command
+                System.out.println("____________________________________________________________");
+                System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
+                System.out.println("To fix: Enter one of the following commands in the correct format");
+                System.out.println("list");
+                System.out.println("todo <description>");
+                System.out.println("deadline <description> /by <due>");
+                System.out.println("event <description> /from <start> /to <end>");
+                System.out.println("mark <index>");
+                System.out.println("unmark <index>");
+                System.out.println("bye");
+                System.out.println("____________________________________________________________");
+                System.out.print("\n");
                 break;
             }
 
