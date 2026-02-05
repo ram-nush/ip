@@ -15,6 +15,7 @@ public class Bmo {
         helpMessages.add("event <description> /from <start> /to <end>");
         helpMessages.add("mark <index>");
         helpMessages.add("unmark <index>");
+        helpMessages.add("delete <index>");
         helpMessages.add("bye");
         
         List<Task> tasks = new ArrayList<Task>();
@@ -47,8 +48,7 @@ public class Bmo {
                     Task todoTask = new Todo(todoDescription);
                     tasks.add(todoTask);
 
-                    printMessage("Got it. I've added this task:n\n"
-                            + todoTask
+                    printMessage("Got it. I've added this task:n\n" + todoTask
                             + "\nNow you have " + tasks.size() + " tasks in the list.");
                     
                 } catch (MissingArgumentException e) {
@@ -79,8 +79,7 @@ public class Bmo {
                     Task deadlineTask = new Deadline(deadlineDescription, deadlineBy);
                     tasks.add(deadlineTask);
 
-                    printMessage("Got it. I've added this task:\n"
-                            + deadlineTask
+                    printMessage("Got it. I've added this task:\n" + deadlineTask
                             + "\nNow you have " + tasks.size() + " tasks in the list.");
                 } catch (MissingArgumentException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
@@ -121,8 +120,7 @@ public class Bmo {
                     Task eventTask = new Event(eventDescription, eventFrom, eventTo);
                     tasks.add(eventTask);
 
-                    printMessage("Got it. I've added this task:\n"
-                            + eventTask
+                    printMessage("Got it. I've added this task:\n" + eventTask
                             + "\nNow you have " + tasks.size() + " tasks in the list.");
                 } catch (MissingArgumentException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
@@ -136,8 +134,7 @@ public class Bmo {
                         Task markTask = tasks.get(markTaskNo - 1);
                         markTask.markAsDone();
 
-                        printMessage("Nice! I've marked this task as done:\n"
-                                + markTask);
+                        printMessage("Nice! I've marked this task as done:\n" + markTask);
                     }
                 } catch (NumberFormatException e) {
                     printMessage(parameters[1] + " is not a number!\n"
@@ -154,8 +151,27 @@ public class Bmo {
                         Task unmarkTask = tasks.get(unmarkTaskNo - 1);
                         unmarkTask.markAsNotDone();
 
-                        printMessage("OK, I've marked this task as not done yet:\n"
-                                + unmarkTask);
+                        printMessage("OK, I've marked this task as not done yet:\n" + unmarkTask);
+                    }
+                } catch (NumberFormatException e) {
+                    printMessage(parameters[1] + " is not a number!\n"
+                            + "To fix: Enter a number");
+                } catch (InvalidIndexException e) {
+                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                }
+                break;
+                
+            case "delete":
+                try {
+                    int deleteTaskNo = Integer.parseInt(parameters[1]);
+                    if (isInRange(deleteTaskNo, tasks)) {
+                        Task deleteTask = tasks.get(deleteTaskNo - 1);
+                        int newSize = tasks.size() - 1;
+
+                        printMessage("Noted. I've removed this task:\n" + deleteTask
+                                + "\nNow you have " + newSize + " tasks in the list.");
+                        
+                        tasks.remove(deleteTaskNo - 1);
                     }
                 } catch (NumberFormatException e) {
                     printMessage(parameters[1] + " is not a number!\n"
