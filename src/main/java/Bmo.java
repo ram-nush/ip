@@ -78,6 +78,50 @@ public class Bmo {
                 System.out.print("\n");
                 break;
 
+            case "event":
+                String eventDescription = "";
+                String eventFrom = "";
+                String eventTo = "";
+                boolean hasReachedFrom = false;
+                boolean hasReachedTo = false;
+                for (int i = 1; i < parameters.length; i++) {
+                    if (parameters[i].equals("/from")) {
+                        hasReachedFrom = true;
+                        continue;
+                    }
+
+                    if (parameters[i].equals("/to")) {
+                        hasReachedTo = true;
+                        continue;
+                    }
+
+                    if (hasReachedTo) {
+                        eventTo += parameters[i];
+                        if (i != parameters.length - 1) {
+                            eventTo += " ";
+                        }
+                    } else if (hasReachedFrom) {
+                        eventFrom += parameters[i];
+                        if (i != parameters.length - 1) {
+                            eventFrom += " ";
+                        }
+                    } else {
+                        eventDescription += parameters[i];
+                        if (i != parameters.length - 1) {
+                            eventDescription += " ";
+                        }
+                    }
+                }
+                Task eventTask = new Event(eventDescription, eventFrom, eventTo);
+                tasks.add(eventTask);
+
+                System.out.println("____________________________________________________________");
+                System.out.println("Got it. I've added this task:");
+                System.out.println(eventTask);
+                System.out.println("____________________________________________________________");
+                System.out.print("\n");
+                break;
+
             case "mark":
                 int markTaskNo = Integer.parseInt(parameters[1]);
                 if (markTaskNo >= 1 && markTaskNo <= tasks.size()) {
