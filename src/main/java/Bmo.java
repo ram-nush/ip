@@ -27,6 +27,24 @@ public class Bmo {
                 System.out.print("\n");
                 break;
 
+            case "todo":
+                String description = "";
+                for (int i = 1; i < parameters.length; i++) {
+                    description += parameters[i];
+                    if (i != parameters.length - 1) {
+                        description += " ";
+                    }
+                }
+                Task newTask = new Todo(description);
+                tasks.add(newTask);
+
+                System.out.println("____________________________________________________________");
+                System.out.println("Got it. I've added this task:");
+                System.out.println(newTask);
+                System.out.println("____________________________________________________________");
+                System.out.print("\n");
+                break;
+
             case "mark":
                 int markTaskNo = Integer.parseInt(parameters[1]);
                 if (markTaskNo >= 1 && markTaskNo <= tasks.size()) {
@@ -66,13 +84,7 @@ public class Bmo {
                 break;
 
             default:
-                Task newTask = new Task(userInput);
-                tasks.add(newTask);
-
-                System.out.println("____________________________________________________________");
-                System.out.println("added: " + userInput);
-                System.out.println("____________________________________________________________");
-                System.out.print("\n");
+                break;
             }
 
             userInput = scanner.nextLine();
