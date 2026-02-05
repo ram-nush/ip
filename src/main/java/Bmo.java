@@ -32,9 +32,7 @@ public class Bmo {
                 String todoDescription = "";
                 for (int i = 1; i < parameters.length; i++) {
                     todoDescription += parameters[i];
-                    if (i != parameters.length - 1) {
-                        todoDescription += " ";
-                    }
+                    todoDescription += " ";
                 }
                 Task todoTask = new Todo(todoDescription);
                 tasks.add(todoTask);
@@ -42,6 +40,7 @@ public class Bmo {
                 System.out.println("____________________________________________________________");
                 System.out.println("Got it. I've added this task:");
                 System.out.println(todoTask);
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("____________________________________________________________");
                 System.out.print("\n");
                 break;
@@ -58,14 +57,10 @@ public class Bmo {
 
                     if (hasReachedBy) {
                         deadlineBy += parameters[i];
-                        if (i != parameters.length - 1) {
-                            deadlineBy += " ";
-                        }
+                        deadlineBy += " ";
                     } else {
                         deadlineDescription += parameters[i];
-                        if (i != parameters.length - 1) {
-                            deadlineDescription += " ";
-                        }
+                        deadlineDescription += " ";
                     }
                 }
                 Task deadlineTask = new Deadline(deadlineDescription, deadlineBy);
@@ -74,6 +69,7 @@ public class Bmo {
                 System.out.println("____________________________________________________________");
                 System.out.println("Got it. I've added this task:");
                 System.out.println(deadlineTask);
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("____________________________________________________________");
                 System.out.print("\n");
                 break;
@@ -97,19 +93,13 @@ public class Bmo {
 
                     if (hasReachedTo) {
                         eventTo += parameters[i];
-                        if (i != parameters.length - 1) {
-                            eventTo += " ";
-                        }
+                        eventTo += " ";
                     } else if (hasReachedFrom) {
                         eventFrom += parameters[i];
-                        if (i != parameters.length - 1) {
-                            eventFrom += " ";
-                        }
+                        eventFrom += " ";
                     } else {
                         eventDescription += parameters[i];
-                        if (i != parameters.length - 1) {
-                            eventDescription += " ";
-                        }
+                        eventDescription += " ";
                     }
                 }
                 Task eventTask = new Event(eventDescription, eventFrom, eventTo);
@@ -118,6 +108,7 @@ public class Bmo {
                 System.out.println("____________________________________________________________");
                 System.out.println("Got it. I've added this task:");
                 System.out.println(eventTask);
+                System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println("____________________________________________________________");
                 System.out.print("\n");
                 break;
