@@ -116,31 +116,17 @@ public class Bmo {
                         eventDescription += " ";
                     }
                 }
+                
+                try {
+                    Task eventTask = new Event(eventDescription, eventFrom, eventTo);
+                    tasks.add(eventTask);
 
-                if (eventDescription.isEmpty()) {
-                    // handle error 3a: event description is empty
-                    printMessage("OOPS!!! The description of an event cannot be empty.\n"
-                            + "To fix: Add a description after event");
-                    break;
-                } else if (eventFrom.isEmpty()) {
-                    // handle error 3b: event from is empty
-                    printMessage("OOPS!!! The start of an event cannot be empty.\n"
-                            + "To fix: Add a start after /from option");
-                    break;
-                } else if (eventTo.isEmpty()) {
-                    // handle error 3c: event to is empty
-                    printMessage("OOPS!!! The end of an event cannot be empty.\n"
-                            + "To fix: Add an end after /to option");
-                    break;
+                    printMessage("Got it. I've added this task:\n"
+                            + eventTask
+                            + "\nNow you have " + tasks.size() + " tasks in the list.");
+                } catch (MissingArgumentException e) {
+                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
                 }
-                
-                Task eventTask = new Event(eventDescription, eventFrom, eventTo);
-                tasks.add(eventTask);
-
-                printMessage("Got it. I've added this task:\n" 
-                        + eventTask.toString()
-                        + "\nNow you have " + tasks.size() + " tasks in the list.");
-                
                 break;
 
             case "mark":
