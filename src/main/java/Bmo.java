@@ -74,25 +74,17 @@ public class Bmo {
                         deadlineDescription += " ";
                     }
                 }
-
-                if (deadlineDescription.isEmpty()) {
-                    // handle error 2a: deadline description is empty
-                    printMessage("OOPS!!! The description of a deadline cannot be empty.\n"
-                            + "To fix: Add a description after deadline");
-                    break;
-                } else if (deadlineBy.isEmpty()) {
-                    // handle error 2b: deadline by is empty
-                    printMessage("OOPS!!! The due of a deadline cannot be empty.\n"
-                            + "To fix: Add a due after /by option");
-                    break;
-                }
                 
-                Task deadlineTask = new Deadline(deadlineDescription, deadlineBy);
-                tasks.add(deadlineTask);
+                try {
+                    Task deadlineTask = new Deadline(deadlineDescription, deadlineBy);
+                    tasks.add(deadlineTask);
 
-                printMessage("Got it. I've added this task:\n" 
-                        + deadlineTask.toString()
-                        + "\nNow you have " + tasks.size() + " tasks in the list.");
+                    printMessage("Got it. I've added this task:\n"
+                            + deadlineTask
+                            + "\nNow you have " + tasks.size() + " tasks in the list.");
+                } catch (MissingArgumentException e) {
+                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                }
                 break;
 
             case "event":
