@@ -19,8 +19,7 @@ public class Bmo {
         
         List<Task> tasks = new ArrayList<Task>();
 
-        printMessage("Hello! I'm BMO");
-        printMessage("What can I do for you?");
+        printMessage("Hello! I'm BMO\n" + "What can I do for you?");
 
         String userInput = scanner.nextLine();
         String[] parameters = userInput.split(" ");
@@ -43,20 +42,18 @@ public class Bmo {
                     todoDescription += parameters[i];
                     todoDescription += " ";
                 }
-                
-                if (todoDescription.isEmpty()) {
-                    // handle error 1: todo description is empty
-                    printMessage("OOPS!!! The description of a todo cannot be empty.\n" 
-                            + "To fix: Add a description after todo");
-                    break;
-                }
-                
-                Task todoTask = new Todo(todoDescription);
-                tasks.add(todoTask);
+                                
+                try {
+                    Task todoTask = new Todo(todoDescription);
+                    tasks.add(todoTask);
 
-                printMessage("Got it. I've added this task:n\n"
-                        + todoTask.toString()
-                        + "\nNow you have " + tasks.size() + " tasks in the list.");
+                    printMessage("Got it. I've added this task:n\n"
+                            + todoTask
+                            + "\nNow you have " + tasks.size() + " tasks in the list.");
+                    
+                } catch (MissingArgumentException e) {
+                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                }
                 break;
 
             case "deadline":
