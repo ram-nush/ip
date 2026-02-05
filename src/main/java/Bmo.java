@@ -24,7 +24,11 @@ public class Bmo {
 
         String userInput = scanner.nextLine();
         String[] parameters = userInput.split(" ");
-        String command = parameters[0];
+        String command = "";
+        if (parameters.length > 0) {
+            command = parameters[0];
+        }
+        
         while (!command.equals("bye")) {
             switch (command) {
             case "list":
@@ -129,13 +133,21 @@ public class Bmo {
 
             case "mark":
                 try {
-                    int markTaskNo = Integer.parseInt(parameters[1]);
+                    int markTaskNo = 0;
+                    try {
+                        markTaskNo = Integer.parseInt(parameters[1]);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        throw new MissingArgumentException("index", "mark",
+                                "To fix: Add an index after mark");
+                    }
                     if (isInRange(markTaskNo, tasks)) {
                         Task markTask = tasks.get(markTaskNo - 1);
                         markTask.markAsDone();
 
                         printMessage("Nice! I've marked this task as done:\n" + markTask);
                     }
+                } catch (MissingArgumentException e) {
+                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
                 } catch (NumberFormatException e) {
                     printMessage(parameters[1] + " is not a number!\n"
                             + "To fix: Enter a number");
@@ -146,13 +158,21 @@ public class Bmo {
 
             case "unmark":
                 try {
-                    int unmarkTaskNo = Integer.parseInt(parameters[1]);
+                    int unmarkTaskNo = 0;
+                    try {
+                        unmarkTaskNo = Integer.parseInt(parameters[1]);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        throw new MissingArgumentException("index", "unmark",
+                                "To fix: Add an index after unmark");
+                    }
                     if (isInRange(unmarkTaskNo, tasks)) {
                         Task unmarkTask = tasks.get(unmarkTaskNo - 1);
                         unmarkTask.markAsNotDone();
 
                         printMessage("OK, I've marked this task as not done yet:\n" + unmarkTask);
                     }
+                } catch (MissingArgumentException e) {
+                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
                 } catch (NumberFormatException e) {
                     printMessage(parameters[1] + " is not a number!\n"
                             + "To fix: Enter a number");
@@ -163,7 +183,13 @@ public class Bmo {
                 
             case "delete":
                 try {
-                    int deleteTaskNo = Integer.parseInt(parameters[1]);
+                    int deleteTaskNo = 0;
+                    try {
+                        deleteTaskNo = Integer.parseInt(parameters[1]);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        throw new MissingArgumentException("index", "delete",
+                                "To fix: Add an index after delete");
+                    }
                     if (isInRange(deleteTaskNo, tasks)) {
                         Task deleteTask = tasks.get(deleteTaskNo - 1);
                         int newSize = tasks.size() - 1;
@@ -173,6 +199,8 @@ public class Bmo {
                         
                         tasks.remove(deleteTaskNo - 1);
                     }
+                } catch (MissingArgumentException e) {
+                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
                 } catch (NumberFormatException e) {
                     printMessage(parameters[1] + " is not a number!\n"
                             + "To fix: Enter a number");
@@ -189,7 +217,11 @@ public class Bmo {
 
             userInput = scanner.nextLine();
             parameters = userInput.split(" ");
-            command = parameters[0];
+            if (parameters.length > 0) {
+                command = parameters[0];
+            } else {
+                command = "";
+            }
         }
 
         printMessage("Bye. Hope to see you again soon!");
