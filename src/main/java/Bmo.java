@@ -46,6 +46,38 @@ public class Bmo {
                 System.out.print("\n");
                 break;
 
+            case "deadline":
+                String deadlineDescription = "";
+                String deadlineBy = "";
+                boolean hasReachedBy = false;
+                for (int i = 1; i < parameters.length; i++) {
+                    if (parameters[i].equals("/by")) {
+                        hasReachedBy = true;
+                        continue;
+                    }
+
+                    if (hasReachedBy) {
+                        deadlineBy += parameters[i];
+                        if (i != parameters.length - 1) {
+                            deadlineBy += " ";
+                        }
+                    } else {
+                        deadlineDescription += parameters[i];
+                        if (i != parameters.length - 1) {
+                            deadlineDescription += " ";
+                        }
+                    }
+                }
+                Task deadlineTask = new Deadline(deadlineDescription, deadlineBy);
+                tasks.add(deadlineTask);
+
+                System.out.println("____________________________________________________________");
+                System.out.println("Got it. I've added this task:");
+                System.out.println(deadlineTask);
+                System.out.println("____________________________________________________________");
+                System.out.print("\n");
+                break;
+
             case "mark":
                 int markTaskNo = Integer.parseInt(parameters[1]);
                 if (markTaskNo >= 1 && markTaskNo <= tasks.size()) {
