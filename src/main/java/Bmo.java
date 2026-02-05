@@ -29,19 +29,19 @@ public class Bmo {
                 break;
 
             case "todo":
-                String description = "";
+                String todoDescription = "";
                 for (int i = 1; i < parameters.length; i++) {
-                    description += parameters[i];
+                    todoDescription += parameters[i];
                     if (i != parameters.length - 1) {
-                        description += " ";
+                        todoDescription += " ";
                     }
                 }
-                Task newTask = new Todo(description);
-                tasks.add(newTask);
+                Task todoTask = new Todo(todoDescription);
+                tasks.add(todoTask);
 
                 System.out.println("____________________________________________________________");
                 System.out.println("Got it. I've added this task:");
-                System.out.println(newTask);
+                System.out.println(todoTask);
                 System.out.println("____________________________________________________________");
                 System.out.print("\n");
                 break;
