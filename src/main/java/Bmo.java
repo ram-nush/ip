@@ -7,7 +7,6 @@ public class Bmo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
-        Pattern numberMatch = Pattern.compile("\\d+");
         List<String> helpMessages = new ArrayList<String>();
         helpMessages.add("To fix: Enter one of the following commands in the correct format");
         helpMessages.add("list");
@@ -156,14 +155,14 @@ public class Bmo {
                 break;
 
             case "mark":
-                boolean isMarkNumber = numberMatch.matcher(parameters[1]).matches();
-                if (!isMarkNumber) {
+                int markTaskNo = 0;
+                try {
+                    markTaskNo = Integer.parseInt(parameters[1]);
+                } catch (NumberFormatException e) {
                     // handle error 4: mark task with invalid index
-                    printMessage(parameters[1] + " is not a number!\n" 
+                    printMessage(parameters[1] + " is not a number!\n"
                             + "To fix: Enter a number");
                 }
-                
-                int markTaskNo = Integer.parseInt(parameters[1]);
                 if (markTaskNo >= 1 && markTaskNo <= tasks.size()) {
                     Task markTask = tasks.get(markTaskNo - 1);
                     markTask.markAsDone();
@@ -178,14 +177,14 @@ public class Bmo {
                 break;
 
             case "unmark":
-                boolean isUnmarkNumber = numberMatch.matcher(parameters[1]).matches();
-                if (!isUnmarkNumber) {
+                int unmarkTaskNo = 0;
+                try {
+                    unmarkTaskNo = Integer.parseInt(parameters[1]);
+                } catch (NumberFormatException e) {
                     // handle error 5: unmark task with invalid index
                     printMessage(parameters[1] + " is not a number!\n"
                             + "To fix: Enter a number");
                 }
-
-                int unmarkTaskNo = Integer.parseInt(parameters[1]);
                 if (unmarkTaskNo >= 1 && unmarkTaskNo <= tasks.size()) {
                     Task unmarkTask = tasks.get(unmarkTaskNo - 1);
                     unmarkTask.markAsNotDone();
