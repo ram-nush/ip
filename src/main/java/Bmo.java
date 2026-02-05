@@ -130,51 +130,42 @@ public class Bmo {
                 break;
 
             case "mark":
-                int markTaskNo = 0;
                 try {
-                    markTaskNo = Integer.parseInt(parameters[1]);
+                    int markTaskNo = Integer.parseInt(parameters[1]);
+                    if (isInRange(markTaskNo, tasks)) {
+                        Task markTask = tasks.get(markTaskNo - 1);
+                        markTask.markAsDone();
+
+                        printMessage("Nice! I've marked this task as done:\n"
+                                + markTask);
+                    }
                 } catch (NumberFormatException e) {
-                    // handle error 4: mark task with invalid index
                     printMessage(parameters[1] + " is not a number!\n"
                             + "To fix: Enter a number");
-                }
-                if (markTaskNo >= 1 && markTaskNo <= tasks.size()) {
-                    Task markTask = tasks.get(markTaskNo - 1);
-                    markTask.markAsDone();
-
-                    printMessage("Nice! I've marked this task as done:\n"
-                            + markTask.toString());
-                } else {
-                    // handle error 4: mark task with invalid index
-                    printMessage("No task with index " + markTaskNo + " exists!\n" 
-                            + "To fix: Enter a number between 1 and " + tasks.size());
+                } catch (InvalidIndexException e) {
+                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
                 }
                 break;
 
             case "unmark":
-                int unmarkTaskNo = 0;
                 try {
-                    unmarkTaskNo = Integer.parseInt(parameters[1]);
+                    int unmarkTaskNo = Integer.parseInt(parameters[1]);
+                    if (isInRange(unmarkTaskNo, tasks)) {
+                        Task unmarkTask = tasks.get(unmarkTaskNo - 1);
+                        unmarkTask.markAsNotDone();
+
+                        printMessage("OK, I've marked this task as not done yet:\n"
+                                + unmarkTask);
+                    }
                 } catch (NumberFormatException e) {
-                    // handle error 5: unmark task with invalid index
                     printMessage(parameters[1] + " is not a number!\n"
                             + "To fix: Enter a number");
-                }
-                if (unmarkTaskNo >= 1 && unmarkTaskNo <= tasks.size()) {
-                    Task unmarkTask = tasks.get(unmarkTaskNo - 1);
-                    unmarkTask.markAsNotDone();
-
-                    printMessage("OK, I've marked this task as not done yet:\n" 
-                            + unmarkTask.toString());
-                } else {
-                    // handle error 5: unmark task with invalid index
-                    printMessage("No task with index " + unmarkTaskNo + " exists!\n" 
-                            + "To fix: Enter a number between 1 and " + tasks.size());
+                } catch (InvalidIndexException e) {
+                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
                 }
                 break;
 
             default:
-                // handle error 6: unknown command
                 printMessage("OOPS!!! I'm sorry, but I don't know what that means :-(");
                 printMessages(helpMessages);
                 break;
@@ -187,6 +178,15 @@ public class Bmo {
 
         printMessage("Bye. Hope to see you again soon!");
         scanner.close();
+    }
+    
+    public static boolean isInRange(int index, List<Task> tasks) 
+            throws InvalidIndexException {
+        if (index < 1 || index > tasks.size()) {
+            throw new InvalidIndexException("No task with index " + index + " exists!",
+                    "To fix: Enter a number between 1 and " + tasks.size());
+        }
+        return true;
     }
     
     public static void printMessage(String message) {

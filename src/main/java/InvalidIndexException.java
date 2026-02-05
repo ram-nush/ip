@@ -1,5 +1,12 @@
 public class InvalidIndexException extends BmoException {
-    public InvalidIndexException(String message) {
+    public String suggestString;
+    
+    public InvalidIndexException(String message, String suggestString) {
         super(message);
+        this.suggestString = suggestString;
+    }
+
+    public String getSuggestString() {
+        return this.suggestString;
     }
 }
