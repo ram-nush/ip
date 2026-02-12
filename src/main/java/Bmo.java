@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -224,6 +228,13 @@ public class Bmo {
             }
         }
 
+        // save tasks here
+        String saveText = "";
+        for (Task task : tasks) {
+            saveText += task.toString() + "\n";
+        }
+        printMessage("The following tasks will be saved:\n" + saveText);
+        
         printMessage("Bye. Hope to see you again soon!");
         scanner.close();
     }
