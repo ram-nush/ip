@@ -27,10 +27,11 @@ public class Bmo {
         printMessage("Hello! I'm BMO\n" + "What can I do for you?");
 
         String userInput = scanner.nextLine();
-        String[] parameters = userInput.split(" ");
-        String command = "";
-        if (parameters.length > 0) {
-            command = parameters[0];
+        String[] parts = userInput.split(" ", 2);
+        String command = parts[0];
+        String arguments = "";
+        if (parts.length > 1) {
+            arguments = parts[1];
         }
         
         while (!command.equals("bye")) {
@@ -46,11 +47,7 @@ public class Bmo {
                 break;
 
             case "todo":
-                String todoDescription = "";
-                for (int i = 1; i < parameters.length; i++) {
-                    todoDescription += parameters[i];
-                    todoDescription += " ";
-                }
+                String todoDescription = arguments.strip();
                                 
                 try {
                     Task todoTask = new Todo(todoDescription);
@@ -65,22 +62,11 @@ public class Bmo {
                 break;
 
             case "deadline":
-                String deadlineDescription = "";
+                String[] deadlineParts = arguments.split(" /by ");
+                String deadlineDescription = deadlineParts[0].strip();
                 String deadlineBy = "";
-                boolean hasReachedBy = false;
-                for (int i = 1; i < parameters.length; i++) {
-                    if (parameters[i].equals("/by")) {
-                        hasReachedBy = true;
-                        continue;
-                    }
-
-                    if (hasReachedBy) {
-                        deadlineBy += parameters[i];
-                        deadlineBy += " ";
-                    } else {
-                        deadlineDescription += parameters[i];
-                        deadlineDescription += " ";
-                    }
+                if (deadlineParts.length > 1) {
+                    deadlineBy = deadlineParts[1].strip();
                 }
                 
                 try {
@@ -95,36 +81,21 @@ public class Bmo {
                 break;
 
             case "event":
-                String eventDescription = "";
+                
+                String[] eventParts = arguments.split(" /from ");
+                String eventDescription = eventParts[0].strip();
                 String eventFrom = "";
                 String eventTo = "";
-                boolean hasReachedFrom = false;
-                boolean hasReachedTo = false;
                 
-                for (int i = 1; i < parameters.length; i++) {
-                    if (parameters[i].equals("/from")) {
-                        hasReachedFrom = true;
-                        continue;
-                    }
-
-                    if (parameters[i].equals("/to")) {
-                        hasReachedTo = true;
-                        continue;
-                    }
-
-                    if (hasReachedTo) {
-                        eventTo += parameters[i];
-                        eventTo += " ";
-                    } else if (hasReachedFrom) {
-                        eventFrom += parameters[i];
-                        eventFrom += " ";
-                    } else {
-                        eventDescription += parameters[i];
-                        eventDescription += " ";
+                if (eventParts.length > 1) {
+                    String[] timeParts = eventParts[1].split(" /to ");
+                    eventFrom = timeParts[0].strip();
+                    if (timeParts.length > 1) {
+                        eventTo = timeParts[1].strip();
                     }
                 }
-                
-                try {
+                 
+                try {   
                     Task eventTask = new Event(eventDescription, eventFrom, eventTo);
                     tasks.add(eventTask);
 
@@ -139,7 +110,7 @@ public class Bmo {
                 try {
                     int markTaskNo = 0;
                     try {
-                        markTaskNo = Integer.parseInt(parameters[1]);
+                        markTaskNo = Integer.parseInt(arguments);
                     } catch (ArrayIndexOutOfBoundsException e) {
                         throw new MissingArgumentException("index", "mark",
                                 "To fix: Add an index after mark");
@@ -153,7 +124,7 @@ public class Bmo {
                 } catch (MissingArgumentException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
                 } catch (NumberFormatException e) {
-                    printMessage(parameters[1] + " is not a number!\n"
+                    printMessage(arguments + " is not a number!\n"
                             + "To fix: Enter a number");
                 } catch (InvalidIndexException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
@@ -164,7 +135,7 @@ public class Bmo {
                 try {
                     int unmarkTaskNo = 0;
                     try {
-                        unmarkTaskNo = Integer.parseInt(parameters[1]);
+                        unmarkTaskNo = Integer.parseInt(arguments);
                     } catch (ArrayIndexOutOfBoundsException e) {
                         throw new MissingArgumentException("index", "unmark",
                                 "To fix: Add an index after unmark");
@@ -178,7 +149,7 @@ public class Bmo {
                 } catch (MissingArgumentException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
                 } catch (NumberFormatException e) {
-                    printMessage(parameters[1] + " is not a number!\n"
+                    printMessage(arguments + " is not a number!\n"
                             + "To fix: Enter a number");
                 } catch (InvalidIndexException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
@@ -189,7 +160,7 @@ public class Bmo {
                 try {
                     int deleteTaskNo = 0;
                     try {
-                        deleteTaskNo = Integer.parseInt(parameters[1]);
+                        deleteTaskNo = Integer.parseInt(arguments);
                     } catch (ArrayIndexOutOfBoundsException e) {
                         throw new MissingArgumentException("index", "delete",
                                 "To fix: Add an index after delete");
@@ -206,7 +177,7 @@ public class Bmo {
                 } catch (MissingArgumentException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
                 } catch (NumberFormatException e) {
-                    printMessage(parameters[1] + " is not a number!\n"
+                    printMessage(arguments + " is not a number!\n"
                             + "To fix: Enter a number");
                 } catch (InvalidIndexException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
@@ -220,11 +191,11 @@ public class Bmo {
             }
 
             userInput = scanner.nextLine();
-            parameters = userInput.split(" ");
-            if (parameters.length > 0) {
-                command = parameters[0];
-            } else {
-                command = "";
+            parts = userInput.split(" ", 2);
+            command = parts[0];
+            arguments = "";
+            if (parts.length > 1) {
+                arguments = parts[1];
             }
         }
 
