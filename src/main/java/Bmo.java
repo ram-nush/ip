@@ -27,7 +27,7 @@ public class Bmo {
         helpMessages.add("bye");
         helpMessages.add("format of <due>,<start>,<end> is dd-MM-yyyy HHmm");
         
-        List<Task> tasks = new ArrayList<Task>();
+        TaskList tasks = new TaskList();
         // retrieve tasks
         try {
             if (Files.exists(BMO_FILE)) {
@@ -40,7 +40,7 @@ public class Bmo {
                             if (properties[1].equals("1")) {
                                 task.markAsDone();
                             }
-                            tasks.add(task);
+                            tasks.addTask(task);
                         }
                     } else if (properties[0].equals("D")) {
                         if (properties.length == 4) {
@@ -49,7 +49,7 @@ public class Bmo {
                             if (properties[1].equals("1")) {
                                 task.markAsDone();
                             }
-                            tasks.add(task);
+                            tasks.addTask(task);
                         }
                     } else if (properties[0].equals("E")) {
                         if (properties.length == 5) {
@@ -59,15 +59,12 @@ public class Bmo {
                             if (properties[1].equals("1")) {
                                 task.markAsDone();
                             }
-                            tasks.add(task);
+                            tasks.addTask(task);
                         }
                     }
                 }
-                String retrieveText = "";
-                for (Task task : tasks) {
-                    retrieveText += task.toString() + "\n";
-                }
-                printMessage("The following tasks have been retrieved:\n" + retrieveText);
+                
+                printMessage("The following tasks have been retrieved:\n" + tasks.toString());
             }
         } catch (IOException e) {
             System.err.println("An I/O error occurred: " + e.getMessage());
@@ -92,9 +89,7 @@ public class Bmo {
             case "list":
                 System.out.println("____________________________________________________________");
                 System.out.println("Here are the tasks in your list:");
-                for (int i = 1; i <= tasks.size(); i++) {
-                    System.out.println(i + ". " + tasks.get(i - 1));
-                }
+                System.out.println(tasks.listTasks());
                 System.out.println("____________________________________________________________");
                 System.out.print("\n");
                 break;
@@ -104,10 +99,10 @@ public class Bmo {
                                 
                 try {
                     Task todoTask = new Todo(todoDescription);
-                    tasks.add(todoTask);
+                    tasks.addTask(todoTask);
 
                     printMessage("Got it. I've added this task:\n" + todoTask
-                            + "\nNow you have " + tasks.size() + " tasks in the list.");
+                            + "\nNow you have " + tasks.getTotal() + " tasks in the list.");
                     
                 } catch (MissingArgumentException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
@@ -125,10 +120,10 @@ public class Bmo {
                 try {
                     LocalDateTime deadlineBy = LocalDateTime.parse(by, formatter);
                     Task deadlineTask = new Deadline(deadlineDescription, deadlineBy);
-                    tasks.add(deadlineTask);
+                    tasks.addTask(deadlineTask);
 
                     printMessage("Got it. I've added this task:\n" + deadlineTask
-                            + "\nNow you have " + tasks.size() + " tasks in the list.");
+                            + "\nNow you have " + tasks.getTotal() + " tasks in the list.");
                 } catch (DateTimeParseException e) {
                     printMessage("Datetime is in incorrect format: " + e.getMessage());
                 } catch (MissingArgumentException e) {
@@ -155,10 +150,10 @@ public class Bmo {
                     LocalDateTime eventFrom = LocalDateTime.parse(from, formatter);
                     LocalDateTime eventTo = LocalDateTime.parse(to, formatter);
                     Task eventTask = new Event(eventDescription, eventFrom, eventTo);
-                    tasks.add(eventTask);
+                    tasks.addTask(eventTask);
 
                     printMessage("Got it. I've added this task:\n" + eventTask
-                            + "\nNow you have " + tasks.size() + " tasks in the list.");
+                            + "\nNow you have " + tasks.getTotal() + " tasks in the list.");
                 } catch (DateTimeParseException e) {
                     printMessage("Datetime is in incorrect format: " + e.getMessage());
                 } catch (MissingArgumentException e) {
@@ -176,9 +171,7 @@ public class Bmo {
                                 "To fix: Add an index after mark");
                     }
                     if (isInRange(markTaskNo, tasks)) {
-                        Task markTask = tasks.get(markTaskNo - 1);
-                        markTask.markAsDone();
-
+                        Task markTask = tasks.markTask(markTaskNo);
                         printMessage("Nice! I've marked this task as done:\n" + markTask);
                     }
                 } catch (MissingArgumentException e) {
@@ -201,9 +194,7 @@ public class Bmo {
                                 "To fix: Add an index after unmark");
                     }
                     if (isInRange(unmarkTaskNo, tasks)) {
-                        Task unmarkTask = tasks.get(unmarkTaskNo - 1);
-                        unmarkTask.markAsNotDone();
-
+                        Task unmarkTask = tasks.unmarkTask(unmarkTaskNo);
                         printMessage("OK, I've marked this task as not done yet:\n" + unmarkTask);
                     }
                 } catch (MissingArgumentException e) {
@@ -226,13 +217,9 @@ public class Bmo {
                                 "To fix: Add an index after delete");
                     }
                     if (isInRange(deleteTaskNo, tasks)) {
-                        Task deleteTask = tasks.get(deleteTaskNo - 1);
-                        int newSize = tasks.size() - 1;
-
+                        Task deleteTask = tasks.deleteTask(deleteTaskNo);
                         printMessage("Noted. I've removed this task:\n" + deleteTask
-                                + "\nNow you have " + newSize + " tasks in the list.");
-                        
-                        tasks.remove(deleteTaskNo - 1);
+                                + "\nNow you have " + tasks.getTotal() + " tasks in the list.");
                     }
                 } catch (MissingArgumentException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
@@ -260,10 +247,7 @@ public class Bmo {
         }
 
         // save tasks here
-        String saveText = "";
-        for (Task task : tasks) {
-            saveText += task.saveString() + "\n";
-        }
+        String saveText = tasks.saveString();
         printMessage("The following tasks will be saved:\n" + saveText);
         
         try {
@@ -284,11 +268,11 @@ public class Bmo {
         scanner.close();
     }
     
-    public static boolean isInRange(int index, List<Task> tasks) 
+    public static boolean isInRange(int index, TaskList tasks) 
             throws InvalidIndexException {
-        if (index < 1 || index > tasks.size()) {
+        if (index < 1 || index > tasks.getTotal()) {
             throw new InvalidIndexException("No task with index " + index + " exists!",
-                    "To fix: Enter a number between 1 and " + tasks.size());
+                    "To fix: Enter a number between 1 and " + tasks.getTotal());
         }
         return true;
     }
