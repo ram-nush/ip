@@ -8,6 +8,7 @@ import java.util.List;
 public class Bmo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Path BMO_FILE = Path.of("data", "bmo.txt");
         
         List<String> helpMessages = new ArrayList<String>();
         helpMessages.add("To fix: Enter one of the following commands in the correct format");
@@ -21,7 +22,50 @@ public class Bmo {
         helpMessages.add("bye");
         
         List<Task> tasks = new ArrayList<Task>();
-
+        // retrieve tasks
+        try {
+            if (Files.exists(BMO_FILE)) {
+                List<String> lines = Files.readAllLines(BMO_FILE);
+                for (String line : lines) {
+                    String[] properties = line.split(" \\| ");
+                    if (properties[0].equals("T")) {
+                        if (properties.length == 3) {
+                            Task task = new Todo(properties[2]);
+                            if (properties[1].equals("1")) {
+                                task.markAsDone();
+                            }
+                            tasks.add(task);
+                        }
+                    } else if (properties[0].equals("D")) {
+                        if (properties.length == 4) {
+                            Task task = new Deadline(properties[2], properties[3]);
+                            if (properties[1].equals("1")) {
+                                task.markAsDone();
+                            }
+                            tasks.add(task);
+                        }
+                    } else if (properties[0].equals("E")) {
+                        if (properties.length == 5) {
+                            Task task = new Event(properties[2], properties[3], properties[4]);
+                            if (properties[1].equals("1")) {
+                                task.markAsDone();
+                            }
+                            tasks.add(task);
+                        }
+                    }
+                }
+                String retrieveText = "";
+                for (Task task : tasks) {
+                    retrieveText += task.toString() + "\n";
+                }
+                printMessage("The following tasks have been retrieved:\n" + retrieveText);
+            }
+        } catch (IOException e) {
+            System.err.println("An I/O error occurred: " + e.getMessage());
+        } catch (MissingArgumentException e) {
+            printMessage(e.getMessage() + "\n" + e.getSuggestString());
+        }
+        
         printMessage("Hello! I'm BMO\n" + "What can I do for you?");
 
         String userInput = scanner.nextLine();
@@ -204,18 +248,16 @@ public class Bmo {
         }
         printMessage("The following tasks will be saved:\n" + saveText);
         
-        Path bmoFile = Path.of("data", "bmo.txt");
-        
         try {
-            if (bmoFile.getParent() != null) {
-                Files.createDirectories(bmoFile.getParent());
+            if (BMO_FILE.getParent() != null) {
+                Files.createDirectories(BMO_FILE.getParent());
             }
 
-            if (Files.notExists(bmoFile)) {
-                Files.createFile(bmoFile);
+            if (Files.notExists(BMO_FILE)) {
+                Files.createFile(BMO_FILE);
             }
             
-            Files.writeString(bmoFile, saveText);
+            Files.writeString(BMO_FILE, saveText);
         } catch (IOException e) {
             System.err.println("An I/O error occurred: " + e.getMessage());
         }
