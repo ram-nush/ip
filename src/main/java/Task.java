@@ -18,6 +18,10 @@ public class Task {
     public String getStatusIcon() {
         return (this.isDone ? "X" : " ");
     }
+    
+    public String saveString() {
+        return (this.isDone ? "1" : "0") + " | " + this.description;
+    }
 
     @Override
     public String toString() {
