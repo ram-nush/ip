@@ -1,11 +1,9 @@
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class Bmo {
     public static void main(String[] args) {
@@ -53,7 +51,7 @@ public class Bmo {
                     Task todoTask = new Todo(todoDescription);
                     tasks.add(todoTask);
 
-                    printMessage("Got it. I've added this task:n\n" + todoTask
+                    printMessage("Got it. I've added this task:\n" + todoTask
                             + "\nNow you have " + tasks.size() + " tasks in the list.");
                     
                 } catch (MissingArgumentException e) {
