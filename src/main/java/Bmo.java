@@ -231,9 +231,25 @@ public class Bmo {
         // save tasks here
         String saveText = "";
         for (Task task : tasks) {
-            saveText += task.toString() + "\n";
+            saveText += task.saveString() + "\n";
         }
         printMessage("The following tasks will be saved:\n" + saveText);
+        
+        Path bmoFile = Path.of("data", "bmo.txt");
+        
+        try {
+            if (bmoFile.getParent() != null) {
+                Files.createDirectories(bmoFile.getParent());
+            }
+
+            if (Files.notExists(bmoFile)) {
+                Files.createFile(bmoFile);
+            }
+            
+            Files.writeString(bmoFile, saveText);
+        } catch (IOException e) {
+            System.err.println("An I/O error occurred: " + e.getMessage());
+        }
         
         printMessage("Bye. Hope to see you again soon!");
         scanner.close();
