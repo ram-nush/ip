@@ -1,6 +1,9 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +12,8 @@ public class Bmo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Path BMO_FILE = Path.of("data", "bmo.txt");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM d yyyy HHmm");
         
         List<String> helpMessages = new ArrayList<String>();
         helpMessages.add("To fix: Enter one of the following commands in the correct format");
@@ -20,6 +25,7 @@ public class Bmo {
         helpMessages.add("unmark <index>");
         helpMessages.add("delete <index>");
         helpMessages.add("bye");
+        helpMessages.add("format of <due>,<start>,<end> is dd-MM-yyyy HHmm");
         
         List<Task> tasks = new ArrayList<Task>();
         // retrieve tasks
@@ -38,7 +44,8 @@ public class Bmo {
                         }
                     } else if (properties[0].equals("D")) {
                         if (properties.length == 4) {
-                            Task task = new Deadline(properties[2], properties[3]);
+                            LocalDateTime by = LocalDateTime.parse(properties[3], outputFormatter);
+                            Task task = new Deadline(properties[2], by);
                             if (properties[1].equals("1")) {
                                 task.markAsDone();
                             }
@@ -46,7 +53,9 @@ public class Bmo {
                         }
                     } else if (properties[0].equals("E")) {
                         if (properties.length == 5) {
-                            Task task = new Event(properties[2], properties[3], properties[4]);
+                            LocalDateTime from = LocalDateTime.parse(properties[3], outputFormatter);
+                            LocalDateTime to = LocalDateTime.parse(properties[4], outputFormatter);
+                            Task task = new Event(properties[2], from, to);
                             if (properties[1].equals("1")) {
                                 task.markAsDone();
                             }
@@ -62,6 +71,8 @@ public class Bmo {
             }
         } catch (IOException e) {
             System.err.println("An I/O error occurred: " + e.getMessage());
+        } catch (DateTimeParseException e) {
+            printMessage("Datetime is in incorrect format: " + e.getMessage());
         } catch (MissingArgumentException e) {
             printMessage(e.getMessage() + "\n" + e.getSuggestString());
         }
@@ -106,17 +117,20 @@ public class Bmo {
             case "deadline":
                 String[] deadlineParts = arguments.split(" /by ");
                 String deadlineDescription = deadlineParts[0].strip();
-                String deadlineBy = "";
+                String by = "";
                 if (deadlineParts.length > 1) {
-                    deadlineBy = deadlineParts[1].strip();
+                    by = deadlineParts[1].strip();
                 }
                 
                 try {
+                    LocalDateTime deadlineBy = LocalDateTime.parse(by, formatter);
                     Task deadlineTask = new Deadline(deadlineDescription, deadlineBy);
                     tasks.add(deadlineTask);
 
                     printMessage("Got it. I've added this task:\n" + deadlineTask
                             + "\nNow you have " + tasks.size() + " tasks in the list.");
+                } catch (DateTimeParseException e) {
+                    printMessage("Datetime is in incorrect format: " + e.getMessage());
                 } catch (MissingArgumentException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
                 }
@@ -126,23 +140,27 @@ public class Bmo {
                 
                 String[] eventParts = arguments.split(" /from ");
                 String eventDescription = eventParts[0].strip();
-                String eventFrom = "";
-                String eventTo = "";
+                String from = "";
+                String to = "";
                 
                 if (eventParts.length > 1) {
                     String[] timeParts = eventParts[1].split(" /to ");
-                    eventFrom = timeParts[0].strip();
+                    from = timeParts[0].strip();
                     if (timeParts.length > 1) {
-                        eventTo = timeParts[1].strip();
+                        to = timeParts[1].strip();
                     }
                 }
                  
-                try {   
+                try {
+                    LocalDateTime eventFrom = LocalDateTime.parse(from, formatter);
+                    LocalDateTime eventTo = LocalDateTime.parse(to, formatter);
                     Task eventTask = new Event(eventDescription, eventFrom, eventTo);
                     tasks.add(eventTask);
 
                     printMessage("Got it. I've added this task:\n" + eventTask
                             + "\nNow you have " + tasks.size() + " tasks in the list.");
+                } catch (DateTimeParseException e) {
+                    printMessage("Datetime is in incorrect format: " + e.getMessage());
                 } catch (MissingArgumentException e) {
                     printMessage(e.getMessage() + "\n" + e.getSuggestString());
                 }
