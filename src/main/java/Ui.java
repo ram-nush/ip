@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -80,8 +81,18 @@ public class Ui {
                 + "To fix: Enter datetime in " + pattern);
     }
     
-    public void showErrorMessage(IOException e, Path path) {
+    public void showErrorMessage(IOException e, String path) {
         this.printMessage("IOException: " + path + "\n" 
+                + e.getMessage());
+    }
+
+    public void showErrorMessage(InvalidPathException e, String path) {
+        this.printMessage("InvalidPathException: " + path + "\n"
+                + e.getMessage());
+    }
+
+    public void showErrorMessage(ArrayIndexOutOfBoundsException e) {
+        this.printMessage("ArrayIndexOutOfBoundsException: \n"
                 + e.getMessage());
     }
     

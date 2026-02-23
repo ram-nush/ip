@@ -1,70 +1,50 @@
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.InvalidPathException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-import java.util.List;
 
 public class Bmo {
-    public static void main(String[] args) {
+    
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+    
+    public Bmo(String filePath) {
+        ui = new Ui();
+        boolean exceptionCaught = true;
+        try {
+            storage = new Storage(filePath);
+            tasks = new TaskList(storage.load());
+            exceptionCaught = false;
+        } catch (IOException e) {
+            ui.showErrorMessage(e, filePath);
+        } catch (InvalidPathException e) {
+            ui.showErrorMessage(e, filePath);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            ui.showErrorMessage(e);
+        } catch (DateTimeParseException e) {
+            ui.showErrorMessage(e, Storage.INPUT_DATETIME_PATTERN);
+        } catch (MissingArgumentException e) {
+            ui.showErrorMessage(e);
+        } finally {
+            if (exceptionCaught) {
+                tasks = new TaskList();
+            }
+        }
+    }
+    
+    public void run() {
         Scanner scanner = new Scanner(System.in);
-        Path BMO_FILE = Path.of("data", "bmo.txt");
+
         String INPUT_DATETIME_PATTERN = "dd-MM-yyyy HHmm";
         String OUTPUT_DATETIME_PATTERN = "MMM d yyyy HHmm";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(INPUT_DATETIME_PATTERN);
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern(OUTPUT_DATETIME_PATTERN);
-        
-        Ui ui = new Ui();
-        TaskList tasks = new TaskList();
-        
-        // retrieve tasks
-        try {
-            if (Files.exists(BMO_FILE)) {
-                List<String> lines = Files.readAllLines(BMO_FILE);
-                for (String line : lines) {
-                    String[] properties = line.split(" \\| ");
-                    if (properties[0].equals("T")) {
-                        if (properties.length == 3) {
-                            Task task = new Todo(properties[2]);
-                            if (properties[1].equals("1")) {
-                                task.markAsDone();
-                            }
-                            tasks.addTask(task);
-                        }
-                    } else if (properties[0].equals("D")) {
-                        if (properties.length == 4) {
-                            LocalDateTime by = LocalDateTime.parse(properties[3], outputFormatter);
-                            Task task = new Deadline(properties[2], by);
-                            if (properties[1].equals("1")) {
-                                task.markAsDone();
-                            }
-                            tasks.addTask(task);
-                        }
-                    } else if (properties[0].equals("E")) {
-                        if (properties.length == 5) {
-                            LocalDateTime from = LocalDateTime.parse(properties[3], outputFormatter);
-                            LocalDateTime to = LocalDateTime.parse(properties[4], outputFormatter);
-                            Task task = new Event(properties[2], from, to);
-                            if (properties[1].equals("1")) {
-                                task.markAsDone();
-                            }
-                            tasks.addTask(task);
-                        }
-                    }
-                }
-                
-                ui.showRetrieveMessage(tasks.toString());
-            }
-        } catch (BmoException e) {
-            ui.showErrorMessage(e);
-        } catch (IOException e) {
-            ui.showErrorMessage(e, BMO_FILE);
-        } catch (DateTimeParseException e) {
-            ui.showErrorMessage(e, INPUT_DATETIME_PATTERN);
-        }
 
+        // retrieve tasks
+        ui.showRetrieveMessage(tasks.toString());
         ui.showWelcomeMessage();
 
         String userInput = scanner.nextLine();
@@ -74,7 +54,7 @@ public class Bmo {
         if (parts.length > 1) {
             arguments = parts[1];
         }
-        
+
         while (!command.equals("bye")) {
             switch (command) {
             case "list":
@@ -83,7 +63,7 @@ public class Bmo {
 
             case "todo":
                 String todoDescription = arguments.strip();
-                                
+
                 try {
                     Task todoTask = new Todo(todoDescription);
                     tasks.addTask(todoTask);
@@ -100,7 +80,7 @@ public class Bmo {
                 if (deadlineParts.length > 1) {
                     by = deadlineParts[1].strip();
                 }
-                
+
                 try {
                     LocalDateTime deadlineBy = LocalDateTime.parse(by, formatter);
                     Task deadlineTask = new Deadline(deadlineDescription, deadlineBy);
@@ -114,12 +94,12 @@ public class Bmo {
                 break;
 
             case "event":
-                
+
                 String[] eventParts = arguments.split(" /from ");
                 String eventDescription = eventParts[0].strip();
                 String from = "";
                 String to = "";
-                
+
                 if (eventParts.length > 1) {
                     String[] timeParts = eventParts[1].split(" /to ");
                     from = timeParts[0].strip();
@@ -127,7 +107,7 @@ public class Bmo {
                         to = timeParts[1].strip();
                     }
                 }
-                 
+
                 try {
                     LocalDateTime eventFrom = LocalDateTime.parse(from, formatter);
                     LocalDateTime eventTo = LocalDateTime.parse(to, formatter);
@@ -180,7 +160,7 @@ public class Bmo {
                     ui.showErrorMessage(e, arguments);
                 }
                 break;
-                
+
             case "delete":
                 try {
                     int deleteTaskNo = 0;
@@ -217,25 +197,21 @@ public class Bmo {
         }
 
         // save tasks here
-        String saveText = tasks.saveString();
-        ui.showSaveMessage(saveText);
-        
         try {
-            if (BMO_FILE.getParent() != null) {
-                Files.createDirectories(BMO_FILE.getParent());
-            }
-
-            if (Files.notExists(BMO_FILE)) {
-                Files.createFile(BMO_FILE);
-            }
-            
-            Files.writeString(BMO_FILE, saveText);
+            String saveText = tasks.saveString();
+            ui.showSaveMessage(saveText);
+            storage.save(saveText);
         } catch (IOException e) {
             System.err.println("An I/O error occurred: " + e.getMessage());
         }
-        
+
         ui.showByeMessage();
         scanner.close();
+    }
+    
+    public static void main(String[] args) {
+        String BMO_FILE_PATH = "data/bmo.txt";
+        new Bmo(BMO_FILE_PATH).run();
     }
     
     public static boolean isInRange(int index, TaskList tasks) 

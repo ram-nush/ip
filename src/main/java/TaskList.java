@@ -8,6 +8,10 @@ public class TaskList {
         this.tasks = new ArrayList<Task>();
     }
     
+    public TaskList(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+    
     public int getTotal() {
         return this.tasks.size();
     }
