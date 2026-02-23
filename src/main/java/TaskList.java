@@ -37,7 +37,7 @@ public class TaskList {
     public String listTasks() {
         String listOutput = "";
         for (int i = 1; i <= this.tasks.size(); i++) {
-            listOutput += String.format("%d %s\n", i, this.tasks.get(i - 1));
+            listOutput += String.format("%d. %s\n", i, this.tasks.get(i - 1));
         }
         return listOutput;
     }

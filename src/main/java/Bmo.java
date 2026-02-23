@@ -5,29 +5,20 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bmo {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Path BMO_FILE = Path.of("data", "bmo.txt");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm");
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM d yyyy HHmm");
+        String INPUT_DATETIME_PATTERN = "dd-MM-yyyy HHmm";
+        String OUTPUT_DATETIME_PATTERN = "MMM d yyyy HHmm";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(INPUT_DATETIME_PATTERN);
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern(OUTPUT_DATETIME_PATTERN);
         
-        List<String> helpMessages = new ArrayList<String>();
-        helpMessages.add("To fix: Enter one of the following commands in the correct format");
-        helpMessages.add("list");
-        helpMessages.add("todo <description>");
-        helpMessages.add("deadline <description> /by <due>");
-        helpMessages.add("event <description> /from <start> /to <end>");
-        helpMessages.add("mark <index>");
-        helpMessages.add("unmark <index>");
-        helpMessages.add("delete <index>");
-        helpMessages.add("bye");
-        helpMessages.add("format of <due>,<start>,<end> is dd-MM-yyyy HHmm");
-        
+        Ui ui = new Ui();
         TaskList tasks = new TaskList();
+        
         // retrieve tasks
         try {
             if (Files.exists(BMO_FILE)) {
@@ -64,17 +55,17 @@ public class Bmo {
                     }
                 }
                 
-                printMessage("The following tasks have been retrieved:\n" + tasks.toString());
+                ui.showRetrieveMessage(tasks.toString());
             }
+        } catch (BmoException e) {
+            ui.showErrorMessage(e);
         } catch (IOException e) {
-            System.err.println("An I/O error occurred: " + e.getMessage());
+            ui.showErrorMessage(e, BMO_FILE);
         } catch (DateTimeParseException e) {
-            printMessage("Datetime is in incorrect format: " + e.getMessage());
-        } catch (MissingArgumentException e) {
-            printMessage(e.getMessage() + "\n" + e.getSuggestString());
+            ui.showErrorMessage(e, INPUT_DATETIME_PATTERN);
         }
-        
-        printMessage("Hello! I'm BMO\n" + "What can I do for you?");
+
+        ui.showWelcomeMessage();
 
         String userInput = scanner.nextLine();
         String[] parts = userInput.split(" ", 2);
@@ -87,11 +78,7 @@ public class Bmo {
         while (!command.equals("bye")) {
             switch (command) {
             case "list":
-                System.out.println("____________________________________________________________");
-                System.out.println("Here are the tasks in your list:");
-                System.out.println(tasks.listTasks());
-                System.out.println("____________________________________________________________");
-                System.out.print("\n");
+                ui.showTasks(tasks);
                 break;
 
             case "todo":
@@ -100,12 +87,9 @@ public class Bmo {
                 try {
                     Task todoTask = new Todo(todoDescription);
                     tasks.addTask(todoTask);
-
-                    printMessage("Got it. I've added this task:\n" + todoTask
-                            + "\nNow you have " + tasks.getTotal() + " tasks in the list.");
-                    
-                } catch (MissingArgumentException e) {
-                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                    ui.showAddMessage(todoTask, tasks);
+                } catch (BmoException e) {
+                    ui.showErrorMessage(e);
                 }
                 break;
 
@@ -121,13 +105,11 @@ public class Bmo {
                     LocalDateTime deadlineBy = LocalDateTime.parse(by, formatter);
                     Task deadlineTask = new Deadline(deadlineDescription, deadlineBy);
                     tasks.addTask(deadlineTask);
-
-                    printMessage("Got it. I've added this task:\n" + deadlineTask
-                            + "\nNow you have " + tasks.getTotal() + " tasks in the list.");
+                    ui.showAddMessage(deadlineTask, tasks);
+                } catch (BmoException e) {
+                    ui.showErrorMessage(e);
                 } catch (DateTimeParseException e) {
-                    printMessage("Datetime is in incorrect format: " + e.getMessage());
-                } catch (MissingArgumentException e) {
-                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                    ui.showErrorMessage(e, INPUT_DATETIME_PATTERN);
                 }
                 break;
 
@@ -151,13 +133,11 @@ public class Bmo {
                     LocalDateTime eventTo = LocalDateTime.parse(to, formatter);
                     Task eventTask = new Event(eventDescription, eventFrom, eventTo);
                     tasks.addTask(eventTask);
-
-                    printMessage("Got it. I've added this task:\n" + eventTask
-                            + "\nNow you have " + tasks.getTotal() + " tasks in the list.");
+                    ui.showAddMessage(eventTask, tasks);
+                } catch (BmoException e) {
+                    ui.showErrorMessage(e);
                 } catch (DateTimeParseException e) {
-                    printMessage("Datetime is in incorrect format: " + e.getMessage());
-                } catch (MissingArgumentException e) {
-                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                    ui.showErrorMessage(e, INPUT_DATETIME_PATTERN);
                 }
                 break;
 
@@ -172,15 +152,12 @@ public class Bmo {
                     }
                     if (isInRange(markTaskNo, tasks)) {
                         Task markTask = tasks.markTask(markTaskNo);
-                        printMessage("Nice! I've marked this task as done:\n" + markTask);
+                        ui.showMarkMessage(markTask);
                     }
-                } catch (MissingArgumentException e) {
-                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                } catch (BmoException e) {
+                    ui.showErrorMessage(e);
                 } catch (NumberFormatException e) {
-                    printMessage(arguments + " is not a number!\n"
-                            + "To fix: Enter a number");
-                } catch (InvalidIndexException e) {
-                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                    ui.showErrorMessage(e, arguments);
                 }
                 break;
 
@@ -195,15 +172,12 @@ public class Bmo {
                     }
                     if (isInRange(unmarkTaskNo, tasks)) {
                         Task unmarkTask = tasks.unmarkTask(unmarkTaskNo);
-                        printMessage("OK, I've marked this task as not done yet:\n" + unmarkTask);
+                        ui.showUnmarkMessage(unmarkTask);
                     }
-                } catch (MissingArgumentException e) {
-                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                } catch (BmoException e) {
+                    ui.showErrorMessage(e);
                 } catch (NumberFormatException e) {
-                    printMessage(arguments + " is not a number!\n"
-                            + "To fix: Enter a number");
-                } catch (InvalidIndexException e) {
-                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                    ui.showErrorMessage(e, arguments);
                 }
                 break;
                 
@@ -218,22 +192,18 @@ public class Bmo {
                     }
                     if (isInRange(deleteTaskNo, tasks)) {
                         Task deleteTask = tasks.deleteTask(deleteTaskNo);
-                        printMessage("Noted. I've removed this task:\n" + deleteTask
-                                + "\nNow you have " + tasks.getTotal() + " tasks in the list.");
+                        ui.showDeleteMessage(deleteTask, tasks);
                     }
-                } catch (MissingArgumentException e) {
-                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                } catch (BmoException e) {
+                    ui.showErrorMessage(e);
                 } catch (NumberFormatException e) {
-                    printMessage(arguments + " is not a number!\n"
-                            + "To fix: Enter a number");
-                } catch (InvalidIndexException e) {
-                    printMessage(e.getMessage() + "\n" + e.getSuggestString());
+                    ui.showErrorMessage(e, arguments);
                 }
                 break;
 
             default:
-                printMessage("OOPS!!! I'm sorry, but I don't know what that means :-(");
-                printMessages(helpMessages);
+                ui.showDefaultMessage();
+                ui.showHelpMessage();
                 break;
             }
 
@@ -248,7 +218,7 @@ public class Bmo {
 
         // save tasks here
         String saveText = tasks.saveString();
-        printMessage("The following tasks will be saved:\n" + saveText);
+        ui.showSaveMessage(saveText);
         
         try {
             if (BMO_FILE.getParent() != null) {
@@ -264,7 +234,7 @@ public class Bmo {
             System.err.println("An I/O error occurred: " + e.getMessage());
         }
         
-        printMessage("Bye. Hope to see you again soon!");
+        ui.showByeMessage();
         scanner.close();
     }
     
@@ -275,21 +245,5 @@ public class Bmo {
                     "To fix: Enter a number between 1 and " + tasks.getTotal());
         }
         return true;
-    }
-    
-    public static void printMessage(String message) {
-        System.out.println("____________________________________________________________");
-        System.out.println(message);
-        System.out.println("____________________________________________________________");
-        System.out.print("\n");
-    }
-
-    public static void printMessages(List<String> messages) {
-        System.out.println("____________________________________________________________");
-        for (String message : messages) {
-            System.out.println(message);
-        }
-        System.out.println("____________________________________________________________");
-        System.out.print("\n");
     }
 }
