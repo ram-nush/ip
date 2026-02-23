@@ -10,6 +10,7 @@ public class BmoException extends Exception {
         return this.suggestString;
     }
     
+    @Override
     public String toString() {
         return this.getMessage();
     }
