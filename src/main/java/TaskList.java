@@ -16,6 +16,14 @@ public class TaskList {
         return this.tasks.size();
     }
     
+    public boolean isEmpty() {
+        return this.tasks.isEmpty();
+    }
+    
+    public boolean isInRange(int taskNumber) {
+        return taskNumber >= 1 && taskNumber <= this.getTotal();
+    }
+    
     public void addTask(Task newTask) {
         this.tasks.add(newTask);
     }

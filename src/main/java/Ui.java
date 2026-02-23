@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,34 +67,9 @@ public class Ui {
     }
     
     public void showErrorMessage(BmoException e) {
-        this.printMessage(e.getMessage() + "\n" + e.getSuggestString());
+        this.printMessage(e.toString());
     }
 
-    public void showErrorMessage(NumberFormatException e, String arg) {
-        this.printMessage("NumberFormatException: " + arg + " is not a number!\n"
-                + "To fix: Enter a number");
-    }
-
-    public void showErrorMessage(DateTimeParseException e, String pattern) {
-        this.printMessage("DateTimeParseException: Datetime is in incorrect format!\n" 
-                + "To fix: Enter datetime in " + pattern);
-    }
-    
-    public void showErrorMessage(IOException e, String path) {
-        this.printMessage("IOException: " + path + "\n" 
-                + e.getMessage());
-    }
-
-    public void showErrorMessage(InvalidPathException e, String path) {
-        this.printMessage("InvalidPathException: " + path + "\n"
-                + e.getMessage());
-    }
-
-    public void showErrorMessage(ArrayIndexOutOfBoundsException e) {
-        this.printMessage("ArrayIndexOutOfBoundsException: \n"
-                + e.getMessage());
-    }
-    
     public void showDefaultMessage() {
         this.printMessage(defaultString);
     }

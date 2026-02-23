@@ -1,39 +1,31 @@
-import java.io.IOException;
-import java.nio.file.InvalidPathException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Bmo {
     
     private Storage storage;
     private TaskList tasks;
-    private Parser parser;
     private Ui ui;
+    private Parser parser;
     
     public Bmo(String filePath) {
-        boolean exceptionCaught = true;
         try {
             storage = new Storage(filePath);
-            parser = new Parser();
             tasks = new TaskList(storage.load());
             ui = new Ui();
-            exceptionCaught = false;
-        } catch (IOException e) {
-            ui.showErrorMessage(e, filePath);
-        } catch (InvalidPathException e) {
-            ui.showErrorMessage(e, filePath);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            ui.showErrorMessage(e);
-        } catch (DateTimeParseException e) {
-            ui.showErrorMessage(e, Storage.INPUT_DATETIME_PATTERN);
-        } catch (MissingArgumentException e) {
-            ui.showErrorMessage(e);
-        } finally {
-            if (exceptionCaught) {
-                tasks = new TaskList();
+            parser = new Parser();
+            
+            if (storage.hasCorruptedLines()) {
+                String message = StorageCorruptedException.BMO_CORRUPTED_LINES_MESSAGE;
+                String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINES_SUGGESTION;
+                List<String> corruptedLines = storage.getCorruptedLines();
+                throw new StorageCorruptedException(message, suggestion, corruptedLines);
             }
+        } catch (StorageCorruptedException e) {
+            ui.showErrorMessage(e);
+        } catch (BmoException e) {
+            ui.showErrorMessage(e);
+            tasks = new TaskList();
         }
     }
     
@@ -46,10 +38,15 @@ public class Bmo {
         
         boolean hasExit = false;
         while (!hasExit) {
-            String userInput = scanner.nextLine();
-            parser.parseCommand(userInput, ui, tasks, storage);
-            hasExit = parser.hasExitCommand();
+            try {
+                String userInput = scanner.nextLine();
+                parser.parseCommand(userInput, ui, tasks, storage);
+                hasExit = parser.hasExitCommand();
+            } catch (BmoException e) {
+                ui.showErrorMessage(e);
+            }
         }
+        ui.showByeMessage();
         scanner.close();
     }
     
