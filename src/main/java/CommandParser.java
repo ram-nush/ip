@@ -5,23 +5,23 @@ import java.util.List;
 
 public abstract class CommandParser {
     
-    protected String commandWord;
+    protected CommandWord commandWord;
     protected String[] delimiters;
     protected String[] paramNames;
     
-    CommandParser(String commandWord) {
+    CommandParser(CommandWord commandWord) {
         this.commandWord = commandWord;
         this.delimiters = new String[0];
         this.paramNames = new String[0];
     }
 
-    CommandParser(String commandWord, String[] paramNames) {
+    CommandParser(CommandWord commandWord, String[] paramNames) {
         this.commandWord = commandWord;
         this.delimiters = new String[0];
         this.paramNames = paramNames;
     }
 
-    CommandParser(String commandWord, String[] delimiters, String[] paramNames) {
+    CommandParser(CommandWord commandWord, String[] delimiters, String[] paramNames) {
         this.commandWord = commandWord;
         this.delimiters = delimiters;
         this.paramNames = paramNames;
@@ -51,7 +51,7 @@ public abstract class CommandParser {
     }
 
     public static void checkNonEmpty(String parameter, String paramName, 
-                                     String commandWord, String commandFormat) throws BmoException {
+                                     CommandWord commandWord, String commandFormat) throws BmoException {
         if (parameter.isEmpty()) {
             String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
                     paramName, commandWord);
@@ -62,7 +62,7 @@ public abstract class CommandParser {
     }
 
     public static LocalDateTime parseDateTime(String parameter, String paramName,
-                                              String commandWord, String commandFormat) throws BmoException {
+                                              CommandWord commandWord, String commandFormat) throws BmoException {
         LocalDateTime localDateTime;
 
         try {

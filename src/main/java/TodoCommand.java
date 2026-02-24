@@ -3,7 +3,7 @@ public class TodoCommand extends Command {
     private String description;
     
     TodoCommand(String description) {
-        super("todo", false);
+        super(CommandWord.TODO, false);
         this.description = description;
     }
 

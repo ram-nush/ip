@@ -3,7 +3,7 @@ public class MarkCommandParser extends CommandParser {
     private int totalTasks;
     
     MarkCommandParser(int totalTasks) {
-        super("mark", new String[]{ "index" });
+        super(CommandWord.MARK, new String[]{ "index" });
         this.totalTasks = totalTasks;
     }
     

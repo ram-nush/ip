@@ -1,7 +1,7 @@
 public class ByeCommand extends Command {
 
     ByeCommand() {
-        super("bye", true);
+        super(CommandWord.BYE, true);
     }
 
     @Override

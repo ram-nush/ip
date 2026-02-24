@@ -3,7 +3,7 @@ public class UnmarkCommandParser extends CommandParser {
     private int totalTasks;
 
     UnmarkCommandParser(int totalTasks) {
-        super("unmark", new String[]{ "index" });
+        super(CommandWord.UNMARK, new String[]{ "index" });
         this.totalTasks = totalTasks;
     }
     

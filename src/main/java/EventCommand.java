@@ -7,7 +7,7 @@ public class EventCommand extends Command {
     private LocalDateTime end;
 
     EventCommand(String description, LocalDateTime start, LocalDateTime end) {
-        super("event", false);
+        super(CommandWord.EVENT, false);
         this.description = description;
         this.start = start;
         this.end = end;

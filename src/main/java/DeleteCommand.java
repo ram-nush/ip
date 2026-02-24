@@ -3,7 +3,7 @@ public class DeleteCommand extends Command {
     private int index;
 
     DeleteCommand(int index) {
-        super("delete", false);
+        super(CommandWord.DELETE, false);
         this.index = index;
     }
 

@@ -1,7 +1,7 @@
 public class ByeCommandParser extends CommandParser {
 
     ByeCommandParser() {
-        super("bye");
+        super(CommandWord.BYE);
     }
     
     @Override

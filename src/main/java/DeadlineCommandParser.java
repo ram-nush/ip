@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 public class DeadlineCommandParser extends CommandParser {
 
     DeadlineCommandParser() {
-        super("deadline", new String[]{ "/by" }, new String[]{ "description", "due" });
+        super(CommandWord.DEADLINE, new String[]{ "/by" }, new String[]{ "description", "due" });
     }
     
     @Override

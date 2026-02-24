@@ -3,7 +3,7 @@ public class DeleteCommandParser extends CommandParser {
     private int totalTasks;
 
     DeleteCommandParser(int totalTasks) {
-        super("delete", new String[]{ "index" });
+        super(CommandWord.DELETE, new String[]{ "index" });
         this.totalTasks = totalTasks;
     }
 

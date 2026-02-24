@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 public class EventCommandParser extends CommandParser {
 
     EventCommandParser() {
-        super("event", new String[]{ "/from", "/to" }, new String[]{ "description", "start", "end" });
+        super(CommandWord.EVENT, new String[]{ "/from", "/to" }, new String[]{ "description", "start", "end" });
     }
     
     @Override

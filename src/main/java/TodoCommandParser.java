@@ -1,7 +1,7 @@
 public class TodoCommandParser extends CommandParser {
 
     TodoCommandParser() {
-        super("todo", new String[]{ "description" });
+        super(CommandWord.TODO, new String[]{ "description" });
     }
     
     @Override

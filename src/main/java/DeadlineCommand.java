@@ -6,7 +6,7 @@ public class DeadlineCommand extends Command {
     private LocalDateTime due;
 
     DeadlineCommand(String description, LocalDateTime due) {
-        super("deadline", false);
+        super(CommandWord.DEADLINE, false);
         this.description = description;
         this.due = due;
     }

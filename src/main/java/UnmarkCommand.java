@@ -3,7 +3,7 @@ public class UnmarkCommand extends Command {
     private int index;
 
     UnmarkCommand(int index) {
-        super("unmark",false);
+        super(CommandWord.UNMARK,false);
         this.index = index;
     }
 

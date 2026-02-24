@@ -1,7 +1,7 @@
 public class ListCommandParser extends CommandParser {
     
     ListCommandParser() {
-        super("list");
+        super(CommandWord.LIST);
     }
     
     @Override

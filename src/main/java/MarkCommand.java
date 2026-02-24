@@ -3,7 +3,7 @@ public class MarkCommand extends Command {
     private int index;
 
     MarkCommand(int index) {
-        super("mark", false);
+        super(CommandWord.MARK, false);
         this.index = index;
     }
 
