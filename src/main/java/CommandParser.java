@@ -5,24 +5,24 @@ import java.util.List;
 
 public abstract class CommandParser {
     
-    protected String commandName;
+    protected String commandWord;
     protected String[] delimiters;
     protected String[] paramNames;
     
-    CommandParser(String commandType) {
-        this.commandName = commandType;
+    CommandParser(String commandWord) {
+        this.commandWord = commandWord;
         this.delimiters = new String[0];
         this.paramNames = new String[0];
     }
 
-    CommandParser(String commandType, String[] paramNames) {
-        this.commandName = commandType;
+    CommandParser(String commandWord, String[] paramNames) {
+        this.commandWord = commandWord;
         this.delimiters = new String[0];
         this.paramNames = paramNames;
     }
 
-    CommandParser(String commandType, String[] delimiters, String[] paramNames) {
-        this.commandName = commandType;
+    CommandParser(String commandWord, String[] delimiters, String[] paramNames) {
+        this.commandWord = commandWord;
         this.delimiters = delimiters;
         this.paramNames = paramNames;
     }
@@ -51,27 +51,27 @@ public abstract class CommandParser {
     }
 
     public static void checkNonEmpty(String parameter, String paramName, 
-                                     String commandType, String commandFormat) throws BmoException {
+                                     String commandWord, String commandFormat) throws BmoException {
         if (parameter.isEmpty()) {
             String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
-                    paramName, commandType);
+                    paramName, commandWord);
             String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                    commandType, commandFormat);
+                    commandWord, commandFormat);
             throw new BmoException(message, suggestion);
         }
     }
 
     public static LocalDateTime parseDateTime(String parameter, String paramName,
-                                              String commandType, String commandFormat) throws BmoException {
+                                              String commandWord, String commandFormat) throws BmoException {
         LocalDateTime localDateTime;
 
         try {
             localDateTime = LocalDateTime.parse(parameter, TaskListParser.INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
             String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE,
-                    paramName, commandType);
+                    paramName, commandWord);
             String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION,
-                    commandType, TaskListParser.INPUT_DATETIME_PATTERN, TaskListParser.DEADLINE_COMMAND_FORMAT);
+                    commandWord, TaskListParser.INPUT_DATETIME_PATTERN, commandFormat);
             throw new BmoException(message, suggestion);
         }
 

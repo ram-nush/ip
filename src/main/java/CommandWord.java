@@ -1,4 +1,4 @@
-public enum CommandName {
+public enum CommandWord {
     LIST,
     TODO,
     DEADLINE,

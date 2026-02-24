@@ -11,7 +11,7 @@ public class MarkCommandParser extends CommandParser {
     public Command parse(String parameters) throws BmoException {
         String markIndex = parameters;
         
-        CommandParser.checkNonEmpty(markIndex, this.paramNames[0], this.commandName, TaskListParser.MARK_COMMAND_FORMAT);
+        CommandParser.checkNonEmpty(markIndex, this.paramNames[0], this.commandWord, TaskListParser.MARK_COMMAND_FORMAT);
         int index = CommandParser.parseInteger(markIndex);
         CommandParser.checkIntegerInRange(index, this.totalTasks);
         

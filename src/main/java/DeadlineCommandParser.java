@@ -13,11 +13,11 @@ public class DeadlineCommandParser extends CommandParser {
         String description = parts[0];
         String due = parts[1];
 
-        checkNonEmpty(description, this.paramNames[0], this.commandName, TaskListParser.DEADLINE_COMMAND_FORMAT);
-        checkNonEmpty(due, this.paramNames[1], this.commandName, TaskListParser.DEADLINE_COMMAND_FORMAT);
+        checkNonEmpty(description, this.paramNames[0], this.commandWord, TaskListParser.DEADLINE_COMMAND_FORMAT);
+        checkNonEmpty(due, this.paramNames[1], this.commandWord, TaskListParser.DEADLINE_COMMAND_FORMAT);
         
         LocalDateTime dueDateTime = parseDateTime(due, this.paramNames[1], 
-            this.commandName, TaskListParser.DEADLINE_COMMAND_FORMAT);
+            this.commandWord, TaskListParser.DEADLINE_COMMAND_FORMAT);
 
         return new DeadlineCommand(description, dueDateTime);
     }

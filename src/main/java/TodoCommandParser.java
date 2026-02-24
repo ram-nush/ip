@@ -8,7 +8,7 @@ public class TodoCommandParser extends CommandParser {
     public Command parse(String parameters) throws BmoException {
         String description = parameters;
         
-        checkNonEmpty(description, this.paramNames[0], this.commandName, TaskListParser.TODO_COMMAND_FORMAT);
+        checkNonEmpty(description, this.paramNames[0], this.commandWord, TaskListParser.TODO_COMMAND_FORMAT);
         
         return new TodoCommand(description);
     }

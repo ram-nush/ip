@@ -14,14 +14,14 @@ public class EventCommandParser extends CommandParser {
         String start = parts[1];
         String end = parts[2];
 
-        checkNonEmpty(description, this.paramNames[0], this.commandName, TaskListParser.EVENT_COMMAND_FORMAT);
-        checkNonEmpty(start, this.paramNames[1], this.commandName, TaskListParser.EVENT_COMMAND_FORMAT);
-        checkNonEmpty(end, this.paramNames[2], this.commandName, TaskListParser.EVENT_COMMAND_FORMAT);
+        checkNonEmpty(description, this.paramNames[0], this.commandWord, TaskListParser.EVENT_COMMAND_FORMAT);
+        checkNonEmpty(start, this.paramNames[1], this.commandWord, TaskListParser.EVENT_COMMAND_FORMAT);
+        checkNonEmpty(end, this.paramNames[2], this.commandWord, TaskListParser.EVENT_COMMAND_FORMAT);
 
         LocalDateTime startDateTime = parseDateTime(start, this.paramNames[1],
-                this.commandName, TaskListParser.EVENT_COMMAND_FORMAT);
+                this.commandWord, TaskListParser.EVENT_COMMAND_FORMAT);
         LocalDateTime endDateTime = parseDateTime(end, this.paramNames[2],
-                this.commandName, TaskListParser.EVENT_COMMAND_FORMAT);
+                this.commandWord, TaskListParser.EVENT_COMMAND_FORMAT);
 
         return new EventCommand(description, startDateTime, endDateTime);
     }
