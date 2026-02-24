@@ -1,6 +1,6 @@
-public class InvalidCommand extends Command {
+public class UnknownCommand extends Command {
 
-    InvalidCommand(String commandName) {
+    UnknownCommand(String commandName) {
         super(commandName, false);
     }
 

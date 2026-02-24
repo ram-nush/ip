@@ -73,8 +73,8 @@ public class TaskListParser {
             break;
 
         default:
-            // invalid command type, throw BmoException to Bmo
-            commandParser = new InvalidCommandParser(commandName);
+            // unknown command type, throw BmoException to Bmo
+            commandParser = new UnknownCommandParser(commandName);
         }
         
         return commandParser.parse(parameters);
