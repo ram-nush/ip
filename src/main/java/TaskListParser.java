@@ -33,45 +33,48 @@ public class TaskListParser {
         userInput = userInput.strip();
         String[] parts = CommandParser.splitParameters(userInput, new String[]{ " " });
         String commandName = parts[0];
+        CommandWord commandWord = CommandWord.fromString(commandName);
+        
         String parameters = parts[1];
 
         CommandParser commandParser = null;
-        switch (commandName) {
-        case "list":
+        switch (commandWord) {
+        case LIST:
             commandParser = new ListCommandParser();
             break;
 
-        case "todo":
+        case TODO:
             commandParser = new TodoCommandParser();
             break;
 
-        case "deadline":
+        case DEADLINE:
             commandParser = new DeadlineCommandParser();
             break;
 
-        case "event":
+        case EVENT:
             commandParser = new EventCommandParser();
             break;
 
-        case "mark":
+        case MARK:
             int totalTasks = tasks.getTotal();
             commandParser = new MarkCommandParser(totalTasks);
             break;
 
-        case "unmark":
+        case UNMARK:
             totalTasks = tasks.getTotal();
             commandParser = new UnmarkCommandParser(totalTasks);
             break;
 
-        case "delete":
+        case DELETE:
             totalTasks = tasks.getTotal();
             commandParser = new DeleteCommandParser(totalTasks);
             break;
             
-        case "bye":
+        case BYE:
             commandParser = new ByeCommandParser();
             break;
-
+            
+        case UNKNOWN:
         default:
             // unknown command type, throw BmoException to Bmo
             commandParser = new UnknownCommandParser(commandName);
