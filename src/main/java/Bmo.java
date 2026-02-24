@@ -6,21 +6,16 @@ public class Bmo {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
-    private Parser parser;
+    private TaskListParser taskListParser;
     
     public Bmo(String filePath) {
         try {
             storage = new Storage(filePath);
             tasks = new TaskList(storage.load());
-            ui = new Ui();
-            parser = new Parser();
+            StorageParser.checkCorruptedLinesExist(storage);
             
-            if (storage.hasCorruptedLines()) {
-                String message = StorageCorruptedException.BMO_CORRUPTED_LINES_MESSAGE;
-                String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINES_SUGGESTION;
-                List<String> corruptedLines = storage.getCorruptedLines();
-                throw new StorageCorruptedException(message, suggestion, corruptedLines);
-            }
+            ui = new Ui();
+            taskListParser = new TaskListParser();
         } catch (StorageCorruptedException e) {
             ui.showErrorMessage(e);
         } catch (BmoException e) {
@@ -36,12 +31,13 @@ public class Bmo {
         ui.showRetrieveMessage(retrieveText);
         ui.showWelcomeMessage();
         
-        boolean hasExit = false;
-        while (!hasExit) {
+        boolean isExit = false;
+        while (!isExit) {
             try {
                 String userInput = scanner.nextLine();
-                parser.parseCommand(userInput, ui, tasks, storage);
-                hasExit = parser.hasExitCommand();
+                Command command = taskListParser.parseCommand(userInput, ui, tasks, storage);
+                command.execute(tasks, ui, storage);
+                isExit = command.isExit();
             } catch (BmoException e) {
                 ui.showErrorMessage(e);
             }

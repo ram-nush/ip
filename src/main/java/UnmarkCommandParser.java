@@ -9,7 +9,7 @@ public class UnmarkCommandParser implements CommandParser {
     @Override
     public Command parse(String parameters) throws BmoException {
         // can throw BmoException, handle in Bmo
-        CommandParser.checkNonEmpty(parameters, "index", "unmark", Parser.UNMARK_COMMAND_FORMAT);
+        CommandParser.checkNonEmpty(parameters, "index", "unmark", TaskListParser.UNMARK_COMMAND_FORMAT);
         int index = CommandParser.parseInteger(parameters);
         CommandParser.checkIntegerInRange(index, this.totalTasks);
 

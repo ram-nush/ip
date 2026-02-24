@@ -15,7 +15,7 @@ public class DeadlineCommandParser implements CommandParser {
             String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
                     "description", "deadline");
             String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                    "deadline", Parser.DEADLINE_COMMAND_FORMAT);
+                    "deadline", TaskListParser.DEADLINE_COMMAND_FORMAT);
             throw new BmoException(message, suggestion);
         }
 
@@ -23,19 +23,19 @@ public class DeadlineCommandParser implements CommandParser {
             String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
                     "due", "deadline");
             String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                    "deadline", Parser.DEADLINE_COMMAND_FORMAT);
+                    "deadline", TaskListParser.DEADLINE_COMMAND_FORMAT);
             throw new BmoException(message, suggestion);
         }
 
         LocalDateTime by;
 
         try {
-            by = LocalDateTime.parse(byString, Parser.INPUT_FORMATTER);
+            by = LocalDateTime.parse(byString, TaskListParser.INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
             String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE,
                     "due", "deadline");
             String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION,
-                    "deadline", Parser.INPUT_DATETIME_PATTERN, Parser.DEADLINE_COMMAND_FORMAT);
+                    "deadline", TaskListParser.INPUT_DATETIME_PATTERN, TaskListParser.DEADLINE_COMMAND_FORMAT);
             throw new BmoException(message, suggestion);
         }
 

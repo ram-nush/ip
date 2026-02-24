@@ -1,13 +1,10 @@
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class Parser {
+public class TaskListParser {
 
     public static final String INPUT_DATETIME_PATTERN = "d-M-uuuu HHmm";
     public static final DateTimeFormatter INPUT_FORMATTER = new DateTimeFormatterBuilder()
@@ -31,24 +28,13 @@ public class Parser {
             DEADLINE_COMMAND_FORMAT, EVENT_COMMAND_FORMAT, MARK_COMMAND_FORMAT, UNMARK_COMMAND_FORMAT, 
             DELETE_COMMAND_FORMAT, BYE_COMMAND_FORMAT, DATETIME_COMMAND_FORMAT);
     
-    public boolean hasExit;
-    
-    Parser() {
-        this.hasExit = false;
-    }
-    
-    public boolean hasExitCommand() {
-        return this.hasExit;
-    }
-    
-    public void parseCommand(String userInput, Ui ui, TaskList tasks, Storage storage) 
+    public Command parseCommand(String userInput, Ui ui, TaskList tasks, Storage storage) 
             throws BmoException {
         userInput = userInput.strip();
         String[] parts = CommandParser.splitParameters(userInput, new String[]{ " " });
         String commandType = parts[0];
         String parameters = parts[1];
 
-        Command command = null;
         CommandParser commandParser = null;
         switch (commandType) {
         case "list":
@@ -90,8 +76,7 @@ public class Parser {
             // invalid command type, throw BmoException to Bmo
             commandParser = new InvalidCommandParser();
         }
-        command = commandParser.parse(parameters);
-        command.execute(tasks, ui, storage);
-        this.hasExit = command.isExit();
+        
+        return commandParser.parse(parameters);
     }
 }

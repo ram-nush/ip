@@ -59,6 +59,15 @@ public class StorageParser {
         
         return task;
     }
+
+    public static void checkCorruptedLinesExist(Storage storage) throws StorageCorruptedException {
+        if (storage.hasCorruptedLines()) {
+            String message = StorageCorruptedException.BMO_CORRUPTED_LINES_MESSAGE;
+            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINES_SUGGESTION;
+            List<String> corruptedLines = storage.getCorruptedLines();
+            throw new StorageCorruptedException(message, suggestion, corruptedLines);
+        }
+    }
     
     public static void checkParamsLength(String[] parameters, int expectedLength) throws StorageCorruptedException {
         if (parameters.length != expectedLength) {

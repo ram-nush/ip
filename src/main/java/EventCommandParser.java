@@ -16,7 +16,7 @@ public class EventCommandParser implements CommandParser {
             String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
                     "description", "event");
             String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                    "event", Parser.EVENT_COMMAND_FORMAT);
+                    "event", TaskListParser.EVENT_COMMAND_FORMAT);
             throw new BmoException(message, suggestion);
         }
 
@@ -24,7 +24,7 @@ public class EventCommandParser implements CommandParser {
             String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
                     "start", "event");
             String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                    "event", Parser.EVENT_COMMAND_FORMAT);
+                    "event", TaskListParser.EVENT_COMMAND_FORMAT);
             throw new BmoException(message, suggestion);
         }
 
@@ -32,7 +32,7 @@ public class EventCommandParser implements CommandParser {
             String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
                     "end", "event");
             String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                    "event", Parser.EVENT_COMMAND_FORMAT);
+                    "event", TaskListParser.EVENT_COMMAND_FORMAT);
             throw new BmoException(message, suggestion);
         }
 
@@ -40,22 +40,22 @@ public class EventCommandParser implements CommandParser {
         LocalDateTime to;
 
         try {
-            from = LocalDateTime.parse(fromString, Parser.INPUT_FORMATTER);
+            from = LocalDateTime.parse(fromString, TaskListParser.INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
             String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE,
                     "start", "event");
             String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION,
-                    "event", Parser.INPUT_DATETIME_PATTERN, Parser.EVENT_COMMAND_FORMAT);
+                    "event", TaskListParser.INPUT_DATETIME_PATTERN, TaskListParser.EVENT_COMMAND_FORMAT);
             throw new BmoException(message, suggestion);
         }
 
         try {
-            to = LocalDateTime.parse(toString, Parser.INPUT_FORMATTER);
+            to = LocalDateTime.parse(toString, TaskListParser.INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
             String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE,
                     "end", "event");
             String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION,
-                    "event", Parser.INPUT_DATETIME_PATTERN, Parser.EVENT_COMMAND_FORMAT);
+                    "event", TaskListParser.INPUT_DATETIME_PATTERN, TaskListParser.EVENT_COMMAND_FORMAT);
             throw new BmoException(message, suggestion);
         }
 
