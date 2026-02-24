@@ -48,9 +48,10 @@ public class Parser {
         String commandType = parts[0];
         String arguments = parts[1];
 
+        Command command = null;
         switch (commandType) {
         case "list":
-            ui.showTasks(tasks);
+            command = new ListCommand();
             break;
 
         case "todo":
@@ -64,9 +65,7 @@ public class Parser {
                 throw new BmoException(message, suggestion);
             }
 
-            Task todoTask = new Todo(todoDescription);
-            tasks.addTask(todoTask);
-            ui.showAddMessage(todoTask, tasks);
+            command = new TodoCommand(todoDescription);
             break;
 
         case "deadline":
@@ -104,9 +103,7 @@ public class Parser {
                 throw new BmoException(message, suggestion);
             }
 
-            Task deadlineTask = new Deadline(deadlineDescription, deadlineBy);
-            tasks.addTask(deadlineTask);
-            ui.showAddMessage(deadlineTask, tasks);
+            command = new DeadlineCommand(deadlineDescription, deadlineBy);
             break;
 
         case "event":
@@ -164,9 +161,7 @@ public class Parser {
                 throw new BmoException(message, suggestion);
             }
 
-            Task eventTask = new Event(eventDescription, eventFrom, eventTo);
-            tasks.addTask(eventTask);
-            ui.showAddMessage(eventTask, tasks);
+            command = new EventCommand(eventDescription, eventFrom, eventTo);
             break;
 
         case "mark":
@@ -182,8 +177,7 @@ public class Parser {
                 int markTaskNo = Integer.parseInt(arguments);
                 // can throw BmoException, handle in Bmo
                 if (isInRange(markTaskNo, tasks)) {
-                    Task markTask = tasks.markTask(markTaskNo);
-                    ui.showMarkMessage(markTask);
+                    command = new MarkCommand(markTaskNo);
                 }
             } catch (NumberFormatException e) {
                 String message = String.format(BmoException.BMO_NOT_INTEGER_MESSAGE, arguments);
@@ -205,8 +199,7 @@ public class Parser {
                 int unmarkTaskNo = Integer.parseInt(arguments);
                 // can throw BmoException, handle in Bmo
                 if (isInRange(unmarkTaskNo, tasks)) {
-                    Task unmarkTask = tasks.unmarkTask(unmarkTaskNo);
-                    ui.showUnmarkMessage(unmarkTask);
+                    command = new UnmarkCommand(unmarkTaskNo);
                 }
             } catch (NumberFormatException e) {
                 String message = String.format(BmoException.BMO_NOT_INTEGER_MESSAGE, arguments);
@@ -228,8 +221,7 @@ public class Parser {
                 int deleteTaskNo = Integer.parseInt(arguments);
                 // can throw BmoException, handle in Bmo
                 if (isInRange(deleteTaskNo, tasks)) {
-                    Task deleteTask = tasks.deleteTask(deleteTaskNo);
-                    ui.showDeleteMessage(deleteTask, tasks);
+                    command = new DeleteCommand(deleteTaskNo);
                 }
             } catch (NumberFormatException e) {
                 String message = String.format(BmoException.BMO_NOT_INTEGER_MESSAGE, arguments);
@@ -239,22 +231,15 @@ public class Parser {
             break;
             
         case "bye":
-            String saveText = tasks.saveString();
-            ui.showSaveMessage(saveText);
-            // can throw BmoException
-            storage.save(saveText);
+            command = new ByeCommand();
             break;
 
         default:
             // invalid command type, throw BmoException to Bmo
-            ui.showDefaultMessage();
-            String commandFormats = String.join("\n", COMMAND_FORMATS);
-            String message = String.format(BmoException.BMO_INVALID_COMMAND_MESSAGE, commandType);
-            String suggestion = String.format(BmoException.BMO_INVALID_COMMAND_SUGGESTION, commandFormats);
-            throw new BmoException(message, suggestion);
+            command = new InvalidCommand(commandType);
         }
-        
-        this.hasExit = commandType.equals("bye");
+        command.execute(tasks, ui, storage);
+        this.hasExit = command.isExit();
     }
     
     public static String[] parseArguments(String arguments, String[] delimiters) {
