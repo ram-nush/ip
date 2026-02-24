@@ -1,7 +1,7 @@
 public class ListCommand extends Command {
     
     ListCommand() {
-        super(false);
+        super("list", false);
     }
     
     @Override

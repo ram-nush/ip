@@ -7,7 +7,7 @@ public class EventCommand extends Command {
     private LocalDateTime to;
 
     EventCommand(String description, LocalDateTime from, LocalDateTime to) {
-        super(false);
+        super("event", false);
         this.description = description;
         this.from = from;
         this.to = to;

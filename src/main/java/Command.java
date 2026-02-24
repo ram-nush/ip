@@ -1,7 +1,9 @@
 public abstract class Command {
+    protected String commandType;
     protected boolean isExit;
     
-    Command(boolean isExit) {
+    Command(String commandType, boolean isExit) {
+        this.commandType = commandType;
         this.isExit = isExit;
     }
     
