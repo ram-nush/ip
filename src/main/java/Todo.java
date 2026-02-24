@@ -1,20 +1,16 @@
 public class Todo extends Task {
 
-    public Todo(String description) throws MissingArgumentException {
+    public Todo(String description) {
         super(description);
-        if (description.isEmpty()) {
-            throw new MissingArgumentException("description", "todo", 
-                    "To fix: Add a description after todo");
-        }
     }
 
     @Override
     public String saveString() {
-        return "T | " + super.saveString();
+        return String.format("T | %s", super.saveString());
     }
 
     @Override
     public String toString() {
-        return "[T]" + super.toString();
+        return String.format("[T]%s", super.toString());
     }
 }

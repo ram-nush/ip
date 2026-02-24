@@ -2,39 +2,25 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
-    protected LocalDateTime from;
-    protected LocalDateTime to;
-    DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM d yyyy HHmm");
+    
+    protected LocalDateTime start;
+    protected LocalDateTime end;
 
-    public Event(String description, LocalDateTime from, LocalDateTime to) 
-            throws MissingArgumentException {
+    public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
-        if (description.isEmpty()) {
-            throw new MissingArgumentException("description", "event",
-                    "To fix: Add a description after event");
-        }
-        if (from == null) {
-            throw new MissingArgumentException("/from", "event",
-                    "To fix: Add a start datetime after /from");
-        }
-        if (to == null) {
-            throw new MissingArgumentException("/to", "event",
-                    "To fix: Add an end datetime after /to");
-        }
-        this.from = from;
-        this.to = to;
+        this.start = start;
+        this.end = end;
     }
 
     @Override
     public String saveString() {
-        return "E | " + super.saveString() + " | " 
-                + this.from.format(outputFormatter) + " | " 
-                + this.to.format(outputFormatter);
+        return String.format("E | %s | %s | %s", super.saveString(), 
+                this.start.format(StorageParser.OUTPUT_FORMATTER), this.end.format(StorageParser.OUTPUT_FORMATTER));
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.from.format(outputFormatter)
-                + " to: " + this.to.format(outputFormatter) + ")";
+        return String.format("[E]%s (from: %s, to: %s)", super.toString(),
+                this.start.format(StorageParser.OUTPUT_FORMATTER), this.end.format(StorageParser.OUTPUT_FORMATTER));
     }
 }
