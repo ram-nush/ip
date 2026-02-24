@@ -12,11 +12,6 @@ import java.util.List;
 
 public class Storage {
     
-    public static String INPUT_DATETIME_PATTERN = "dd-MM-yyyy HHmm";
-    public static String OUTPUT_DATETIME_PATTERN = "MMM d yyyy HHmm";
-    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern(INPUT_DATETIME_PATTERN);
-    public static DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern(OUTPUT_DATETIME_PATTERN);
-    
     private final Path path;
     private List<String> corruptedLines;
     
@@ -47,163 +42,19 @@ public class Storage {
         }
         
         for (String line : lines) {
-            String[] properties = line.split(" \\| ");
-            String type = properties[0];
-            Task task;
-            
             try {
-                switch (type) {
-                case "T":
-                    task = parseTodo(properties);
-                    tasks.add(task);
-                    break;
-
-                case "D":
-                    task = parseDeadline(properties);
-                    tasks.add(task);
-                    break;
-
-                case "E":
-                    task = parseEvent(properties);
-                    tasks.add(task);
-                    break;
-
-                default:
-                    // invalid task, store for later
-                    // need to inform user that these lines are corrupted
-                    // no need to throw error, otherwise other valid tasks are lost
-                    this.corruptedLines.add(line);
-                    break;
-                }
+                // may cause StorageCorruptedException
+                // no need to throw error, otherwise other valid tasks are lost
+                // catch and save corrupted line
+                Task task = StorageParser.parseLine(line);
+                tasks.add(task);
             } catch (StorageCorruptedException e) {
                 this.corruptedLines.add(line);
             }
+            
         }
         
         return tasks;
-    }
-    
-    public Task parseTodo(String[] properties) throws StorageCorruptedException {
-        if (properties.length != 3) {
-            String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
-            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;
-            List<String> list = Arrays.asList(properties);
-            throw new StorageCorruptedException(message, suggestion, list);
-        }
-
-        String isDone = properties[1].strip();
-        String description = properties[2].strip();
-
-        if (!isDone.equals("0") && !isDone.equals("1")) {
-            String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
-            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;
-            List<String> list = Arrays.asList(properties);
-            throw new StorageCorruptedException(message, suggestion, list);
-        }
-
-        if (description.isEmpty()) {
-            String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
-            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;
-            List<String> list = Arrays.asList(properties);
-            throw new StorageCorruptedException(message, suggestion, list);
-        }
-        
-        Task task = new Todo(description);
-        if (isDone.equals("1")) {
-            task.markAsDone();
-        }
-        return task;
-    }
-    
-    public Task parseDeadline(String[] properties) throws StorageCorruptedException {
-        if (properties.length != 4) {
-            String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
-            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;
-            List<String> list = Arrays.asList(properties);
-            throw new StorageCorruptedException(message, suggestion, list);
-        }
-        
-        String isDone = properties[1].strip();
-        String description = properties[2].strip();
-        String byString = properties[3].strip();
-
-        if (!isDone.equals("0") && !isDone.equals("1")) {
-            String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
-            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;
-            List<String> list = Arrays.asList(properties);
-            throw new StorageCorruptedException(message, suggestion, list);
-        }
-
-        if (description.isEmpty()) {
-            String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
-            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;
-            List<String> list = Arrays.asList(properties);
-            throw new StorageCorruptedException(message, suggestion, list);
-        }
-        
-        LocalDateTime by;
-        
-        try {
-            by = LocalDateTime.parse(byString, outputFormatter);
-        } catch (DateTimeParseException e) {
-            String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
-            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;
-            List<String> list = Arrays.asList(properties);
-            throw new StorageCorruptedException(message, suggestion, list);
-        }
-        
-        Task task = new Deadline(description, by);
-        if (isDone.equals("1")) {
-            task.markAsDone();
-        }
-        return task;
-    }
-    
-    public Task parseEvent(String[] properties) throws StorageCorruptedException {
-        if (properties.length != 5) {
-            String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
-            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;
-            List<String> list = Arrays.asList(properties);
-            throw new StorageCorruptedException(message, suggestion, list);
-        }
-        
-        String isDone = properties[1].strip();
-        String description = properties[2].strip();
-        String fromString = properties[3].strip();
-        String toString = properties[4].strip();
-
-        if (!isDone.equals("0") && !isDone.equals("1")) {
-            String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
-            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;
-            List<String> list = Arrays.asList(properties);
-            throw new StorageCorruptedException(message, suggestion, list);
-        }
-
-        if (description.isEmpty()) {
-            String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
-            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;
-            List<String> list = Arrays.asList(properties);
-            throw new StorageCorruptedException(message, suggestion, list);
-        }
-
-        LocalDateTime from;
-        LocalDateTime to;
-
-        try {
-            from = LocalDateTime.parse(fromString, outputFormatter);
-            to = LocalDateTime.parse(toString, outputFormatter);
-        } catch (DateTimeParseException e) {
-            String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
-            String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;
-            List<String> list = Arrays.asList(properties);
-            throw new StorageCorruptedException(message, suggestion, list);
-        }
-        
-        Task task = new Event(description, from, to);
-        if (isDone.equals("1")) {
-            task.markAsDone();
-        }
-        return task;
     }
     
     public void save(String saveText) throws BmoException {

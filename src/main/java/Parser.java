@@ -28,6 +28,7 @@ public class Parser {
     
     public void parseCommand(String userInput, Ui ui, TaskList tasks, Storage storage) 
             throws BmoException {
+        userInput = userInput.strip();
         String[] parts = parseArguments(userInput, new String[]{ " " });
         String commandType = parts[0];
         String arguments = parts[1];
@@ -54,7 +55,7 @@ public class Parser {
             break;
 
         case "deadline":
-            String[] deadlineDelimiters = new String[]{ " /by " };
+            String[] deadlineDelimiters = new String[]{ "/by" };
             String[] deadlineParts = parseArguments(arguments, deadlineDelimiters);
             
             String deadlineDescription = deadlineParts[0];
@@ -94,7 +95,7 @@ public class Parser {
             break;
 
         case "event":
-            String[] eventDelimiters = new String[]{ " /from ", " /to " };
+            String[] eventDelimiters = new String[]{ "/from", "/to" };
             String[] eventParts = parseArguments(arguments, eventDelimiters);
             
             String eventDescription = eventParts[0];
