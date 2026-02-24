@@ -44,200 +44,53 @@ public class Parser {
     public void parseCommand(String userInput, Ui ui, TaskList tasks, Storage storage) 
             throws BmoException {
         userInput = userInput.strip();
-        String[] parts = CommandParser.parseArguments(userInput, new String[]{ " " });
+        String[] parts = CommandParser.splitParameters(userInput, new String[]{ " " });
         String commandType = parts[0];
-        String arguments = parts[1];
+        String parameters = parts[1];
 
         Command command = null;
+        CommandParser commandParser = null;
         switch (commandType) {
         case "list":
-            command = new ListCommand();
+            commandParser = new ListCommandParser();
             break;
 
         case "todo":
-            String todoDescription = arguments;
-
-            if (todoDescription.isEmpty()) {
-                String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
-                        "description", "todo");
-                String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                        "todo", TODO_COMMAND_FORMAT);
-                throw new BmoException(message, suggestion);
-            }
-
-            command = new TodoCommand(todoDescription);
+            commandParser = new TodoCommandParser();
             break;
 
         case "deadline":
-            String[] deadlineDelimiters = new String[]{ "/by" };
-            String[] deadlineParts = CommandParser.parseArguments(arguments, deadlineDelimiters);
-            
-            String deadlineDescription = deadlineParts[0];
-            String by = deadlineParts[1];
-
-            if (deadlineDescription.isEmpty()) {
-                String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
-                        "description", "deadline");
-                String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                        "deadline", DEADLINE_COMMAND_FORMAT);
-                throw new BmoException(message, suggestion);
-            }
-
-            if (by.isEmpty()) {
-                String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
-                        "due", "deadline");
-                String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                        "deadline", DEADLINE_COMMAND_FORMAT);
-                throw new BmoException(message, suggestion);
-            }
-
-            LocalDateTime deadlineBy;
-
-            try {
-                deadlineBy = LocalDateTime.parse(by, INPUT_FORMATTER);
-            } catch (DateTimeParseException e) {
-                String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE,
-                        "due", "deadline");
-                String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION,
-                        "deadline", INPUT_DATETIME_PATTERN, DEADLINE_COMMAND_FORMAT);
-                throw new BmoException(message, suggestion);
-            }
-
-            command = new DeadlineCommand(deadlineDescription, deadlineBy);
+            commandParser = new DeadlineCommandParser();
             break;
 
         case "event":
-            String[] eventDelimiters = new String[]{ "/from", "/to" };
-            String[] eventParts = CommandParser.parseArguments(arguments, eventDelimiters);
-            
-            String eventDescription = eventParts[0];
-            String from = eventParts[1];
-            String to = eventParts[2];
-            
-            if (eventDescription.isEmpty()) {
-                String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
-                        "description", "event");
-                String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                        "event", EVENT_COMMAND_FORMAT);
-                throw new BmoException(message, suggestion);
-            }
-
-            if (from.isEmpty()) {
-                String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
-                        "start", "event");
-                String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                        "event", EVENT_COMMAND_FORMAT);
-                throw new BmoException(message, suggestion);
-            }
-
-            if (to.isEmpty()) {
-                String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
-                        "end", "event");
-                String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                        "event", EVENT_COMMAND_FORMAT);
-                throw new BmoException(message, suggestion);
-            }
-
-            LocalDateTime eventFrom;
-            LocalDateTime eventTo;
-            
-            try {
-                eventFrom = LocalDateTime.parse(from, INPUT_FORMATTER);
-            } catch (DateTimeParseException e) {
-                String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE, 
-                        "start", "event");
-                String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION, 
-                        "event", INPUT_DATETIME_PATTERN, EVENT_COMMAND_FORMAT);
-                throw new BmoException(message, suggestion);
-            }
-
-            try {
-                eventTo = LocalDateTime.parse(to, INPUT_FORMATTER);
-            } catch (DateTimeParseException e) {
-                String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE,
-                        "end", "event");
-                String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION,
-                        "event", INPUT_DATETIME_PATTERN, EVENT_COMMAND_FORMAT);
-                throw new BmoException(message, suggestion);
-            }
-
-            command = new EventCommand(eventDescription, eventFrom, eventTo);
+            commandParser = new EventCommandParser();
             break;
 
         case "mark":
-            try {
-                if (arguments.isEmpty()) {
-                    String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
-                            "index", "mark");
-                    String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                            "mark", MARK_COMMAND_FORMAT);
-                    throw new BmoException(message, suggestion);
-                }
-
-                int markTaskNo = Integer.parseInt(arguments);
-                // can throw BmoException, handle in Bmo
-                if (CommandParser.isInRange(markTaskNo, tasks)) {
-                    command = new MarkCommand(markTaskNo);
-                }
-            } catch (NumberFormatException e) {
-                String message = String.format(BmoException.BMO_NOT_INTEGER_MESSAGE, arguments);
-                String suggestion = BmoException.BMO_NOT_INTEGER_SUGGESTION;
-                throw new BmoException(message, suggestion);
-            }
+            int totalTasks = tasks.getTotal();
+            commandParser = new MarkCommandParser(totalTasks);
             break;
 
         case "unmark":
-            try {
-                if (arguments.isEmpty()) {
-                    String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
-                            "index", "unmark");
-                    String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                            "unmark", UNMARK_COMMAND_FORMAT);
-                    throw new BmoException(message, suggestion);
-                }
-
-                int unmarkTaskNo = Integer.parseInt(arguments);
-                // can throw BmoException, handle in Bmo
-                if (CommandParser.isInRange(unmarkTaskNo, tasks)) {
-                    command = new UnmarkCommand(unmarkTaskNo);
-                }
-            } catch (NumberFormatException e) {
-                String message = String.format(BmoException.BMO_NOT_INTEGER_MESSAGE, arguments);
-                String suggestion = BmoException.BMO_NOT_INTEGER_SUGGESTION;
-                throw new BmoException(message, suggestion);
-            }
+            totalTasks = tasks.getTotal();
+            commandParser = new UnmarkCommandParser(totalTasks);
             break;
 
         case "delete":
-            try {
-                if (arguments.isEmpty()) {
-                    String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE, 
-                            "index", "delete");
-                    String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION, 
-                            "delete", DELETE_COMMAND_FORMAT);
-                    throw new BmoException(message, suggestion);
-                }
-                
-                int deleteTaskNo = Integer.parseInt(arguments);
-                // can throw BmoException, handle in Bmo
-                if (CommandParser.isInRange(deleteTaskNo, tasks)) {
-                    command = new DeleteCommand(deleteTaskNo);
-                }
-            } catch (NumberFormatException e) {
-                String message = String.format(BmoException.BMO_NOT_INTEGER_MESSAGE, arguments);
-                String suggestion = BmoException.BMO_NOT_INTEGER_SUGGESTION;
-                throw new BmoException(message, suggestion);
-            }
+            totalTasks = tasks.getTotal();
+            commandParser = new DeleteCommandParser(totalTasks);
             break;
             
         case "bye":
-            command = new ByeCommand();
+            commandParser = new ByeCommandParser();
             break;
 
         default:
             // invalid command type, throw BmoException to Bmo
-            command = new InvalidCommand(commandType);
+            commandParser = new InvalidCommandParser();
         }
+        command = commandParser.parse(parameters);
         command.execute(tasks, ui, storage);
         this.hasExit = command.isExit();
     }
