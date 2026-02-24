@@ -1,16 +1,22 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class StorageParser {
     
     public static final String SPLIT_REGEX = "\\s*\\|\\s*";
-    public static final String INPUT_DATETIME_PATTERN = "dd-MM-yyyy HHmm";
-    public static final String OUTPUT_DATETIME_PATTERN = "MMM d yyyy HHmm";
-    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(INPUT_DATETIME_PATTERN);
-    public static final DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern(OUTPUT_DATETIME_PATTERN);
+    
+    public static final String OUTPUT_DATETIME_PATTERN = "MMM d uuuu HHmm";
+    public static final DateTimeFormatter OUTPUT_FORMATTER = new DateTimeFormatterBuilder()
+            .parseCaseInsensitive()
+            .appendPattern(OUTPUT_DATETIME_PATTERN)
+            .toFormatter(Locale.ENGLISH)
+            .withResolverStyle(ResolverStyle.STRICT);
     
     public static Task parseLine(String line) throws StorageCorruptedException {
         String[] parts = line.split(SPLIT_REGEX, 2);
@@ -85,7 +91,7 @@ public class StorageParser {
         LocalDateTime localDateTime;
         
         try {
-            localDateTime = LocalDateTime.parse(dateTime, outputFormatter);
+            localDateTime = LocalDateTime.parse(dateTime, OUTPUT_FORMATTER);
         } catch (DateTimeParseException e) {
             String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
             String suggestion = StorageCorruptedException.BMO_CORRUPTED_LINE_SUGGESTION;

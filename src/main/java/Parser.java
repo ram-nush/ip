@@ -1,14 +1,21 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Parser {
 
-    String INPUT_DATETIME_PATTERN = "dd-MM-yyyy HHmm";
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(INPUT_DATETIME_PATTERN);
-
+    public static final String INPUT_DATETIME_PATTERN = "d-M-uuuu HHmm";
+    public static final DateTimeFormatter INPUT_FORMATTER = new DateTimeFormatterBuilder()
+            .parseCaseInsensitive()
+            .appendPattern(INPUT_DATETIME_PATTERN)
+            .toFormatter(Locale.ENGLISH)
+            .withResolverStyle(ResolverStyle.STRICT);
+    
     public static final String TODO_COMMAND_FORMAT = "todo <description>";
     public static final String DEADLINE_COMMAND_FORMAT = "deadline <description> /by <due>";
     public static final String EVENT_COMMAND_FORMAT = "event <description> /from <start> /to <end>";
@@ -80,12 +87,12 @@ public class Parser {
             LocalDateTime deadlineBy;
 
             try {
-                deadlineBy = LocalDateTime.parse(by, formatter);
+                deadlineBy = LocalDateTime.parse(by, INPUT_FORMATTER);
             } catch (DateTimeParseException e) {
                 String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE,
                         "due", "deadline");
                 String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION,
-                        "deadline", INPUT_DATETIME_PATTERN);
+                        "deadline", INPUT_DATETIME_PATTERN, DEADLINE_COMMAND_FORMAT);
                 throw new BmoException(message, suggestion);
             }
 
@@ -130,22 +137,22 @@ public class Parser {
             LocalDateTime eventTo;
             
             try {
-                eventFrom = LocalDateTime.parse(from, formatter);
+                eventFrom = LocalDateTime.parse(from, INPUT_FORMATTER);
             } catch (DateTimeParseException e) {
                 String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE, 
                         "start", "event");
                 String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION, 
-                        "event", INPUT_DATETIME_PATTERN);
+                        "event", INPUT_DATETIME_PATTERN, EVENT_COMMAND_FORMAT);
                 throw new BmoException(message, suggestion);
             }
 
             try {
-                eventTo = LocalDateTime.parse(to, formatter);
+                eventTo = LocalDateTime.parse(to, INPUT_FORMATTER);
             } catch (DateTimeParseException e) {
                 String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE,
                         "end", "event");
                 String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION,
-                        "event", INPUT_DATETIME_PATTERN);
+                        "event", INPUT_DATETIME_PATTERN, EVENT_COMMAND_FORMAT);
                 throw new BmoException(message, suggestion);
             }
 

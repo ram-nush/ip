@@ -3,8 +3,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
     
-    static DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MMM d yyyy HHmm");
-    
     protected LocalDateTime from;
     protected LocalDateTime to;
 
@@ -17,12 +15,12 @@ public class Event extends Task {
     @Override
     public String saveString() {
         return String.format("E | %s | %s | %s", super.saveString(), 
-                this.from.format(outputFormatter), this.to.format(outputFormatter));
+                this.from.format(StorageParser.OUTPUT_FORMATTER), this.to.format(StorageParser.OUTPUT_FORMATTER));
     }
 
     @Override
     public String toString() {
-        return String.format("[E]%s (from: %s, to: %s)", super.toString(), 
-                this.from.format(outputFormatter), this.to.format(outputFormatter));
+        return String.format("[E]%s (from: %s, to: %s)", super.toString(),
+                this.from.format(StorageParser.OUTPUT_FORMATTER), this.to.format(StorageParser.OUTPUT_FORMATTER));
     }
 }

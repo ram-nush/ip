@@ -14,7 +14,7 @@ public class BmoException extends Exception {
     public static final String BMO_STORE_DATETIME_MESSAGE = "Incorrect input datetime format"
             + " for parameter %s in %s command!";
     public static final String BMO_STORE_DATETIME_SUGGESTION = "Follow the input datetime format"
-            + " of the %s command!\ne.g. %s";
+            + " of the %s command!\ne.g. %s\n%s";
     public static final String BMO_RETRIEVE_DATETIME_MESSAGE = "Incorrect saved datetime format!";
     public static final String BMO_RETRIEVE_DATETIME_SUGGESTION = "Follow the saved datetime format"
             + " in the save file!\ne.g. %s";
