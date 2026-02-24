@@ -32,11 +32,11 @@ public class TaskListParser {
             throws BmoException {
         userInput = userInput.strip();
         String[] parts = CommandParser.splitParameters(userInput, new String[]{ " " });
-        String commandType = parts[0];
+        String commandName = parts[0];
         String parameters = parts[1];
 
         CommandParser commandParser = null;
-        switch (commandType) {
+        switch (commandName) {
         case "list":
             commandParser = new ListCommandParser();
             break;
@@ -74,7 +74,7 @@ public class TaskListParser {
 
         default:
             // invalid command type, throw BmoException to Bmo
-            commandParser = new InvalidCommandParser();
+            commandParser = new InvalidCommandParser(commandName);
         }
         
         return commandParser.parse(parameters);

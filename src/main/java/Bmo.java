@@ -12,10 +12,10 @@ public class Bmo {
         try {
             storage = new Storage(filePath);
             tasks = new TaskList(storage.load());
-            StorageParser.checkCorruptedLinesExist(storage);
-            
             ui = new Ui();
             taskListParser = new TaskListParser();
+            
+            StorageParser.checkCorruptedLinesExist(storage);
         } catch (StorageCorruptedException e) {
             ui.showErrorMessage(e);
         } catch (BmoException e) {

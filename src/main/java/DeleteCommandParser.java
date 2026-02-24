@@ -1,16 +1,18 @@
-public class DeleteCommandParser implements CommandParser {
+public class DeleteCommandParser extends CommandParser {
 
     private int totalTasks;
 
-    DeleteCommandParser(int numTasks) {
-        this.totalTasks = numTasks;
+    DeleteCommandParser(int totalTasks) {
+        super("delete", new String[]{ "index" });
+        this.totalTasks = totalTasks;
     }
 
     @Override
     public Command parse(String parameters) throws BmoException {
-        // can throw BmoException, handle in Bmo
-        CommandParser.checkNonEmpty(parameters, "index", "delete", TaskListParser.DELETE_COMMAND_FORMAT);
-        int index = CommandParser.parseInteger(parameters);
+        String deleteIndex = parameters;
+        
+        CommandParser.checkNonEmpty(deleteIndex, this.paramNames[0], this.commandName, TaskListParser.DELETE_COMMAND_FORMAT);
+        int index = CommandParser.parseInteger(deleteIndex);
         CommandParser.checkIntegerInRange(index, this.totalTasks);
 
         return new DeleteCommand(index);

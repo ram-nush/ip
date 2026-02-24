@@ -1,44 +1,24 @@
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 
-public class DeadlineCommandParser implements CommandParser {
+public class DeadlineCommandParser extends CommandParser {
 
+    DeadlineCommandParser() {
+        super("deadline", new String[]{ "/by" }, new String[]{ "description", "due" });
+    }
+    
     @Override
     public Command parse(String parameters) throws BmoException {
-        String[] delimiters = new String[]{ "/by" };
-        String[] parts = CommandParser.splitParameters(parameters, delimiters);
-
+        String[] parts = CommandParser.splitParameters(parameters, this.delimiters);
+        
         String description = parts[0];
-        String byString = parts[1];
+        String due = parts[1];
 
-        if (description.isEmpty()) {
-            String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
-                    "description", "deadline");
-            String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                    "deadline", TaskListParser.DEADLINE_COMMAND_FORMAT);
-            throw new BmoException(message, suggestion);
-        }
+        checkNonEmpty(description, this.paramNames[0], this.commandName, TaskListParser.DEADLINE_COMMAND_FORMAT);
+        checkNonEmpty(due, this.paramNames[1], this.commandName, TaskListParser.DEADLINE_COMMAND_FORMAT);
+        
+        LocalDateTime dueDateTime = parseDateTime(due, this.paramNames[1], 
+            this.commandName, TaskListParser.DEADLINE_COMMAND_FORMAT);
 
-        if (byString.isEmpty()) {
-            String message = String.format(BmoException.BMO_MISSING_PARAMS_MESSAGE,
-                    "due", "deadline");
-            String suggestion = String.format(BmoException.BMO_MISSING_PARAMS_SUGGESTION,
-                    "deadline", TaskListParser.DEADLINE_COMMAND_FORMAT);
-            throw new BmoException(message, suggestion);
-        }
-
-        LocalDateTime by;
-
-        try {
-            by = LocalDateTime.parse(byString, TaskListParser.INPUT_FORMATTER);
-        } catch (DateTimeParseException e) {
-            String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE,
-                    "due", "deadline");
-            String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION,
-                    "deadline", TaskListParser.INPUT_DATETIME_PATTERN, TaskListParser.DEADLINE_COMMAND_FORMAT);
-            throw new BmoException(message, suggestion);
-        }
-
-        return new DeadlineCommand(description, by);
+        return new DeadlineCommand(description, dueDateTime);
     }
 }

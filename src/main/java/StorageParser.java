@@ -132,14 +132,14 @@ public class StorageParser {
 
         String isDone = parameters[0].strip();
         String description = parameters[1].strip();
-        String byString = parameters[2].strip();
+        String due = parameters[2].strip();
 
         checkIsDoneValid(parameters, isDone);
         checkDescriptionValid(parameters, description);
 
-        LocalDateTime by = parseDateTime(parameters, byString);
+        LocalDateTime dueDateTime = parseDateTime(parameters, due);
 
-        Task task = new Deadline(description, by);
+        Task task = new Deadline(description, dueDateTime);
         if (isDone.equals("1")) {
             task.markAsDone();
         }
@@ -151,16 +151,16 @@ public class StorageParser {
 
         String isDone = parameters[0].strip();
         String description = parameters[1].strip();
-        String fromString = parameters[2].strip();
-        String toString = parameters[3].strip();
+        String start = parameters[2].strip();
+        String end = parameters[3].strip();
 
         checkIsDoneValid(parameters, isDone);
         checkDescriptionValid(parameters, description);
 
-        LocalDateTime from = parseDateTime(parameters, fromString);
-        LocalDateTime to = parseDateTime(parameters, toString);
+        LocalDateTime startDateTime = parseDateTime(parameters, start);
+        LocalDateTime endDateTime = parseDateTime(parameters, end);
 
-        Task task = new Event(description, from, to);
+        Task task = new Event(description, startDateTime, endDateTime);
         if (isDone.equals("1")) {
             task.markAsDone();
         }

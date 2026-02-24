@@ -3,24 +3,24 @@ import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
     
-    protected LocalDateTime from;
-    protected LocalDateTime to;
+    protected LocalDateTime start;
+    protected LocalDateTime end;
 
-    public Event(String description, LocalDateTime from, LocalDateTime to) {
+    public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.start = start;
+        this.end = end;
     }
 
     @Override
     public String saveString() {
         return String.format("E | %s | %s | %s", super.saveString(), 
-                this.from.format(StorageParser.OUTPUT_FORMATTER), this.to.format(StorageParser.OUTPUT_FORMATTER));
+                this.start.format(StorageParser.OUTPUT_FORMATTER), this.end.format(StorageParser.OUTPUT_FORMATTER));
     }
 
     @Override
     public String toString() {
         return String.format("[E]%s (from: %s, to: %s)", super.toString(),
-                this.from.format(StorageParser.OUTPUT_FORMATTER), this.to.format(StorageParser.OUTPUT_FORMATTER));
+                this.start.format(StorageParser.OUTPUT_FORMATTER), this.end.format(StorageParser.OUTPUT_FORMATTER));
     }
 }

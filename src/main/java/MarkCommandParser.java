@@ -1,16 +1,18 @@
-public class MarkCommandParser implements CommandParser {
-
+public class MarkCommandParser extends CommandParser {
+    
     private int totalTasks;
     
-    MarkCommandParser(int numTasks) {
-        this.totalTasks = numTasks;
+    MarkCommandParser(int totalTasks) {
+        super("mark", new String[]{ "index" });
+        this.totalTasks = totalTasks;
     }
     
     @Override
     public Command parse(String parameters) throws BmoException {
-        // can throw BmoException, handle in Bmo
-        CommandParser.checkNonEmpty(parameters, "index", "mark", TaskListParser.MARK_COMMAND_FORMAT);
-        int index = CommandParser.parseInteger(parameters);
+        String markIndex = parameters;
+        
+        CommandParser.checkNonEmpty(markIndex, this.paramNames[0], this.commandName, TaskListParser.MARK_COMMAND_FORMAT);
+        int index = CommandParser.parseInteger(markIndex);
         CommandParser.checkIntegerInRange(index, this.totalTasks);
         
         return new MarkCommand(index);

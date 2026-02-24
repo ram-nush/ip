@@ -3,22 +3,22 @@ import java.time.format.DateTimeFormatter;
 
 public class Deadline extends Task {
 
-    protected LocalDateTime by;
+    protected LocalDateTime due;
 
-    public Deadline(String description, LocalDateTime by) {
+    public Deadline(String description, LocalDateTime due) {
         super(description);
-        this.by = by;
+        this.due = due;
     }
 
     @Override
     public String saveString() {
         return String.format("D | %s | %s", super.saveString(),
-                this.by.format(StorageParser.OUTPUT_FORMATTER));
+                this.due.format(StorageParser.OUTPUT_FORMATTER));
     }
 
     @Override
     public String toString() {
         return String.format("[D]%s (by: %s)", super.toString(),
-                this.by.format(StorageParser.OUTPUT_FORMATTER));
+                this.due.format(StorageParser.OUTPUT_FORMATTER));
     }
 }
