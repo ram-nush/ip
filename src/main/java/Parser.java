@@ -44,7 +44,7 @@ public class Parser {
     public void parseCommand(String userInput, Ui ui, TaskList tasks, Storage storage) 
             throws BmoException {
         userInput = userInput.strip();
-        String[] parts = parseArguments(userInput, new String[]{ " " });
+        String[] parts = CommandParser.parseArguments(userInput, new String[]{ " " });
         String commandType = parts[0];
         String arguments = parts[1];
 
@@ -70,7 +70,7 @@ public class Parser {
 
         case "deadline":
             String[] deadlineDelimiters = new String[]{ "/by" };
-            String[] deadlineParts = parseArguments(arguments, deadlineDelimiters);
+            String[] deadlineParts = CommandParser.parseArguments(arguments, deadlineDelimiters);
             
             String deadlineDescription = deadlineParts[0];
             String by = deadlineParts[1];
@@ -108,7 +108,7 @@ public class Parser {
 
         case "event":
             String[] eventDelimiters = new String[]{ "/from", "/to" };
-            String[] eventParts = parseArguments(arguments, eventDelimiters);
+            String[] eventParts = CommandParser.parseArguments(arguments, eventDelimiters);
             
             String eventDescription = eventParts[0];
             String from = eventParts[1];
@@ -176,7 +176,7 @@ public class Parser {
 
                 int markTaskNo = Integer.parseInt(arguments);
                 // can throw BmoException, handle in Bmo
-                if (isInRange(markTaskNo, tasks)) {
+                if (CommandParser.isInRange(markTaskNo, tasks)) {
                     command = new MarkCommand(markTaskNo);
                 }
             } catch (NumberFormatException e) {
@@ -198,7 +198,7 @@ public class Parser {
 
                 int unmarkTaskNo = Integer.parseInt(arguments);
                 // can throw BmoException, handle in Bmo
-                if (isInRange(unmarkTaskNo, tasks)) {
+                if (CommandParser.isInRange(unmarkTaskNo, tasks)) {
                     command = new UnmarkCommand(unmarkTaskNo);
                 }
             } catch (NumberFormatException e) {
@@ -220,7 +220,7 @@ public class Parser {
                 
                 int deleteTaskNo = Integer.parseInt(arguments);
                 // can throw BmoException, handle in Bmo
-                if (isInRange(deleteTaskNo, tasks)) {
+                if (CommandParser.isInRange(deleteTaskNo, tasks)) {
                     command = new DeleteCommand(deleteTaskNo);
                 }
             } catch (NumberFormatException e) {
@@ -240,46 +240,5 @@ public class Parser {
         }
         command.execute(tasks, ui, storage);
         this.hasExit = command.isExit();
-    }
-    
-    public static String[] parseArguments(String arguments, String[] delimiters) {
-        List<String> argumentsList = new ArrayList<String>();
-        String remainingArgs = arguments;
-        String[] parts;
-        String argument;
-        
-        for (String delimiter : delimiters) {
-            parts = remainingArgs.split(delimiter, 2);
-            argument = parts[0].strip();
-            argumentsList.add(argument);
-            
-            remainingArgs = "";
-            if (parts.length == 2) {
-                remainingArgs = parts[1];
-            }
-        }
-        argumentsList.add(remainingArgs.strip());
-        
-        return argumentsList.toArray(new String[0]);
-    }
-
-    public static boolean isInRange(int index, TaskList tasks)
-            throws BmoException {
-        
-        if (!tasks.isInRange(index)) {
-            int numTasks = tasks.getTotal();
-            if (tasks.isEmpty()) {
-                String exMessage = String.format(BmoException.BMO_INVALID_INTEGER_MESSAGE, index);
-                String exSuggestion = BmoException.BMO_INVALID_INTEGER_SUGGESTION_EMPTY;
-                throw new BmoException(exMessage, exSuggestion);
-            }
-            
-            String exMessage = String.format(BmoException.BMO_INVALID_INTEGER_MESSAGE, index);
-            String exSuggestion = String.format(BmoException.BMO_INVALID_INTEGER_SUGGESTION_EXISTING,
-                    numTasks, numTasks);
-            throw new BmoException(exMessage, exSuggestion);
-        }
-        
-        return true;
     }
 }
