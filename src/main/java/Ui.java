@@ -9,7 +9,6 @@ public class Ui {
     private static String welcomeString;
     private static String listString;
     private static String defaultString;
-    private static List<String> helpMessages;
     private static String saveString;
     private static String byeString;
     
@@ -18,19 +17,6 @@ public class Ui {
         welcomeString = "Hello! I'm BMO\n" + "What can I do for you?";
         listString = "Here are the tasks in your list:";
         defaultString = "OOPS!!! I'm sorry, but I don't know what that means :-(";
-        
-        helpMessages = new ArrayList<String>();
-        helpMessages.add("To fix: Enter one of the following commands in the correct format");
-        helpMessages.add("list");
-        helpMessages.add("todo <description>");
-        helpMessages.add("deadline <description> /by <due>");
-        helpMessages.add("event <description> /from <start> /to <end>");
-        helpMessages.add("mark <index>");
-        helpMessages.add("unmark <index>");
-        helpMessages.add("delete <index>");
-        helpMessages.add("bye");
-        helpMessages.add("format of <due>,<start>,<end> is dd-MM-yyyy HHmm");
-        
         saveString = "The following tasks will be saved:";
         byeString = "Bye. Hope to see you again soon!";
     }
@@ -72,10 +58,6 @@ public class Ui {
 
     public void showDefaultMessage() {
         this.printMessage(defaultString);
-    }
-    
-    public void showHelpMessage() {
-        this.printMessage(helpMessages);
     }
     
     public void showSaveMessage(String message) {

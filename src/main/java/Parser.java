@@ -15,13 +15,21 @@ public class Parser {
             .appendPattern(INPUT_DATETIME_PATTERN)
             .toFormatter(Locale.ENGLISH)
             .withResolverStyle(ResolverStyle.STRICT);
-    
+
+    public static final String LIST_COMMAND_FORMAT = "list";  
     public static final String TODO_COMMAND_FORMAT = "todo <description>";
     public static final String DEADLINE_COMMAND_FORMAT = "deadline <description> /by <due>";
     public static final String EVENT_COMMAND_FORMAT = "event <description> /from <start> /to <end>";
     public static final String MARK_COMMAND_FORMAT = "mark <index>";
     public static final String UNMARK_COMMAND_FORMAT = "unmark <index>";
     public static final String DELETE_COMMAND_FORMAT = "delete <index>";
+    public static final String BYE_COMMAND_FORMAT = "bye";
+    public static final String DATETIME_COMMAND_FORMAT = String.format("Note: <due>, <start>, <end>"
+            + " are in %s datetime format",  INPUT_DATETIME_PATTERN);
+    
+    public static final List<String> COMMAND_FORMATS = List.of(LIST_COMMAND_FORMAT, TODO_COMMAND_FORMAT, 
+            DEADLINE_COMMAND_FORMAT, EVENT_COMMAND_FORMAT, MARK_COMMAND_FORMAT, UNMARK_COMMAND_FORMAT, 
+            DELETE_COMMAND_FORMAT, BYE_COMMAND_FORMAT, DATETIME_COMMAND_FORMAT);
     
     public boolean hasExit;
     
@@ -238,9 +246,12 @@ public class Parser {
             break;
 
         default:
+            // invalid command type, throw BmoException to Bmo
             ui.showDefaultMessage();
-            ui.showHelpMessage();
-            break;
+            String commandFormats = String.join("\n", COMMAND_FORMATS);
+            String message = String.format(BmoException.BMO_INVALID_COMMAND_MESSAGE, commandType);
+            String suggestion = String.format(BmoException.BMO_INVALID_COMMAND_SUGGESTION, commandFormats);
+            throw new BmoException(message, suggestion);
         }
         
         this.hasExit = commandType.equals("bye");
