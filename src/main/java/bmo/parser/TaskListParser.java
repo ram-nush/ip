@@ -12,6 +12,11 @@ import bmo.storage.Storage;
 import bmo.task.TaskList;
 import bmo.ui.Ui;
 
+/**
+ * Represents a parser which parses a line of user input to create the respective 
+ * command parsers. A <code>TaskListParser</code> object passes a string containing 
+ * all parameters to the command parser.
+ */
 public class TaskListParser {
 
     public static final String INPUT_DATETIME_PATTERN = "d-M-uuuu HHmm";

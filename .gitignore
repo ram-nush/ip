@@ -8,8 +8,9 @@
 /build/
 src/main/resources/docs/
 
-# Java binary files
+# Java binary and JAR files
 *.class
+*.jar
 
 # MacOS custom attributes files created by Finder
 .DS_Store

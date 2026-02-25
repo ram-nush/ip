@@ -7,6 +7,13 @@ import bmo.storage.Storage;
 import bmo.task.TaskList;
 import bmo.ui.Ui;
 
+/**
+ * Represents the default command which cannot be resolved to any other command. 
+ * An <code>UnknownCommand</code> object corresponds to a command which stores 
+ * the UNKNOWN CommandWord e.g., <code>CommandWord.UNKNOWN</code> and the 
+ * input given by the user which does not match any command word e.g., 
+ * <code>speak</code>
+ */
 public class UnknownCommand extends Command {
 
     private String unknownInput;

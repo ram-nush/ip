@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Represents the test class for the <code>Task</code> class. A <code>TaskTest</code>
+ * object stores the test cases which perform operations on <code>Task</code> objects.
+ */
 public class TaskTest {
     @Test
     public void markAsDone_newTask_success() {

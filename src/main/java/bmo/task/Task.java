@@ -1,5 +1,10 @@
 package bmo.task;
 
+/**
+ * Represents a task created by the user. A <code>Task</code> object corresponds 
+ * to a task represented by its description e.g., <code>read book</code> and whether
+ * it has been done e.g., <code>false</code>
+ */
 public class Task {
     protected String description;
     protected boolean isDone;

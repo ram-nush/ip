@@ -3,6 +3,11 @@ package bmo.parser;
 import bmo.command.ByeCommand;
 import bmo.command.Command;
 
+/**
+ * Represents a specific command parser which returns the respective command.
+ * A <code>ByeCommandParser</code> object corresponds to a parser for a command with
+ * the specific CommandWord e.g., <code>CommandWord.BYE</code>. 
+ */
 public class ByeCommandParser extends CommandParser {
 
     ByeCommandParser() {

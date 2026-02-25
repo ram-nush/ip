@@ -20,10 +20,10 @@ public class Bmo {
     
     public Bmo(String filePath) {
         try {
-            storage = new Storage(filePath);
-            tasks = new TaskList(storage.load());
             ui = new Ui();
+            storage = new Storage(filePath);
             taskListParser = new TaskListParser();
+            tasks = new TaskList(storage.load());
             
             StorageParser.checkCorruptedLinesExist(storage);
         } catch (StorageCorruptedException e) {

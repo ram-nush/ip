@@ -1,5 +1,12 @@
 package bmo.exception;
 
+/**
+ * Represents the main custom exception which is called whenever the program 
+ * does not execute as expected. A <code>BmoException</code> object corresponds 
+ * to a message explaining the reason for an exception e.g., <code>2.5 is not a 
+ * valid integer</code> and a suggestion explaining how the user can resolve this 
+ * exception e.g., <code>Try using a digit like 2 instead of text</code>
+ */
 public class BmoException extends Exception {
     
     public static final String BMO_NOT_INTEGER_MESSAGE = "%s is not a valid integer!";

@@ -4,6 +4,11 @@ import bmo.command.Command;
 import bmo.command.DeleteCommand;
 import bmo.exception.BmoException;
 
+/**
+ * Represents a specific command parser which returns the respective command.
+ * A <code>DeleteCommandParser</code> object corresponds to a parser for a command with
+ * the specific CommandWord e.g., <code>CommandWord.DEADLINE</code>. 
+ */
 public class DeleteCommandParser extends CommandParser {
 
     private int totalTasks;

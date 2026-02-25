@@ -5,6 +5,10 @@ import java.util.List;
 
 import bmo.exception.BmoException;
 
+/**
+ * Represents the list of tasks stored by the program. A <code>TaskList</code> object 
+ * corresponds to a list of <code>Task</code> objects stored as a <code>List</code>
+ */
 public class TaskList {
     private List<Task> tasks;
     

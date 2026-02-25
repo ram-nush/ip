@@ -2,6 +2,15 @@ package bmo.exception;
 
 import java.util.List;
 
+/**
+ * Represents a custom exception which is called whenever the program reads lines 
+ * from a save file which do not match the expected storage format. A 
+ * <code>StorageCorruptedException</code> object corresponds to a message explaining 
+ * the reason for an exception e.g., <code>The line is corrupted.</code>, a suggestion 
+ * explaining how the user can resolve this exception e.g., <code>Save it elsewhere 
+ * before it gets overwritten.</code>, and the corrupted line itself e.g., 
+ * <code>T | x read | book | today</code>
+ */
 public class StorageCorruptedException extends BmoException {
 
     public static final String BMO_CORRUPTED_LINE_MESSAGE = "The line is corrupted.";

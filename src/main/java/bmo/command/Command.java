@@ -6,6 +6,10 @@ import bmo.storage.Storage;
 import bmo.task.TaskList;
 import bmo.ui.Ui;
 
+/**
+ * Represents a command created from a line of user input. A <code>Command</code> object 
+ * corresponds to any command represented by a CommandWord e.g., <code>CommandWord.LIST</code>
+ */
 public abstract class Command {
     protected CommandWord commandWord;
     protected boolean isExit;

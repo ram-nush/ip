@@ -4,6 +4,11 @@ import java.time.LocalDateTime;
 
 import bmo.storage.StorageParser;
 
+/**
+ * Represents a specific task with a deadline. A <code>Deadline</code> object 
+ * corresponds to a task represented by its description e.g., <code>return book</code> 
+ * and a datetime for the task to be completed by e.g., <code>5-3-2026 1234</code>
+ */
 public class Deadline extends Task {
 
     protected LocalDateTime due;

@@ -9,6 +9,10 @@ import java.util.List;
 
 import bmo.parser.TaskListParser;
 
+/**
+ * Represents the test class for the <code>TaskList</code> class. A <code>TaskListTest</code>
+ * object stores the test cases which perform operations on <code>TaskList</code> objects.
+ */
 public class TaskListTest {
     @Test
     public void addTask_todoTask_success() {

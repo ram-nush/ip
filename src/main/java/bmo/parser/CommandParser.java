@@ -8,6 +8,13 @@ import java.util.List;
 import bmo.command.Command;
 import bmo.exception.BmoException;
 
+/**
+ * Represents a command parser which parses a string containing all parameters and 
+ * creates the respective command. A <code>CommandParser</code> object corresponds to 
+ * the specific CommandWord e.g., <code>CommandWord.LIST</code>, a list of delimiters 
+ * to separate the parameter by, e.g. <code>/from,/to</code>, and a list of parameter 
+ * names which represent the parameters given by the user, e.g.<code>description</code>
+ */
 public abstract class CommandParser {
     
     protected CommandWord commandWord;

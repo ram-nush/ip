@@ -6,6 +6,11 @@ import bmo.command.Command;
 import bmo.command.EventCommand;
 import bmo.exception.BmoException;
 
+/**
+ * Represents a specific command parser which returns the respective command.
+ * An <code>EventCommandParser</code> object corresponds to a parser for a command with
+ * the specific CommandWord e.g., <code>CommandWord.EVENT</code>. 
+ */
 public class EventCommandParser extends CommandParser {
 
     EventCommandParser() {
