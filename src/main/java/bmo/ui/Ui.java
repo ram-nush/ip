@@ -15,6 +15,13 @@ public class Ui {
     private static final String RETRIEVE_STRING = "The following tasks have been retrieved:";
     private static final String WELCOME_STRING = "Hello! I'm BMO\nWhat can I do for you?";
     private static final String LIST_STRING = "Here are the tasks in your list:";
+    private static final String FIND_STRING = "Here are the matching tasks in your list:";
+    private static final String ADD_STRING = "Got it. I've added this task:\n%s\n"
+            + "Now you have %d tasks in the list.";
+    private static final String MARK_STRING = "Nice! I've marked this task as done:\n%s";
+    private static final String UNMARK_STRING = "OK, I've marked this task as not done yet:\n%s";
+    private static final String DELETE_STRING = "Noted. I've removed this task:\n%s\n"
+            + "Now you have %d tasks in the list.";
     private static final String DEFAULT_STRING = "OOPS!!! I'm sorry, but I don't know what that means :-(";
     private static final String SAVE_STRING = "The following tasks will be saved:";
     private static final String BYE_STRING = "Bye. Hope to see you again soon!";
@@ -47,14 +54,24 @@ public class Ui {
     }
 
     /**
+     * Displays a message with the list of tasks that match 
+     * a specific keyword, to the user.
+     *
+     * @param tasks The list of tasks.
+     */
+    public void showMatchingTasks(TaskList tasks) {
+        String message = String.format("%s\n%s", FIND_STRING, tasks.listTasks());
+        this.printMessage(message);
+    }
+
+    /**
      * Displays a message to the user after adding a task to the task list.
      *
      * @param addTask Task to be added.
      * @param tasks The list of tasks.
      */
     public void showAddMessage(Task addTask, TaskList tasks) {
-        String output = String.format("Got it. I've added this task:\n%s\n" 
-        + "Now you have %d tasks in the list.", addTask, tasks.getTotal());
+        String output = String.format(ADD_STRING, addTask, tasks.getTotal());
         this.printMessage(output);
     }
 
@@ -64,7 +81,7 @@ public class Ui {
      * @param markTask Task to be marked as done.
      */
     public void showMarkMessage(Task markTask) {
-        String output = String.format("Nice! I've marked this task as done:\n%s", markTask);
+        String output = String.format(MARK_STRING, markTask);
         this.printMessage(output);
     }
 
@@ -74,7 +91,7 @@ public class Ui {
      * @param unmarkTask Task to be marked as not done.
      */
     public void showUnmarkMessage(Task unmarkTask) {
-        String output = String.format("OK, I've marked this task as not done yet:\n%s", unmarkTask);
+        String output = String.format(UNMARK_STRING, unmarkTask);
         this.printMessage(output);
     }
 
@@ -85,8 +102,7 @@ public class Ui {
      * @param tasks The list of tasks.
      */
     public void showDeleteMessage(Task deleteTask, TaskList tasks) {
-        String output = String.format("Noted. I've removed this task:\n%s\n"
-                + "Now you have %d tasks in the list.", deleteTask, tasks.getTotal());
+        String output = String.format(DELETE_STRING, deleteTask, tasks.getTotal());
         this.printMessage(output);
     }
 

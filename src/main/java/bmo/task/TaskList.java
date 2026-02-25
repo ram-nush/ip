@@ -109,6 +109,23 @@ public class TaskList {
         }
         return listOutput;
     }
+
+    /**
+     * Returns a <code>TaskList</code> consisting of the tasks which contain the provided keyword.
+     * This match is case-insensitive and ignores non-alphanumeric characters.
+     *
+     * @param keyword a String that represents the keyword to match
+     * @return the new <code>TaskList</code>
+     */
+    public TaskList listMatchingTasks(String keyword) {
+        // Filter the list for tasks which contain the keyword
+        List<Task> matchingTasks = this.tasks.stream()
+                .filter(task -> task.hasMatch(keyword))
+                .toList();
+        
+        // Create a TaskList using the filtered list
+        return new TaskList(matchingTasks);
+    }
     
     /**
      * Returns a formatted string with task properties of each task in the task list, 

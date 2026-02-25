@@ -10,6 +10,7 @@ public enum CommandWord {
     TODO,
     DEADLINE,
     EVENT,
+    FIND,
     MARK,
     UNMARK,
     DELETE,
