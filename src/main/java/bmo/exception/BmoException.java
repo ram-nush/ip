@@ -4,7 +4,7 @@ public class BmoException extends Exception {
     
     public static final String BMO_NOT_INTEGER_MESSAGE = "%s is not a valid integer!";
     public static final String BMO_NOT_INTEGER_SUGGESTION = "Try using a digit like 2 instead of text.";
-    public static final String BMO_INVALID_INTEGER_MESSAGE = "bmo.task.Task number %d does not exist!";
+    public static final String BMO_INVALID_INTEGER_MESSAGE = "Task number %d does not exist!";
     public static final String BMO_INVALID_INTEGER_SUGGESTION_EMPTY = "You currently have no tasks!"
             + " Add a task first.";
     public static final String BMO_INVALID_INTEGER_SUGGESTION_EXISTING = "You currently have %d tasks."

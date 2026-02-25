@@ -3,6 +3,8 @@ package bmo.task;
 import java.util.ArrayList;
 import java.util.List;
 
+import bmo.exception.BmoException;
+
 public class TaskList {
     private List<Task> tasks;
     
