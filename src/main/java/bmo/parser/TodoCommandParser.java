@@ -28,9 +28,12 @@ public class TodoCommandParser extends CommandParser {
      */
     @Override
     public Command parse(String parameters) throws BmoException {
+        // Extract description parameter
         String description = parameters;
-        
-        checkNonEmpty(description, this.paramNames[0], this.commandWord, TaskListParser.TODO_COMMAND_FORMAT);
+
+        // Ensure description is a valid parameter
+        CommandParser.checkNonEmpty(description, this.paramNames[0], this.commandWord, 
+                TaskListParser.TODO_COMMAND_FORMAT);
         
         return new TodoCommand(description);
     }

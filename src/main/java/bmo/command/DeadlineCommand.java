@@ -38,9 +38,11 @@ public class DeadlineCommand extends Command {
      * @param storage The storage object.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList taskList, Ui ui, Storage storage) {
         Task deadlineTask = new Deadline(this.description, this.due);
-        tasks.addTask(deadlineTask);
-        ui.showAddMessage(deadlineTask, tasks);
+        
+        taskList.addTask(deadlineTask);
+        
+        ui.showAddMessage(deadlineTask, taskList);
     }
 }

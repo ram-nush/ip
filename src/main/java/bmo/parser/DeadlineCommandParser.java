@@ -30,14 +30,20 @@ public class DeadlineCommandParser extends CommandParser {
      */
     @Override
     public Command parse(String parameters) throws BmoException {
+        // Split parameters into a parameter array
         String[] parts = CommandParser.splitParameters(parameters, this.delimiters);
         
+        // Extract individual parameters
         String description = parts[0];
         String due = parts[1];
 
-        checkNonEmpty(description, this.paramNames[0], this.commandWord, TaskListParser.DEADLINE_COMMAND_FORMAT);
-        checkNonEmpty(due, this.paramNames[1], this.commandWord, TaskListParser.DEADLINE_COMMAND_FORMAT);
+        // Ensure all parameters are non-empty
+        CommandParser.checkNonEmpty(description, this.paramNames[0], this.commandWord, 
+                TaskListParser.DEADLINE_COMMAND_FORMAT);
+        CommandParser.checkNonEmpty(due, this.paramNames[1], this.commandWord, 
+                TaskListParser.DEADLINE_COMMAND_FORMAT);
         
+        // Parse due as a datetime
         LocalDateTime dueDateTime = parseDateTime(due, this.paramNames[1], 
             this.commandWord, TaskListParser.DEADLINE_COMMAND_FORMAT);
 

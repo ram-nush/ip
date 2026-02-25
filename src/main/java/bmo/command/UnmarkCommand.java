@@ -30,8 +30,9 @@ public class UnmarkCommand extends Command {
      * @param storage The storage object.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        Task unmarkTask = tasks.unmarkTask(this.index);
+    public void execute(TaskList taskList, Ui ui, Storage storage) {
+        Task unmarkTask = taskList.unmarkTask(this.index);
+        
         ui.showUnmarkMessage(unmarkTask);
     }
 }

@@ -30,16 +30,23 @@ public class EventCommandParser extends CommandParser {
      */
     @Override
     public Command parse(String parameters) throws BmoException {
+        // Split parameters into a parameter array
         String[] parts = CommandParser.splitParameters(parameters, this.delimiters);
 
+        // Extract individual parameters
         String description = parts[0];
         String start = parts[1];
         String end = parts[2];
 
-        checkNonEmpty(description, this.paramNames[0], this.commandWord, TaskListParser.EVENT_COMMAND_FORMAT);
-        checkNonEmpty(start, this.paramNames[1], this.commandWord, TaskListParser.EVENT_COMMAND_FORMAT);
-        checkNonEmpty(end, this.paramNames[2], this.commandWord, TaskListParser.EVENT_COMMAND_FORMAT);
+        // Ensure all parameters are non-empty
+        CommandParser.checkNonEmpty(description, this.paramNames[0], this.commandWord, 
+                TaskListParser.EVENT_COMMAND_FORMAT);
+        CommandParser.checkNonEmpty(start, this.paramNames[1], this.commandWord, 
+                TaskListParser.EVENT_COMMAND_FORMAT);
+        CommandParser.checkNonEmpty(end, this.paramNames[2], this.commandWord, 
+                TaskListParser.EVENT_COMMAND_FORMAT);
 
+        // Parse start and end as datetimes
         LocalDateTime startDateTime = parseDateTime(start, this.paramNames[1],
                 this.commandWord, TaskListParser.EVENT_COMMAND_FORMAT);
         LocalDateTime endDateTime = parseDateTime(end, this.paramNames[2],

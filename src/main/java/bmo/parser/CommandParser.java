@@ -63,23 +63,33 @@ public abstract class CommandParser {
      * @return Parameters separated by the delimiters.
      */
     public static String[] splitParameters(String parameters, String[] delimiters) {
+        // Create a list to store parameters
         List<String> parametersList = new ArrayList<String>();
+        
+        // Initialize variables
         String remainingParams = parameters;
         String[] parts;
         String parameter;
 
         for (String delimiter : delimiters) {
+            // Split the string into two
             parts = remainingParams.split(delimiter, 2);
+            
+            // Add first part to parameter list
             parameter = parts[0].strip();
             parametersList.add(parameter);
 
+            // Assign a value to second part
             remainingParams = "";
             if (parts.length == 2) {
                 remainingParams = parts[1];
             }
         }
+        
+        // Add remaining parameter
         parametersList.add(remainingParams.strip());
 
+        // Return parameter list as an array
         return parametersList.toArray(new String[0]);
     }
 
@@ -121,8 +131,10 @@ public abstract class CommandParser {
         LocalDateTime localDateTime;
 
         try {
+            // Parse given parameter as a datetime
             localDateTime = LocalDateTime.parse(parameter, TaskListParser.INPUT_FORMATTER);
         } catch (DateTimeParseException e) {
+            // Parameter does not match a datetime
             String message = String.format(BmoException.BMO_STORE_DATETIME_MESSAGE,
                     paramName, commandWord);
             String suggestion = String.format(BmoException.BMO_STORE_DATETIME_SUGGESTION,
@@ -144,8 +156,10 @@ public abstract class CommandParser {
      */
     public static int parseInteger(String parameter) throws BmoException {
         try {
+            // Parse given parameter as an Integer
             return Integer.parseInt(parameter);
         } catch (NumberFormatException e) {
+            // Parameter does not match an integer
             String message = String.format(BmoException.BMO_NOT_INTEGER_MESSAGE, parameter);
             String suggestion = BmoException.BMO_NOT_INTEGER_SUGGESTION;
             throw new BmoException(message, suggestion);
@@ -163,12 +177,14 @@ public abstract class CommandParser {
      */
     public static void checkIntegerInRange(int index, int totalTasks) throws BmoException {
         if (totalTasks == 0) {
+            // No tasks in list
             String exMessage = String.format(BmoException.BMO_INVALID_INTEGER_MESSAGE, index);
             String exSuggestion = BmoException.BMO_INVALID_INTEGER_SUGGESTION_EMPTY;
             throw new BmoException(exMessage, exSuggestion);
         }
 
         if (index < 1 || index > totalTasks) {
+            // Index does not match valid task number
             String exMessage = String.format(BmoException.BMO_INVALID_INTEGER_MESSAGE, index);
             String exSuggestion = String.format(BmoException.BMO_INVALID_INTEGER_SUGGESTION_EXISTING,
                     totalTasks, totalTasks);

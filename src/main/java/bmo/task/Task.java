@@ -28,7 +28,7 @@ public class Task {
      * @return A string corresponding to whether the task is done.
      */
     public String getStatusIcon() {
-        return (this.isDone ? "X" : " ");
+        return this.isDone ? "[X]" : "[ ]";
     }
 
     /**
@@ -37,7 +37,8 @@ public class Task {
      * @return A string matching the save format of the task.
      */
     public String saveString() {
-        return (this.isDone ? "1" : "0") + " | " + this.description;
+        String isDoneText = this.isDone ? "1" : "0";
+        return String.format("%s | %s", isDoneText, this.description);
     }
 
     /**
@@ -47,6 +48,6 @@ public class Task {
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + this.description;
+        return String.format("%s %s", this.getStatusIcon(), this.description);
     }
 }

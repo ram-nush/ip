@@ -21,7 +21,7 @@ public class TaskListTest {
      *         and it is reflected in Task.toString()
      */
     @Test
-    public void addTask_todoTask_success() {
+    public void addTask_todoTask() {
         TaskList taskList = new TaskList();
         Task task = new Todo("read book");
         taskList.addTask(task);
@@ -35,7 +35,7 @@ public class TaskListTest {
      *         and it is reflected in Task.toString()
      */
     @Test
-    public void addTask_todoDeadline_success() {
+    public void addTask_todoDeadline() {
         TaskList taskList = new TaskList();
         LocalDateTime due = LocalDateTime.parse("05-03-2026 1200", 
                 TaskListParser.INPUT_FORMATTER);
@@ -51,7 +51,7 @@ public class TaskListTest {
      *         and it is reflected in Task.toString()
      */
     @Test
-    public void addTask_todoEvent_success() {
+    public void addTask_todoEvent() {
         TaskList taskList = new TaskList();
         LocalDateTime start = LocalDateTime.parse("05-03-2026 1300",
                 TaskListParser.INPUT_FORMATTER);
@@ -70,7 +70,7 @@ public class TaskListTest {
      *         and they are listed in the order which they were stored.
      */
     @Test
-    public void listTasks_differentTasks_success() {
+    public void listTasks_subclassTasks_success() {
         LocalDateTime due = LocalDateTime.parse("05-03-2026 1200",
                 TaskListParser.INPUT_FORMATTER);
         LocalDateTime start = LocalDateTime.parse("05-03-2026 1300",

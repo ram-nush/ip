@@ -31,8 +31,10 @@ public class DeleteCommandParser extends CommandParser {
      */
     @Override
     public Command parse(String parameters) throws BmoException {
+        // Extract index parameter
         String deleteIndex = parameters;
-        
+
+        // Ensure index is a valid parameter
         CommandParser.checkNonEmpty(deleteIndex, this.paramNames[0], this.commandWord, TaskListParser.DELETE_COMMAND_FORMAT);
         int index = CommandParser.parseInteger(deleteIndex);
         CommandParser.checkIntegerInRange(index, this.totalTasks);

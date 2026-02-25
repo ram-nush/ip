@@ -30,8 +30,9 @@ public class MarkCommand extends Command {
      * @param storage The storage object.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        Task markTask = tasks.markTask(this.index);
+    public void execute(TaskList taskList, Ui ui, Storage storage) {
+        Task markTask = taskList.markTask(this.index);
+        
         ui.showMarkMessage(markTask);
     }
 }

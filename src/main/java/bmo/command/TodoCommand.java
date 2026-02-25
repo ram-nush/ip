@@ -32,9 +32,11 @@ public class TodoCommand extends Command {
      * @param storage The storage object.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList taskList, Ui ui, Storage storage) {
         Task todoTask = new Todo(this.description);
-        tasks.addTask(todoTask);
-        ui.showAddMessage(todoTask, tasks);
+        
+        taskList.addTask(todoTask);
+        
+        ui.showAddMessage(todoTask, taskList);
     }
 }
