@@ -14,6 +14,12 @@ import bmo.parser.TaskListParser;
  * object stores the test cases which perform operations on <code>TaskList</code> objects.
  */
 public class TaskListTest {
+    /**
+     * Add a <code>Todo</code> object to a <code>TaskList</code> object
+     *
+     * @result Task will be stored in the TaskList without any errors,
+     *         and it is reflected in Task.toString()
+     */
     @Test
     public void addTask_todoTask_success() {
         TaskList taskList = new TaskList();
@@ -22,6 +28,12 @@ public class TaskListTest {
         assertEquals("[T][ ] read book\n", taskList.toString());
     }
 
+    /**
+     * Add a <code>Deadline</code> object to a <code>TaskList</code> object
+     *
+     * @result Task will be stored in the TaskList without any errors,
+     *         and it is reflected in Task.toString()
+     */
     @Test
     public void addTask_todoDeadline_success() {
         TaskList taskList = new TaskList();
@@ -32,6 +44,12 @@ public class TaskListTest {
         assertEquals("[D][ ] return book (by: Mar 5 2026 1200)\n", taskList.toString());
     }
 
+    /**
+     * Add an <code>Event</code> object to a <code>TaskList</code> object
+     *
+     * @result Task will be stored in the TaskList without any errors,
+     *         and it is reflected in Task.toString()
+     */
     @Test
     public void addTask_todoEvent_success() {
         TaskList taskList = new TaskList();
@@ -44,6 +62,13 @@ public class TaskListTest {
         assertEquals("[E][ ] project meeting (from: Mar 5 2026 1300, to: Mar 6 2026 1400)\n", taskList.toString());
     }
 
+    /**
+     * Add multiple <code>Task</code> objects to a <code>TaskList</code> object
+     * and list them.
+     *
+     * @result The tasks will be stored in the TaskList without any errors,
+     *         and they are listed in the order which they were stored.
+     */
     @Test
     public void listTasks_differentTasks_success() {
         LocalDateTime due = LocalDateTime.parse("05-03-2026 1200",
