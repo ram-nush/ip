@@ -84,7 +84,7 @@ public class TaskListParser {
             
         case UNKNOWN:
         default:
-            // unknown command type, throw bmo.exception.BmoException to bmo.ui.Bmo
+            // unknown command type, throw bmo.exception.BmoException to bmo.Bmo
             commandParser = new UnknownCommandParser(commandName);
         }
         

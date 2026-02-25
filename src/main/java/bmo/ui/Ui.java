@@ -14,7 +14,7 @@ public class Ui {
     private static String saveString;
     private static String byeString;
     
-    Ui() {
+    public Ui() {
         retrieveString = "The following tasks have been retrieved:";
         welcomeString = "Hello! I'm BMO\n" + "What can I do for you?";
         listString = "Here are the tasks in your list:";

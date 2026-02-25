@@ -1,4 +1,4 @@
-package bmo.ui;
+package bmo;
 
 import java.util.Scanner;
 
@@ -9,6 +9,7 @@ import bmo.parser.TaskListParser;
 import bmo.storage.Storage;
 import bmo.task.TaskList;
 import bmo.storage.StorageParser;
+import bmo.ui.Ui;
 
 public class Bmo {
     
