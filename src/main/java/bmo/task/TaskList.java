@@ -57,6 +57,26 @@ public class TaskList {
         }
         return listOutput;
     }
+
+    /**
+     * Returns a numbered list of tasks containing the provided keyword.
+     * This match is case-insensitive and ignores non-alphanumeric characters.
+     *
+     * @param keyword a String that represents the keyword to match
+     * @return the String corresponding to the numbered list of tasks which contain the keyword
+     */
+    public String listMatchingTasks(String keyword) {
+        // Filter the list for tasks which contain the keyword
+        List<Task> matchingTasks = this.tasks.stream()
+                .filter(task -> task.hasMatch(keyword))
+                .toList();
+        
+        // Create a TaskList using the filtered list
+        TaskList filteredTaskList = new TaskList(matchingTasks);
+        
+        // List the tasks inside the new TaskList
+        return filteredTaskList.listTasks();
+    }
     
     public String saveString() {
         String saveOutput = "";
