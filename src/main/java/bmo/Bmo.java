@@ -11,6 +11,11 @@ import bmo.task.TaskList;
 import bmo.storage.StorageParser;
 import bmo.ui.Ui;
 
+/**
+ * Represents the main class of the program. A <code>Bmo</code> object initializes the 
+ * storage, task list, ui and task list parser components. On startup, lines from the 
+ * save file are loaded by storage.
+ */
 public class Bmo {
     
     private Storage storage;
@@ -20,10 +25,10 @@ public class Bmo {
     
     public Bmo(String filePath) {
         try {
-            storage = new Storage(filePath);
-            tasks = new TaskList(storage.load());
             ui = new Ui();
+            storage = new Storage(filePath);
             taskListParser = new TaskListParser();
+            tasks = new TaskList(storage.load());
             
             StorageParser.checkCorruptedLinesExist(storage);
         } catch (StorageCorruptedException e) {
@@ -33,7 +38,11 @@ public class Bmo {
             tasks = new TaskList();
         }
     }
-    
+
+    /**
+     * Runs the main logic of the app.
+     * Handles reading user input inside a loop until the exit command is received.
+     */
     public void run() {
         Scanner scanner = new Scanner(System.in);
         
@@ -55,7 +64,10 @@ public class Bmo {
         ui.showByeMessage();
         scanner.close();
     }
-    
+
+    /**
+     * Starts the application.
+     */
     public static void main(String[] args) {
         String BMO_FILE_PATH = "data/bmo.txt";
         new Bmo(BMO_FILE_PATH).run();

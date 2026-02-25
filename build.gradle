@@ -34,6 +34,7 @@ application {
 shadowJar {
     archiveBaseName = "bmo"
     archiveClassifier = null
+    archiveFileName = 'bmo.jar'
 }
 
 run {

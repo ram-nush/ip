@@ -9,12 +9,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import bmo.exception.BmoException;
 import bmo.exception.StorageCorruptedException;
 import bmo.task.Deadline;
 import bmo.task.Event;
 import bmo.task.Task;
 import bmo.task.Todo;
 
+/**
+ * Represents a parser which parses a line from the save file to create the respective 
+ * task. A <code>StorageParser</code> object passes a <code>Task</code> object
+ * corresponding to the line e.g. <code>new Todo("return book")</code>
+ */
 public class StorageParser {
     
     public static final String SPLIT_REGEX = "\\s*\\|\\s*";
@@ -25,7 +31,16 @@ public class StorageParser {
             .appendPattern(OUTPUT_DATETIME_PATTERN)
             .toFormatter(Locale.ENGLISH)
             .withResolverStyle(ResolverStyle.STRICT);
-    
+
+    /**
+     * Reads one line from the save file and creates a task.
+     * Returns the task created.
+     * If the line is corrupted, a StorageCorruptedException will be thrown.
+     *
+     * @param line One line retrieved from the save file.
+     * @return Task created from the line.
+     * @throws StorageCorruptedException If the line does not match any task format.
+     */
     public static Task parseLine(String line) throws StorageCorruptedException {
         String[] parts = line.split(SPLIT_REGEX, 2);
         String type = parts[0];
@@ -68,6 +83,13 @@ public class StorageParser {
         return task;
     }
 
+    /**
+     * Checks whether a storage object has corrupted lines.
+     * If so, a StorageCorruptedException will be thrown.
+     *
+     * @param storage The storage object.
+     * @throws StorageCorruptedException If storage has non-empty corruptedLines.
+     */
     public static void checkCorruptedLinesExist(Storage storage) throws StorageCorruptedException {
         if (storage.hasCorruptedLines()) {
             String message = StorageCorruptedException.BMO_CORRUPTED_LINES_MESSAGE;
@@ -76,7 +98,16 @@ public class StorageParser {
             throw new StorageCorruptedException(message, suggestion, corruptedLines);
         }
     }
-    
+
+    /**
+     * Checks whether the number of parameters match the expected number.
+     * If they are not equal, a StorageCorruptedException containing the full line 
+     * will be thrown.
+     *
+     * @param parameters An array of parameters split from a line stored in the save file.
+     * @param expectedLength The expected number of parameters.
+     * @throws StorageCorruptedException If parameters.length does not match expectedLength.
+     */
     public static void checkParamsLength(String[] parameters, int expectedLength) throws StorageCorruptedException {
         if (parameters.length != expectedLength) {
             String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
@@ -86,6 +117,15 @@ public class StorageParser {
         }
     }
 
+    /**
+     * Checks whether the string matches a valid format for storing isDone.
+     * If the string does not match either done or not done,
+     * a StorageCorruptedException containing the full line will be thrown.
+     *
+     * @param parameters An array of parameters split from a line stored in the save file.
+     * @param isDone A string extracted from the save file.
+     * @throws StorageCorruptedException If isDone is not "0" and not "1".
+     */
     public static void checkIsDoneValid(String[] parameters, String isDone) throws StorageCorruptedException {
         if (!isDone.equals("0") && !isDone.equals("1")) {
             String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
@@ -95,6 +135,15 @@ public class StorageParser {
         }
     }
 
+    /**
+     * Checks whether the given description is valid.
+     * If the description is empty, a StorageCorruptedException containing 
+     * the full line will be thrown.
+     *
+     * @param parameters An array of parameters split from a line stored in the save file.
+     * @param description A string extracted from the save file.
+     * @throws StorageCorruptedException If description is empty.
+     */
     public static void checkDescriptionValid(String[] parameters, String description) throws StorageCorruptedException {
         if (description.isEmpty()) {
             String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
@@ -103,7 +152,17 @@ public class StorageParser {
             throw new StorageCorruptedException(message, suggestion, list);
         }
     }
-    
+
+    /**
+     * Checks whether a given parameter can be parsed as a LocalDateTime.
+     * Returns a datetime object if the parameter can be parsed.
+     * Otherwise, a StorageCorruptedException containing the full line will be thrown.
+     *
+     * @param parameters An array of parameters split from a line stored in the save file.
+     * @param dateTime A parameter extracted from splitting user input.
+     * @return A LocalDateTime object corresponding to dateTime.
+     * @throws StorageCorruptedException If dateTime cannot be parsed as a LocalDateTime.
+     */
     public static LocalDateTime parseDateTime(String[] parameters, String dateTime) throws StorageCorruptedException {
         LocalDateTime localDateTime;
         
@@ -119,6 +178,15 @@ public class StorageParser {
         return localDateTime;
     }
 
+    /**
+     * Returns a task based on a list of parameters.
+     * If the parameters do not match the expected format of a todo command,
+     * a StorageCorruptedException containing the full line will be thrown.
+     *
+     * @param parameters An array of parameters split from a line stored in the save file.
+     * @return A Task object corresponding to the list of parameters.
+     * @throws StorageCorruptedException If parameters do not match the format of Todo.
+     */
     public static Task parseTodo(String[] parameters) throws StorageCorruptedException {
         checkParamsLength(parameters, 2);
 
@@ -135,6 +203,15 @@ public class StorageParser {
         return task;
     }
 
+    /**
+     * Returns a task based on a list of parameters.
+     * If the parameters do not match the expected format of a deadline command,
+     * a StorageCorruptedException containing the full line will be thrown.
+     *
+     * @param parameters An array of parameters split from a line stored in the save file.
+     * @return A Task object corresponding to the list of parameters.
+     * @throws StorageCorruptedException If parameters do not match the format of Deadline.
+     */
     public static Task parseDeadline(String[] parameters) throws StorageCorruptedException {
         checkParamsLength(parameters, 3);
 
@@ -154,6 +231,15 @@ public class StorageParser {
         return task;
     }
 
+    /**
+     * Returns a task based on a list of parameters.
+     * If the parameters do not match the expected format of a deadline command,
+     * a StorageCorruptedException containing the full line will be thrown.
+     *
+     * @param parameters An array of parameters split from a line stored in the save file.
+     * @return A Task object corresponding to the list of parameters.
+     * @throws StorageCorruptedException If parameters do not match the format of Event.
+     */
     public static Task parseEvent(String[] parameters) throws StorageCorruptedException {
         checkParamsLength(parameters, 4);
 

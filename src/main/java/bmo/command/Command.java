@@ -6,6 +6,10 @@ import bmo.storage.Storage;
 import bmo.task.TaskList;
 import bmo.ui.Ui;
 
+/**
+ * Represents a command created from a line of user input. A <code>Command</code> object 
+ * corresponds to any command represented by a CommandWord e.g., <code>CommandWord.LIST</code>
+ */
 public abstract class Command {
     protected CommandWord commandWord;
     protected boolean isExit;
@@ -18,6 +22,15 @@ public abstract class Command {
     public boolean isExit() {
         return this.isExit;
     }
-    
+
+    /**
+     * Executes the command on the main program parts.
+     * A custom exception may be thrown.
+     *
+     * @param tasks The list of tasks to be saved.
+     * @param ui The user interface object.
+     * @param storage The storage object.
+     * @throws BmoException If an unexpected event occurs.
+     */
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws BmoException;
 }
