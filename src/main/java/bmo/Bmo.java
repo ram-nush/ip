@@ -14,44 +14,66 @@ import bmo.ui.Ui;
 public class Bmo {
     
     private Storage storage;
-    private TaskList tasks;
+    private TaskList taskList;
     private Ui ui;
     private TaskListParser taskListParser;
     
     public Bmo(String filePath) {
         try {
+            // Initialize components
             storage = new Storage(filePath);
-            tasks = new TaskList(storage.load());
             ui = new Ui();
             taskListParser = new TaskListParser();
             
+            // Load lines from storage into tasks
+            taskList = new TaskList(storage.load());
+            
+            // Determine if there exist corrupted lines stored
             StorageParser.checkCorruptedLinesExist(storage);
         } catch (StorageCorruptedException e) {
+            // Corrupted lines exist, display error message to user
+            // taskList will contain tasks from non-corrupted lines
             ui.showErrorMessage(e);
         } catch (BmoException e) {
+            // Cannot read from file
             ui.showErrorMessage(e);
-            tasks = new TaskList();
+            
+            // Create empty task list
+            taskList = new TaskList();
         }
     }
     
     public void run() {
         Scanner scanner = new Scanner(System.in);
         
-        String retrieveText = tasks.toString();
+        // Display retrieved tasks to user
+        String retrieveText = taskList.toString();
         ui.showRetrieveMessage(retrieveText);
+        
+        // Display welcome message to user
         ui.showWelcomeMessage();
         
         boolean isExit = false;
         while (!isExit) {
+            // Previous command was not the final command
             try {
+                // Read user input
                 String userInput = scanner.nextLine();
-                Command command = taskListParser.parseCommand(userInput, ui, tasks, storage);
-                command.execute(tasks, ui, storage);
+                
+                // Parse user input to create a Command object
+                Command command = taskListParser.parseCommand(userInput, ui, taskList, storage);
+                
+                // Execute the command on the other components
+                command.execute(taskList, ui, storage);
+                
+                // Determine whether this is a final command
                 isExit = command.isExit();
             } catch (BmoException e) {
                 ui.showErrorMessage(e);
             }
         }
+        
+        // Display closing message to user
         ui.showByeMessage();
         scanner.close();
     }

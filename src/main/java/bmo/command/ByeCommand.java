@@ -13,10 +13,14 @@ public class ByeCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BmoException {
-        String saveText = tasks.saveString();
+    public void execute(TaskList taskList, Ui ui, Storage storage) throws BmoException {
+        // Store lines of text to be stored
+        String saveText = taskList.saveString();
+        
+        // Display lines of text to be stored to user
         ui.showSaveMessage(saveText);
-        // can throw bmo.exception.BmoException
+        
+        // Store the lines in the save file
         storage.save(saveText);
     }
 }

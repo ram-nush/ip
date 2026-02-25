@@ -14,9 +14,11 @@ import bmo.ui.Ui;
 
 public class TaskListParser {
 
+    // Accept single number day and month
     public static final String INPUT_DATETIME_PATTERN = "d-M-uuuu HHmm";
+    
+    // Enforce strict date checking
     public static final DateTimeFormatter INPUT_FORMATTER = new DateTimeFormatterBuilder()
-            .parseCaseInsensitive()
             .appendPattern(INPUT_DATETIME_PATTERN)
             .toFormatter(Locale.ENGLISH)
             .withResolverStyle(ResolverStyle.STRICT);
@@ -29,6 +31,7 @@ public class TaskListParser {
     public static final String UNMARK_COMMAND_FORMAT = "unmark <index>";
     public static final String DELETE_COMMAND_FORMAT = "delete <index>";
     public static final String BYE_COMMAND_FORMAT = "bye";
+    
     public static final String DATETIME_COMMAND_FORMAT = String.format("Note: <due>, <start>, <end>"
             + " are in %s datetime format",  INPUT_DATETIME_PATTERN);
     
@@ -38,56 +41,41 @@ public class TaskListParser {
     
     public Command parseCommand(String userInput, Ui ui, TaskList tasks, Storage storage) 
             throws BmoException {
+        // Remove surrounding whitespaces from user input
         userInput = userInput.strip();
+
+        // Split input into command name and parametersText
         String[] parts = CommandParser.splitParameters(userInput, new String[]{ " " });
         String commandName = parts[0];
         CommandWord commandWord = CommandWord.fromString(commandName);
         
-        String parameters = parts[1];
+        String parameterText = parts[1];
 
-        CommandParser commandParser = null;
-        switch (commandWord) {
-        case LIST:
-            commandParser = new ListCommandParser();
-            break;
+        // Create specific command parser based on command word
+        CommandParser commandParser = switch (commandWord) {
+            case LIST -> new ListCommandParser();
+            case TODO -> new TodoCommandParser();
+            case DEADLINE -> new DeadlineCommandParser();
+            case EVENT -> new EventCommandParser();
+            case MARK -> {
+                int totalTasks = tasks.getTotal();
+                yield new MarkCommandParser(totalTasks);
+            }
+            case UNMARK -> {
+                int totalTasks = tasks.getTotal();
+                yield new UnmarkCommandParser(totalTasks);
+            }
+            case DELETE -> {
+                int totalTasks = tasks.getTotal();
+                yield new DeleteCommandParser(totalTasks);
+            }
+            case BYE -> new ByeCommandParser();
+            // Command name does not match any other command
+            // Provide command name to parser for reference
+            case UNKNOWN -> new UnknownCommandParser(commandName);
+        };
 
-        case TODO:
-            commandParser = new TodoCommandParser();
-            break;
-
-        case DEADLINE:
-            commandParser = new DeadlineCommandParser();
-            break;
-
-        case EVENT:
-            commandParser = new EventCommandParser();
-            break;
-
-        case MARK:
-            int totalTasks = tasks.getTotal();
-            commandParser = new MarkCommandParser(totalTasks);
-            break;
-
-        case UNMARK:
-            totalTasks = tasks.getTotal();
-            commandParser = new UnmarkCommandParser(totalTasks);
-            break;
-
-        case DELETE:
-            totalTasks = tasks.getTotal();
-            commandParser = new DeleteCommandParser(totalTasks);
-            break;
-            
-        case BYE:
-            commandParser = new ByeCommandParser();
-            break;
-            
-        case UNKNOWN:
-        default:
-            // unknown command type, throw bmo.exception.BmoException to bmo.Bmo
-            commandParser = new UnknownCommandParser(commandName);
-        }
-        
-        return commandParser.parse(parameters);
+        // Parse the parameterText to return a Command
+        return commandParser.parse(parameterText);
     }
 }

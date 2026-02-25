@@ -19,5 +19,5 @@ public abstract class Command {
         return this.isExit;
     }
     
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws BmoException;
+    public abstract void execute(TaskList taskList, Ui ui, Storage storage) throws BmoException;
 }

@@ -7,51 +7,47 @@ import bmo.task.Task;
 import bmo.task.TaskList;
 
 public class Ui {
-    private static String retrieveString;
-    private static String welcomeString;
-    private static String listString;
-    private static String defaultString;
-    private static String saveString;
-    private static String byeString;
+    private static final String RETRIEVE_STRING = "The following tasks have been retrieved:";
+    private static final String WELCOME_STRING = "Hello! I'm BMO\nWhat can I do for you?";
+    private static final String LIST_STRING = "Here are the tasks in your list:";
+    private static final String DEFAULT_STRING = "OOPS!!! I'm sorry, but I don't know what that means :-(";
+    private static final String SAVE_STRING = "The following tasks will be saved:";
+    private static final String BYE_STRING = "Bye. Hope to see you again soon!";
     
-    public Ui() {
-        retrieveString = "The following tasks have been retrieved:";
-        welcomeString = "Hello! I'm BMO\n" + "What can I do for you?";
-        listString = "Here are the tasks in your list:";
-        defaultString = "OOPS!!! I'm sorry, but I don't know what that means :-(";
-        saveString = "The following tasks will be saved:";
-        byeString = "Bye. Hope to see you again soon!";
-    }
-
     public void showRetrieveMessage(String message) {
-        this.printMessage(retrieveString + "\n" + message);
+        String output = String.format("%s\n%s", RETRIEVE_STRING, message);
+        this.printMessage(output);
     }
     
     public void showWelcomeMessage() {
-        this.printMessage(welcomeString);
+        this.printMessage(WELCOME_STRING);
     }
     
     public void showTasks(TaskList tasks) {
-        String message = listString + "\n" + tasks.listTasks();
-        this.printMessage(message);
+        String output = String.format("%s\n%s", LIST_STRING, tasks.listTasks());
+        this.printMessage(output);
     }
     
     public void showAddMessage(Task addTask, TaskList tasks) {
-        this.printMessage("Got it. I've added this task:\n" + addTask
-                + "\nNow you have " + tasks.getTotal() + " tasks in the list.");
+        String output = String.format("Got it. I've added this task:\n%s\n" 
+        + "Now you have %d tasks in the list.", addTask, tasks.getTotal());
+        this.printMessage(output);
     }
 
     public void showMarkMessage(Task markTask) {
-        this.printMessage("Nice! I've marked this task as done:\n" + markTask);
+        String output = String.format("Nice! I've marked this task as done:\n%s", markTask);
+        this.printMessage(output);
     }
 
     public void showUnmarkMessage(Task unmarkTask) {
-        this.printMessage("OK, I've marked this task as not done yet:\n" + unmarkTask);
+        String output = String.format("OK, I've marked this task as not done yet:\n%s", unmarkTask);
+        this.printMessage(output);
     }
     
     public void showDeleteMessage(Task deleteTask, TaskList tasks) {
-        this.printMessage("Noted. I've removed this task:\n" + deleteTask
-                + "\nNow you have " + tasks.getTotal() + " tasks in the list.");
+        String output = String.format("Noted. I've removed this task:\n%s\n"
+                + "Now you have %d tasks in the list.", deleteTask, tasks.getTotal());
+        this.printMessage(output);
     }
     
     public void showErrorMessage(BmoException e) {
@@ -59,15 +55,16 @@ public class Ui {
     }
 
     public void showDefaultMessage() {
-        this.printMessage(defaultString);
+        this.printMessage(DEFAULT_STRING);
     }
     
     public void showSaveMessage(String message) {
-        this.printMessage(saveString + "\n" + message);
+        String output = String.format("%s\n%s", SAVE_STRING, message);
+        this.printMessage(output);
     }
     
     public void showByeMessage() {
-        this.printMessage(byeString);
+        this.printMessage(BYE_STRING);
     }
     
     public void showLine() {

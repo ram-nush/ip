@@ -15,9 +15,12 @@ public class UnmarkCommandParser extends CommandParser {
     
     @Override
     public Command parse(String parameters) throws BmoException {
+        // Extract index parameter
         String unmarkIndex = parameters;
-        
-        CommandParser.checkNonEmpty(unmarkIndex, this.paramNames[0], this.commandWord, TaskListParser.UNMARK_COMMAND_FORMAT);
+
+        // Ensure index is a valid parameter
+        CommandParser.checkNonEmpty(unmarkIndex, this.paramNames[0], this.commandWord, 
+                TaskListParser.UNMARK_COMMAND_FORMAT);
         int index = CommandParser.parseInteger(unmarkIndex);
         CommandParser.checkIntegerInRange(index, this.totalTasks);
 

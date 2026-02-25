@@ -18,15 +18,16 @@ public class Task {
     }
 
     public String getStatusIcon() {
-        return (this.isDone ? "X" : " ");
+        return this.isDone ? "[X]" : "[ ]";
     }
     
     public String saveString() {
-        return (this.isDone ? "1" : "0") + " | " + this.description;
+        String isDoneText = this.isDone ? "1" : "0";
+        return String.format("%s | %s", isDoneText, this.description);
     }
 
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + this.description;
+        return String.format("%s %s", this.getStatusIcon(), this.description);
     }
 }
