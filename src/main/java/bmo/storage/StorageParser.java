@@ -15,6 +15,11 @@ import bmo.task.Event;
 import bmo.task.Task;
 import bmo.task.Todo;
 
+/**
+ * Represents a parser which parses a line from the save file to create the respective 
+ * task. A <code>StorageParser</code> object passes a <code>Task</code> object
+ * corresponding to the line e.g. <code>new Todo("return book")</code>
+ */
 public class StorageParser {
     
     public static final String SPLIT_REGEX = "\\s*\\|\\s*";

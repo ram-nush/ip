@@ -6,6 +6,11 @@ import bmo.exception.BmoException;
 import bmo.task.Task;
 import bmo.task.TaskList;
 
+/**
+ * Represents the user interface of the program. A <code>Ui</code> object 
+ * displays messages based on the respective commands entered. It also displays  
+ * error messages when unexpected events occur e.g., user enters an unknown command
+ */
 public class Ui {
     private static String retrieveString;
     private static String welcomeString;

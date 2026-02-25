@@ -12,6 +12,12 @@ import bmo.exception.BmoException;
 import bmo.exception.StorageCorruptedException;
 import bmo.task.Task;
 
+/**
+ * Represents the storage object of the program. A <code>Storage</code> object 
+ * corresponds to a file path where the save file is saved e.g., <code>data/bmo.txt</code> 
+ * and stores lines read from the save file which do not match the format e.g., 
+ * <code>T | x | read | book</code>
+ */
 public class Storage {
     
     private final Path path;
