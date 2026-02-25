@@ -11,6 +11,11 @@ import bmo.task.TaskList;
 import bmo.storage.StorageParser;
 import bmo.ui.Ui;
 
+/**
+ * Represents the main class of the program. A <code>Bmo</code> object initializes the 
+ * storage, task list, ui and task list parser components. On startup, lines from the 
+ * save file are loaded by storage.
+ */
 public class Bmo {
     
     private Storage storage;
