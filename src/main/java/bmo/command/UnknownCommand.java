@@ -23,6 +23,16 @@ public class UnknownCommand extends Command {
         this.unknownInput = unknownInput;
     }
 
+    /**
+     * Displays a message to the user that the input does not match any command.
+     * Displays the list of commands and their formats to the user.
+     * Throws a custom exception to handle the unknown input.
+     *
+     * @param tasks The list of tasks to be saved.
+     * @param ui The user interface object.
+     * @param storage The storage object.
+     * @throws BmoException This command does not match any other command.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws BmoException {
         ui.showDefaultMessage();

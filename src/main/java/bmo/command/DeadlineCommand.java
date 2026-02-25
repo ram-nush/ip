@@ -2,6 +2,7 @@ package bmo.command;
 
 import java.time.LocalDateTime;
 
+import bmo.exception.BmoException;
 import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.Deadline;
@@ -27,6 +28,15 @@ public class DeadlineCommand extends Command {
         this.due = due;
     }
 
+    /**
+     * Creates a Deadline object.
+     * Adds the Task to the task list.
+     * Displays the information to the user.
+     *
+     * @param tasks The list of tasks to be saved.
+     * @param ui The user interface object.
+     * @param storage The storage object.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task deadlineTask = new Deadline(this.description, this.due);

@@ -38,9 +38,30 @@ public abstract class CommandParser {
         this.delimiters = delimiters;
         this.paramNames = paramNames;
     }
-    
+
+    /**
+     * Parses a given string to get parameters corresponding to a command type.
+     * Returns a Command object created based on these parameters.
+     * May throw an exception if the given string does not follow the command format.
+     *
+     * @param parameters A string containing all parameters 
+     *                   corresponding to a specific command type.
+     * @return A Command object corresponding to the CommandWord.
+     * @throws BmoException If parameters does not have all required parameters
+     *                      in the correct order.
+     */
     public abstract Command parse(String parameters) throws BmoException;
 
+    /**
+     * Splits a given string based on an array of delimiters given, 
+     * in that specific order.
+     * Returns an array containing the parameters separated
+     * by the above delimiters.
+     *
+     * @param parameters A string containing parameters.
+     * @param delimiters An array of delimiters used to separate the parameters.
+     * @return Parameters separated by the delimiters.
+     */
     public static String[] splitParameters(String parameters, String[] delimiters) {
         List<String> parametersList = new ArrayList<String>();
         String remainingParams = parameters;
@@ -62,6 +83,16 @@ public abstract class CommandParser {
         return parametersList.toArray(new String[0]);
     }
 
+    /**
+     * Checks whether a given parameter is not empty.
+     * If the parameter is empty, a BmoException will be thrown.
+     *
+     * @param parameter A parameter extracted from splitting user input.
+     * @param paramName The name of the parameter.
+     * @param commandWord The specific command this parameter is from.
+     * @param commandFormat The format of this command.
+     * @throws BmoException If parameter is empty.
+     */
     public static void checkNonEmpty(String parameter, String paramName,
                                      CommandWord commandWord, String commandFormat) throws BmoException {
         if (parameter.isEmpty()) {
@@ -73,6 +104,18 @@ public abstract class CommandParser {
         }
     }
 
+    /**
+     * Checks whether a given parameter can be parsed as a LocalDateTime.
+     * Returns a datetime object if the parameter can be parsed.
+     * Otherwise, a BmoException will be thrown.
+     *
+     * @param parameter A parameter extracted from splitting user input.
+     * @param paramName The name of the parameter.
+     * @param commandWord The specific command this parameter is from.
+     * @param commandFormat The format of this command.
+     * @return A LocalDateTime object corresponding to parameter.
+     * @throws BmoException If parameter cannot be parsed as a LocalDateTime.
+     */
     public static LocalDateTime parseDateTime(String parameter, String paramName,
                                               CommandWord commandWord, String commandFormat) throws BmoException {
         LocalDateTime localDateTime;
@@ -90,6 +133,15 @@ public abstract class CommandParser {
         return localDateTime;
     }
 
+    /**
+     * Checks whether a given parameter can be parsed as an integer.
+     * Returns the integer if the parameter can be parsed.
+     * Otherwise, a BmoException will be thrown.
+     *
+     * @param parameter A parameter extracted from splitting user input.
+     * @return Integer corresponding to parameter.
+     * @throws BmoException If parameter cannot be parsed as an Integer.
+     */
     public static int parseInteger(String parameter) throws BmoException {
         try {
             return Integer.parseInt(parameter);
@@ -100,6 +152,15 @@ public abstract class CommandParser {
         }
     }
 
+    /**
+     * Checks whether a given integer is within 1 and 
+     * the number of tasks (both inclusive).
+     * If the integer is out of range, a BmoException will be thrown.
+     *
+     * @param index An integer extracted from splitting user input.
+     * @param totalTasks The current number of tasks in the list.
+     * @throws BmoException If the integer is <= 0 or > totalTasks.
+     */
     public static void checkIntegerInRange(int index, int totalTasks) throws BmoException {
         if (totalTasks == 0) {
             String exMessage = String.format(BmoException.BMO_INVALID_INTEGER_MESSAGE, index);

@@ -48,7 +48,13 @@ public class BmoException extends Exception {
         super(message);
         this.suggestion = suggestion;
     }
-    
+
+    /**
+     * Returns a formatted string containing the exception message
+     * and a suggestion to resolve the exception.
+     *
+     * @return A string with more information on the exception.
+     */
     @Override
     public String toString() {
         return String.format("%s\nTIP: %s", this.getMessage(), this.suggestion);

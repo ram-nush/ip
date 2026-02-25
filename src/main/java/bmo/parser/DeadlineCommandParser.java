@@ -16,7 +16,18 @@ public class DeadlineCommandParser extends CommandParser {
     DeadlineCommandParser() {
         super(CommandWord.DEADLINE, new String[]{ "/by" }, new String[]{ "description", "due" });
     }
-    
+
+    /**
+     * Parses a given string to get parameters corresponding to a command type.
+     * Returns a Command object created based on the parameters.
+     * Throws a BmoException if not all parameters can be extracted.
+     *
+     * @param parameters A string containing parameters 
+     *                   corresponding to a DeadlineCommand object.
+     * @return A Command object corresponding to CommandWord.DEADLINE.
+     * @throws BmoException If parameters does not contain all parameters 
+     *                      specific to DeadlineCommand.
+     */
     @Override
     public Command parse(String parameters) throws BmoException {
         String[] parts = CommandParser.splitParameters(parameters, this.delimiters);

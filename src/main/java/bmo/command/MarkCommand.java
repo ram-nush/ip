@@ -21,6 +21,14 @@ public class MarkCommand extends Command {
         this.index = index;
     }
 
+    /**
+     * Marks a task corresponding to the index in the task list as done.
+     * Displays the information to the user.
+     *
+     * @param tasks The list of tasks to be saved.
+     * @param ui The user interface object.
+     * @param storage The storage object.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task markTask = tasks.markTask(this.index);

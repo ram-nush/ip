@@ -22,6 +22,14 @@ public class DeleteCommand extends Command {
         this.index = index;
     }
 
+    /**
+     * Deletes a task corresponding to the index from the task list.
+     * Displays the information to the user.
+     *
+     * @param tasks The list of tasks to be saved.
+     * @param ui The user interface object.
+     * @param storage The storage object.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task deleteTask = tasks.deleteTask(this.index);

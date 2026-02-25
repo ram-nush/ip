@@ -2,6 +2,7 @@ package bmo.task;
 
 import java.time.LocalDateTime;
 
+import bmo.exception.StorageCorruptedException;
 import bmo.storage.StorageParser;
 
 /**
@@ -18,12 +19,22 @@ public class Deadline extends Task {
         this.due = due;
     }
 
+    /**
+     * Returns a formatted string with deadline properties to be saved in the save file.
+     *
+     * @return A string matching the save format of the deadline.
+     */
     @Override
     public String saveString() {
         return String.format("D | %s | %s", super.saveString(),
                 this.due.format(StorageParser.OUTPUT_FORMATTER));
     }
 
+    /**
+     * Returns a formatted string with deadline properties to be displayed to the user.
+     *
+     * @return A string matching the displayed format of the deadline.
+     */
     @Override
     public String toString() {
         return String.format("[D]%s (by: %s)", super.toString(),

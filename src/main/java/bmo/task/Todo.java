@@ -10,11 +10,21 @@ public class Todo extends Task {
         super(description);
     }
 
+    /**
+     * Returns a formatted string with todo properties to be saved in the save file.
+     *
+     * @return A string matching the save format of the todo.
+     */
     @Override
     public String saveString() {
         return String.format("T | %s", super.saveString());
     }
 
+    /**
+     * Returns a formatted string with todo properties to be displayed to the user.
+     *
+     * @return A string matching the displayed format of the todo.
+     */
     @Override
     public String toString() {
         return String.format("[T]%s", super.toString());

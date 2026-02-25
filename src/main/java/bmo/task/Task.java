@@ -22,14 +22,29 @@ public class Task {
         this.isDone = false;
     }
 
+    /**
+     * Returns a formatted string based on whether the task is done.
+     *
+     * @return A string corresponding to whether the task is done.
+     */
     public String getStatusIcon() {
         return (this.isDone ? "X" : " ");
     }
-    
+
+    /**
+     * Returns a formatted string with task properties to be saved in the save file.
+     *
+     * @return A string matching the save format of the task.
+     */
     public String saveString() {
         return (this.isDone ? "1" : "0") + " | " + this.description;
     }
 
+    /**
+     * Returns a formatted string with task properties to be displayed to the user.
+     *
+     * @return A string matching the displayed format of the task.
+     */
     @Override
     public String toString() {
         return "[" + getStatusIcon() + "] " + this.description;

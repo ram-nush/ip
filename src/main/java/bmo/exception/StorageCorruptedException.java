@@ -30,6 +30,13 @@ public class StorageCorruptedException extends BmoException {
         this.corruptedLines = corruptedLines;
     }
 
+    /**
+     * Returns a formatted string containing the exception message,
+     * a suggestion to resolve the exception, and the list of 
+     * corrupted lines for the user to save them somewhere else.
+     *
+     * @return A string with more information on the exception.
+     */
     @Override
     public String toString() {
         String corruptedText = String.join("\n", this.corruptedLines);

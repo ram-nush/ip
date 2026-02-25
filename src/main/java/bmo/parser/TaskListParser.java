@@ -40,7 +40,21 @@ public class TaskListParser {
     public static final List<String> COMMAND_FORMATS = List.of(LIST_COMMAND_FORMAT, TODO_COMMAND_FORMAT, 
             DEADLINE_COMMAND_FORMAT, EVENT_COMMAND_FORMAT, MARK_COMMAND_FORMAT, UNMARK_COMMAND_FORMAT, 
             DELETE_COMMAND_FORMAT, BYE_COMMAND_FORMAT, DATETIME_COMMAND_FORMAT);
-    
+
+    /**
+     * Parses a line of user input to determine the command type and parameters.
+     * Creates a CommandParser object created based on the command type.
+     * Returns a Command object from CommandParser parsing the parameters.
+     * May throw an exception if the parameter string does not follow the command format.
+     *
+     * @param userInput A string entered by the user.
+     * @param ui The user interface object.
+     * @param tasks The list of tasks to be saved.
+     * @param storage The storage object.
+     * @return A Command object corresponding to the CommandWord generated from 
+     *         the extracted command type.
+     * @throws BmoException If the parameter string does not follow the command format.
+     */
     public Command parseCommand(String userInput, Ui ui, TaskList tasks, Storage storage) 
             throws BmoException {
         userInput = userInput.strip();

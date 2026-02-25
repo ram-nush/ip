@@ -38,7 +38,11 @@ public class Bmo {
             tasks = new TaskList();
         }
     }
-    
+
+    /**
+     * Runs the main logic of the app.
+     * Handles reading user input inside a loop until the exit command is received.
+     */
     public void run() {
         Scanner scanner = new Scanner(System.in);
         
@@ -60,7 +64,10 @@ public class Bmo {
         ui.showByeMessage();
         scanner.close();
     }
-    
+
+    /**
+     * Starts the application.
+     */
     public static void main(String[] args) {
         String BMO_FILE_PATH = "data/bmo.txt";
         new Bmo(BMO_FILE_PATH).run();

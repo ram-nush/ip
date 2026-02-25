@@ -13,7 +13,14 @@ public class ListCommandParser extends CommandParser {
     ListCommandParser() {
         super(CommandWord.LIST);
     }
-    
+
+    /**
+     * Returns a Command object created based on the string of parameters.
+     *
+     * @param parameters A string containing parameters 
+     *                   corresponding to a ListCommand object.
+     * @return A Command object corresponding to CommandWord.LIST.
+     */
     @Override
     public Command parse(String parameters) {
         return new ListCommand();

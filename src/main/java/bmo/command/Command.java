@@ -22,6 +22,15 @@ public abstract class Command {
     public boolean isExit() {
         return this.isExit;
     }
-    
+
+    /**
+     * Executes the command on the main program parts.
+     * A custom exception may be thrown.
+     *
+     * @param tasks The list of tasks to be saved.
+     * @param ui The user interface object.
+     * @param storage The storage object.
+     * @throws BmoException If an unexpected event occurs.
+     */
     public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws BmoException;
 }

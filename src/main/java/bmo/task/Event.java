@@ -21,12 +21,22 @@ public class Event extends Task {
         this.end = end;
     }
 
+    /**
+     * Returns a formatted string with event properties to be saved in the save file.
+     *
+     * @return A string matching the save format of the event.
+     */
     @Override
     public String saveString() {
         return String.format("E | %s | %s | %s", super.saveString(), 
                 this.start.format(StorageParser.OUTPUT_FORMATTER), this.end.format(StorageParser.OUTPUT_FORMATTER));
     }
 
+    /**
+     * Returns a formatted string with event properties to be displayed to the user.
+     *
+     * @return A string matching the displayed format of the event.
+     */
     @Override
     public String toString() {
         return String.format("[E]%s (from: %s, to: %s)", super.toString(),

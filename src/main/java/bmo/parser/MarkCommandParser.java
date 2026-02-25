@@ -17,7 +17,18 @@ public class MarkCommandParser extends CommandParser {
         super(CommandWord.MARK, new String[]{ "index" });
         this.totalTasks = totalTasks;
     }
-    
+
+    /**
+     * Parses a given string to get parameters corresponding to a command type.
+     * Returns a Command object created based on the parameters.
+     * Throws a BmoException if not all parameters can be extracted.
+     *
+     * @param parameters A string containing parameters 
+     *                   corresponding to a MarkCommand object.
+     * @return A Command object corresponding to CommandWord.MARK.
+     * @throws BmoException If parameters does not contain all parameters 
+     *                      specific to MarkCommand.
+     */
     @Override
     public Command parse(String parameters) throws BmoException {
         String markIndex = parameters;

@@ -29,6 +29,15 @@ public class EventCommand extends Command {
         this.end = end;
     }
 
+    /**
+     * Creates an Event object.
+     * Adds the Task to the task list.
+     * Displays the information to the user.
+     *
+     * @param tasks The list of tasks to be saved.
+     * @param ui The user interface object.
+     * @param storage The storage object.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         Task eventTask = new Event(this.description, this.start, this.end);

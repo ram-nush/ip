@@ -15,7 +15,14 @@ public class ListCommand extends Command {
     public ListCommand() {
         super(CommandWord.LIST, false);
     }
-    
+
+    /**
+     * Displays the list of tasks to the user.
+     *
+     * @param tasks The list of tasks to be saved.
+     * @param ui The user interface object.
+     * @param storage The storage object.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.showTasks(tasks);
