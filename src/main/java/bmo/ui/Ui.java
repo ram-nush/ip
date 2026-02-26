@@ -7,8 +7,8 @@ import bmo.task.Task;
 import bmo.task.TaskList;
 
 /**
- * Represents the user interface of the program. A <code>Ui</code> object 
- * displays messages based on the respective commands entered. It also displays  
+ * Represents the user interface of the program. A <code>Ui</code> object
+ * displays messages based on the respective commands entered. It also displays
  * error messages when unexpected events occur e.g., user enters an unknown command
  */
 public class Ui {
@@ -25,7 +25,7 @@ public class Ui {
     private static final String DEFAULT_STRING = "OOPS!!! I'm sorry, but I don't know what that means :-(";
     private static final String SAVE_STRING = "The following tasks will be saved:";
     private static final String BYE_STRING = "Bye. Hope to see you again soon!";
-    
+
     /**
      * Displays a message with the list of tasks retrieved from the save file to the user.
      *
@@ -54,7 +54,7 @@ public class Ui {
     }
 
     /**
-     * Displays a message with the list of tasks that match 
+     * Displays a message with the list of tasks that match
      * a specific keyword, to the user.
      *
      * @param tasks The list of tasks.
@@ -122,7 +122,7 @@ public class Ui {
 
     /**
      * Displays a message to the user that the current list of tasks have been saved.
-     * 
+     *
      * @param message The list of tasks which have been saved to the save file.
      */
     public void showSaveMessage(String message) {
@@ -136,14 +136,14 @@ public class Ui {
     public void showByeMessage() {
         this.printMessage(BYE_STRING);
     }
-    
+
     public void showLine() {
         System.out.println("____________________________________________________________");
     }
 
     /**
      * Displays a message to the user enclosed by lines.
-     * 
+     *
      * @param message The text to display to the user.
      */
     public void printMessage(String message) {

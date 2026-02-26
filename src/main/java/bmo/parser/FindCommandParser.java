@@ -6,6 +6,11 @@ import bmo.command.Command;
 import bmo.command.FindCommand;
 import bmo.exception.BmoException;
 
+/**
+ * Represents a specific command parser which returns the respective command.
+ * A <code>FindCommandParser</code> object corresponds to a parser for a command with
+ * the specific CommandWord e.g., <code>CommandWord.FIND</code>.
+ */
 public class FindCommandParser extends CommandParser {
 
     FindCommandParser() {
@@ -25,7 +30,7 @@ public class FindCommandParser extends CommandParser {
     public Command parse(String parameters) throws BmoException {
         // Extract keyword parameter
         String keyword = parameters;
-        
+
         // Remove all non-alphanumeric characters
         keyword = keyword.replaceAll(REMOVE_SYMBOL_REGEX, "");
 

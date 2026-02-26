@@ -2,7 +2,6 @@ package bmo.command;
 
 import java.time.LocalDateTime;
 
-import bmo.exception.BmoException;
 import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.Deadline;
@@ -11,10 +10,10 @@ import bmo.task.TaskList;
 import bmo.ui.Ui;
 
 /**
- * Represents a command which adds a deadline task to the list of tasks. A 
- * <code>DeadlineCommand</code> object corresponds to a command which stores the 
- * DEADLINE CommandWord e.g., <code>CommandWord.DEADLINE</code>, a description 
- * e.g., * <code>return book</code>, and a due date and time for the task 
+ * Represents a command which adds a deadline task to the list of tasks. A
+ * <code>DeadlineCommand</code> object corresponds to a command which stores the
+ * DEADLINE CommandWord e.g., <code>CommandWord.DEADLINE</code>, a description
+ * e.g., * <code>return book</code>, and a due date and time for the task
  * e.g., <code>5-3-2026 1800</code>
  */
 public class DeadlineCommand extends Command {
@@ -22,6 +21,13 @@ public class DeadlineCommand extends Command {
     private String description;
     private LocalDateTime due;
 
+    /**
+     * Initializes a <code>DeadlineCommand</code> object which stores command parameters
+     * representing the description of the task and the datetime it is due.
+     *
+     * @param description The String containing a description of the task
+     * @param due The LocalDateTime object corresponding to the date and time the task is due
+     */
     public DeadlineCommand(String description, LocalDateTime due) {
         super(CommandWord.DEADLINE, false);
         this.description = description;
@@ -33,16 +39,16 @@ public class DeadlineCommand extends Command {
      * Adds the Task to the task list.
      * Displays the information to the user.
      *
-     * @param tasks The list of tasks to be saved.
+     * @param taskList The list of tasks to be saved.
      * @param ui The user interface object.
      * @param storage The storage object.
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         Task deadlineTask = new Deadline(this.description, this.due);
-        
+
         taskList.addTask(deadlineTask);
-        
+
         ui.showAddMessage(deadlineTask, taskList);
     }
 }

@@ -9,7 +9,7 @@ import bmo.exception.BmoException;
 /**
  * Represents a specific command parser which returns the respective command.
  * An <code>EventCommandParser</code> object corresponds to a parser for a command with
- * the specific CommandWord e.g., <code>CommandWord.EVENT</code>. 
+ * the specific CommandWord e.g., <code>CommandWord.EVENT</code>.
  */
 public class EventCommandParser extends CommandParser {
 
@@ -22,10 +22,10 @@ public class EventCommandParser extends CommandParser {
      * Returns a Command object created based on the parameters.
      * Throws a BmoException if not all parameters can be extracted.
      *
-     * @param parameters A string containing parameters 
+     * @param parameters A string containing parameters
      *                   corresponding to an EventCommand object.
      * @return A Command object corresponding to CommandWord.EVENT.
-     * @throws BmoException If parameters does not contain all parameters 
+     * @throws BmoException If parameters does not contain all parameters
      *                      specific to EventCommand.
      */
     @Override
@@ -39,11 +39,11 @@ public class EventCommandParser extends CommandParser {
         String end = parts[2];
 
         // Ensure all parameters are non-empty
-        CommandParser.checkNonEmpty(description, this.paramNames[0], this.commandWord, 
+        CommandParser.checkNonEmpty(description, this.paramNames[0], this.commandWord,
                 TaskListParser.EVENT_COMMAND_FORMAT);
-        CommandParser.checkNonEmpty(start, this.paramNames[1], this.commandWord, 
+        CommandParser.checkNonEmpty(start, this.paramNames[1], this.commandWord,
                 TaskListParser.EVENT_COMMAND_FORMAT);
-        CommandParser.checkNonEmpty(end, this.paramNames[2], this.commandWord, 
+        CommandParser.checkNonEmpty(end, this.paramNames[2], this.commandWord,
                 TaskListParser.EVENT_COMMAND_FORMAT);
 
         // Parse start and end as datetimes

@@ -1,8 +1,8 @@
 package bmo.task;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 /**
  * Represents the test class for the <code>Task</code> class. A <code>TaskTest</code>
@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TaskTest {
     /**
      * Mark a newly created task as done.
-     * 
+     *
      * @result Task will be marked as done without any errors,
      *         and it is reflected in Task.toString()
      */

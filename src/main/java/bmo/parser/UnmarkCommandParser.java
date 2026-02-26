@@ -7,7 +7,7 @@ import bmo.exception.BmoException;
 /**
  * Represents a specific command parser which returns the respective command.
  * An <code>UnmarkCommandParser</code> object corresponds to a parser for a command with
- * the specific CommandWord e.g., <code>CommandWord.UNMARK</code>. 
+ * the specific CommandWord e.g., <code>CommandWord.UNMARK</code>.
  */
 public class UnmarkCommandParser extends CommandParser {
 
@@ -23,10 +23,10 @@ public class UnmarkCommandParser extends CommandParser {
      * Returns a Command object created based on the parameters.
      * Throws a BmoException if not all parameters can be extracted.
      *
-     * @param parameters A string containing parameters 
+     * @param parameters A string containing parameters
      *                   corresponding to an UnmarkCommand object.
      * @return A Command object corresponding to CommandWord.UNMARK.
-     * @throws BmoException If parameters does not contain all parameters 
+     * @throws BmoException If parameters does not contain all parameters
      *                      specific to UnmarkCommand.
      */
     @Override
@@ -35,7 +35,7 @@ public class UnmarkCommandParser extends CommandParser {
         String unmarkIndex = parameters;
 
         // Ensure index is a valid parameter
-        CommandParser.checkNonEmpty(unmarkIndex, this.paramNames[0], this.commandWord, 
+        CommandParser.checkNonEmpty(unmarkIndex, this.paramNames[0], this.commandWord,
                 TaskListParser.UNMARK_COMMAND_FORMAT);
         int index = CommandParser.parseInteger(unmarkIndex);
         CommandParser.checkIntegerInRange(index, this.totalTasks);

@@ -7,7 +7,7 @@ import bmo.exception.BmoException;
 /**
  * Represents a specific command parser which returns the respective command.
  * A <code>DeleteCommandParser</code> object corresponds to a parser for a command with
- * the specific CommandWord e.g., <code>CommandWord.DEADLINE</code>. 
+ * the specific CommandWord e.g., <code>CommandWord.DEADLINE</code>.
  */
 public class DeleteCommandParser extends CommandParser {
 
@@ -23,10 +23,10 @@ public class DeleteCommandParser extends CommandParser {
      * Returns a Command object created based on the parameters.
      * Throws a BmoException if not all parameters can be extracted.
      *
-     * @param parameters A string containing parameters 
+     * @param parameters A string containing parameters
      *                   corresponding to a DeleteCommand object.
      * @return A Command object corresponding to CommandWord.DELETE.
-     * @throws BmoException If parameters does not contain all parameters 
+     * @throws BmoException If parameters does not contain all parameters
      *                      specific to DeleteCommand.
      */
     @Override
@@ -35,7 +35,8 @@ public class DeleteCommandParser extends CommandParser {
         String deleteIndex = parameters;
 
         // Ensure index is a valid parameter
-        CommandParser.checkNonEmpty(deleteIndex, this.paramNames[0], this.commandWord, TaskListParser.DELETE_COMMAND_FORMAT);
+        CommandParser.checkNonEmpty(deleteIndex, this.paramNames[0], this.commandWord,
+                TaskListParser.DELETE_COMMAND_FORMAT);
         int index = CommandParser.parseInteger(deleteIndex);
         CommandParser.checkIntegerInRange(index, this.totalTasks);
 

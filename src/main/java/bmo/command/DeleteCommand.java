@@ -7,16 +7,22 @@ import bmo.task.TaskList;
 import bmo.ui.Ui;
 
 /**
- * Represents a command which deletes a task in the list of tasks. A 
- * <code>DeleteCommand</code> object corresponds to a command which stores 
- * the DELETE CommandWord e.g., <code>CommandWord.DELETE</code>, and an 
- * integer which represents the index of the task in the list of tasks to 
+ * Represents a command which deletes a task in the list of tasks. A
+ * <code>DeleteCommand</code> object corresponds to a command which stores
+ * the DELETE CommandWord e.g., <code>CommandWord.DELETE</code>, and an
+ * integer which represents the index of the task in the list of tasks to
  * be deleted e.g., 1
  */
 public class DeleteCommand extends Command {
 
     private int index;
 
+    /**
+     * Initializes a <code>DeleteCommand</code> object which stores command parameters
+     * representing the index of the task list to be deleted.
+     *
+     * @param index The index corresponding to the task to be deleted
+     */
     public DeleteCommand(int index) {
         super(CommandWord.DELETE, false);
         this.index = index;
@@ -26,14 +32,14 @@ public class DeleteCommand extends Command {
      * Deletes a task corresponding to the index from the task list.
      * Displays the information to the user.
      *
-     * @param tasks The list of tasks to be saved.
+     * @param taskList The list of tasks to be saved.
      * @param ui The user interface object.
      * @param storage The storage object.
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
         Task deleteTask = taskList.deleteTask(this.index);
-        
+
         ui.showDeleteMessage(deleteTask, taskList);
     }
 }

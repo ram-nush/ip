@@ -9,18 +9,18 @@ import bmo.command.Command;
 import bmo.exception.BmoException;
 
 /**
- * Represents a command parser which parses a string containing all parameters and 
- * creates the respective command. A <code>CommandParser</code> object corresponds to 
- * the specific CommandWord e.g., <code>CommandWord.LIST</code>, a list of delimiters 
- * to separate the parameter by, e.g. <code>/from,/to</code>, and a list of parameter 
+ * Represents a command parser which parses a string containing all parameters and
+ * creates the respective command. A <code>CommandParser</code> object corresponds to
+ * the specific CommandWord e.g., <code>CommandWord.LIST</code>, a list of delimiters
+ * to separate the parameter by, e.g. <code>/from,/to</code>, and a list of parameter
  * names which represent the parameters given by the user, e.g.<code>description</code>
  */
 public abstract class CommandParser {
-    
+
     protected CommandWord commandWord;
     protected String[] delimiters;
     protected String[] paramNames;
-    
+
     CommandParser(CommandWord commandWord) {
         this.commandWord = commandWord;
         this.delimiters = new String[0];
@@ -44,7 +44,7 @@ public abstract class CommandParser {
      * Returns a Command object created based on these parameters.
      * May throw an exception if the given string does not follow the command format.
      *
-     * @param parameters A string containing all parameters 
+     * @param parameters A string containing all parameters
      *                   corresponding to a specific command type.
      * @return A Command object corresponding to the CommandWord.
      * @throws BmoException If parameters does not have all required parameters
@@ -53,7 +53,7 @@ public abstract class CommandParser {
     public abstract Command parse(String parameters) throws BmoException;
 
     /**
-     * Splits a given string based on an array of delimiters given, 
+     * Splits a given string based on an array of delimiters given,
      * in that specific order.
      * Returns an array containing the parameters separated
      * by the above delimiters.
@@ -65,7 +65,7 @@ public abstract class CommandParser {
     public static String[] splitParameters(String parameters, String[] delimiters) {
         // Create a list to store parameters
         List<String> parametersList = new ArrayList<String>();
-        
+
         // Initialize variables
         String remainingParams = parameters;
         String[] parts;
@@ -74,7 +74,7 @@ public abstract class CommandParser {
         for (String delimiter : delimiters) {
             // Split the string into two
             parts = remainingParams.split(delimiter, 2);
-            
+
             // Add first part to parameter list
             parameter = parts[0].strip();
             parametersList.add(parameter);
@@ -85,7 +85,7 @@ public abstract class CommandParser {
                 remainingParams = parts[1];
             }
         }
-        
+
         // Add remaining parameter
         parametersList.add(remainingParams.strip());
 
@@ -167,7 +167,7 @@ public abstract class CommandParser {
     }
 
     /**
-     * Checks whether a given integer is within 1 and 
+     * Checks whether a given integer is within 1 and
      * the number of tasks (both inclusive).
      * If the integer is out of range, a BmoException will be thrown.
      *

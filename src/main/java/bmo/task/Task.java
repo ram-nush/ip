@@ -1,16 +1,21 @@
 package bmo.task;
 
 /**
- * Represents a task created by the user. A <code>Task</code> object corresponds 
+ * Represents a task created by the user. A <code>Task</code> object corresponds
  * to a task represented by its description e.g., <code>read book</code> and whether
  * it has been done e.g., <code>false</code>
  */
 public class Task {
     public static final String REMOVE_SYMBOL_REGEX = "[^a-zA-Z0-9]";
-    
+
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Initializes a <code>Task</code> object which stores the description of the task.
+     *
+     * @param description The String containing a description of the task
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
@@ -36,7 +41,7 @@ public class Task {
     /**
      * Returns whether the description of this task contains the provided keyword.
      * This match is case-insensitive and ignores non-alphanumeric characters.
-     * 
+     *
      * @param keyword a String that represents the keyword to match
      * @return true if the description contains the keyword, otherwise false
      */
@@ -48,7 +53,7 @@ public class Task {
         // Remove non-alphanumeric characters and converts keyword to lowercase
         String cleanedKeyword = keyword.replaceAll(REMOVE_SYMBOL_REGEX, "")
                 .toLowerCase();
-        
+
         // Checks whether the cleaned description contains the cleaned keyword
         return cleanedDescription.contains(cleanedKeyword);
     }
