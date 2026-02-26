@@ -7,7 +7,7 @@ import bmo.task.TaskList;
 import bmo.ui.Ui;
 
 /**
- * Represents a command which exits the program. A <code>ByeCommand</code> object 
+ * Represents a command which exits the program. A <code>ByeCommand</code> object
  * corresponds to a command which stores the BYE CommandWord e.g., <code>CommandWord.BYE</code>
  */
 public class ByeCommand extends Command {
@@ -19,10 +19,10 @@ public class ByeCommand extends Command {
     /**
      * Displays the list of tasks to the user.
      * Saves the list of tasks in the save file.
-     * If the lines cannot be written to the save file, 
+     * If the lines cannot be written to the save file,
      * a custom exception is thrown.
      *
-     * @param tasks The list of tasks to be saved.
+     * @param taskList The list of tasks to be saved.
      * @param ui The user interface object.
      * @param storage The storage object.
      * @throws BmoException If lines cannot be written to the save file.
@@ -31,10 +31,10 @@ public class ByeCommand extends Command {
     public void execute(TaskList taskList, Ui ui, Storage storage) throws BmoException {
         // Store lines of text to be stored
         String saveText = taskList.saveString();
-        
+
         // Display lines of text to be stored to user
         ui.showSaveMessage(saveText);
-        
+
         // Store the lines in the save file
         storage.save(saveText);
     }

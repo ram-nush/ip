@@ -3,19 +3,17 @@ package bmo.task;
 import java.util.ArrayList;
 import java.util.List;
 
-import bmo.exception.BmoException;
-
 /**
- * Represents the list of tasks stored by the program. A <code>TaskList</code> object 
+ * Represents the list of tasks stored by the program. A <code>TaskList</code> object
  * corresponds to a list of <code>Task</code> objects stored as a <code>List</code>
  */
 public class TaskList {
     private List<Task> tasks;
-    
+
     public TaskList() {
         this.tasks = new ArrayList<Task>();
     }
-    
+
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }
@@ -97,7 +95,7 @@ public class TaskList {
     }
 
     /**
-     * Returns a formatted string representing a numbered list of tasks, 
+     * Returns a formatted string representing a numbered list of tasks,
      * along with their information.
      *
      * @return A string storing all tasks displayed to the user.
@@ -122,13 +120,13 @@ public class TaskList {
         List<Task> matchingTasks = this.tasks.stream()
                 .filter(task -> task.hasMatch(keyword))
                 .toList();
-        
+
         // Create a TaskList using the filtered list
         return new TaskList(matchingTasks);
     }
-    
+
     /**
-     * Returns a formatted string with task properties of each task in the task list, 
+     * Returns a formatted string with task properties of each task in the task list,
      * to be saved in the save file.
      *
      * @return A string matching the save format of all tasks in the task list.
@@ -142,7 +140,7 @@ public class TaskList {
     }
 
     /**
-     * Returns a formatted string with task properties of each task in the task list, 
+     * Returns a formatted string with task properties of each task in the task list,
      * to be displayed to the user.
      *
      * @return A string matching the displayed format of all tasks in the task list.

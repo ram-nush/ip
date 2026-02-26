@@ -6,8 +6,8 @@ import bmo.task.TaskList;
 import bmo.ui.Ui;
 
 /**
- * Represents a command which prints out the list of tasks. A <code>ListCommand</code> 
- * object corresponds to a command which stores the LIST CommandWord e.g., 
+ * Represents a command which prints out the list of tasks. A <code>ListCommand</code>
+ * object corresponds to a command which stores the LIST CommandWord e.g.,
  * <code>CommandWord.LIST</code>
  */
 public class ListCommand extends Command {
@@ -19,7 +19,7 @@ public class ListCommand extends Command {
     /**
      * Displays the list of tasks to the user.
      *
-     * @param tasks The list of tasks to be saved.
+     * @param taskList The list of tasks to be saved.
      * @param ui The user interface object.
      * @param storage The storage object.
      */

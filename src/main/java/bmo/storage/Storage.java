@@ -13,16 +13,24 @@ import bmo.exception.StorageCorruptedException;
 import bmo.task.Task;
 
 /**
- * Represents the storage object of the program. A <code>Storage</code> object 
- * corresponds to a file path where the save file is saved e.g., <code>data/bmo.txt</code> 
- * and stores lines read from the save file which do not match the format e.g., 
+ * Represents the storage object of the program. A <code>Storage</code> object
+ * corresponds to a file path where the save file is saved e.g., <code>data/bmo.txt</code>
+ * and stores lines read from the save file which do not match the format e.g.,
  * <code>T | x | read | book</code>
  */
 public class Storage {
-    
+
     private final Path path;
     private List<String> corruptedLines;
-    
+
+    /**
+     * Initializes a <code>Storage</code> object which takes in a file path
+     * representing the location of the save file.
+     * An InvalidPathException may be thrown if the file path does not match a valid path.
+     *
+     * @param filePath The string which corresponds to the file path where the tasks are stored.
+     * @throws InvalidPathException If the path cannot be converted to a <code>Path</code>
+     */
     public Storage(String filePath) throws InvalidPathException {
         this.path = Paths.get(filePath);
         this.corruptedLines = new ArrayList<String>();
@@ -36,7 +44,7 @@ public class Storage {
     public boolean hasCorruptedLines() {
         return !this.corruptedLines.isEmpty();
     }
-    
+
     public List<String> getCorruptedLines() {
         return this.corruptedLines;
     }
@@ -57,7 +65,7 @@ public class Storage {
         List<String> lines;
         // Create list to store tasks created from lines
         List<Task> tasks = new ArrayList<Task>();
-        
+
         try {
             // Read lines from save file
             lines = Files.readAllLines(this.path);
@@ -67,7 +75,7 @@ public class Storage {
             String suggestion = BmoException.BMO_FILE_SUGGESTION_EXIST;
             throw new BmoException(message, suggestion);
         }
-        
+
         for (String line : lines) {
             try {
                 // Create and add Task object to list of tasks
@@ -79,9 +87,8 @@ public class Storage {
                 // Catch and save corrupted line to storage
                 this.corruptedLines.add(line);
             }
-            
         }
-        
+
         return tasks;
     }
 

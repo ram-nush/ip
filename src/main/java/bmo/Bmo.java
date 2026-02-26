@@ -7,32 +7,38 @@ import bmo.exception.BmoException;
 import bmo.exception.StorageCorruptedException;
 import bmo.parser.TaskListParser;
 import bmo.storage.Storage;
-import bmo.task.TaskList;
 import bmo.storage.StorageParser;
+import bmo.task.TaskList;
 import bmo.ui.Ui;
 
 /**
- * Represents the main class of the program. A <code>Bmo</code> object initializes the 
- * storage, task list, ui and task list parser components. On startup, lines from the 
+ * Represents the main class of the program. A <code>Bmo</code> object initializes the
+ * storage, task list, ui and task list parser components. On startup, lines from the
  * save file are loaded by storage.
  */
 public class Bmo {
-    
+
     private Storage storage;
     private TaskList taskList;
     private Ui ui;
     private TaskListParser taskListParser;
-    
+
+    /**
+     * Initializes a <code>Bmo</code> object which creates instances of the major components.
+     * This constructor takes in a file path representing the location of the save file.
+     *
+     * @param filePath The string which corresponds to the file path where the tasks are stored.
+     */
     public Bmo(String filePath) {
         try {
             // Initialize components
             storage = new Storage(filePath);
             ui = new Ui();
             taskListParser = new TaskListParser();
-            
+
             // Load lines from storage into tasks
             taskList = new TaskList(storage.load());
-            
+
             // Determine if there exist corrupted lines stored
             StorageParser.checkCorruptedLinesExist(storage);
         } catch (StorageCorruptedException e) {
@@ -42,7 +48,7 @@ public class Bmo {
         } catch (BmoException e) {
             // Cannot read from file
             ui.showErrorMessage(e);
-            
+
             // Create empty task list
             taskList = new TaskList();
         }
@@ -54,34 +60,34 @@ public class Bmo {
      */
     public void run() {
         Scanner scanner = new Scanner(System.in);
-        
+
         // Display retrieved tasks to user
         String retrieveText = taskList.toString();
         ui.showRetrieveMessage(retrieveText);
-        
+
         // Display welcome message to user
         ui.showWelcomeMessage();
-        
+
         boolean isExit = false;
         while (!isExit) {
             // Previous command was not the final command
             try {
                 // Read user input
                 String userInput = scanner.nextLine();
-                
+
                 // Parse user input to create a Command object
                 Command command = taskListParser.parseCommand(userInput, ui, taskList, storage);
-                
+
                 // Execute the command on the other components
                 command.execute(taskList, ui, storage);
-                
+
                 // Determine whether this is a final command
                 isExit = command.isExit();
             } catch (BmoException e) {
                 ui.showErrorMessage(e);
             }
         }
-        
+
         // Display closing message to user
         ui.showByeMessage();
         scanner.close();
@@ -91,7 +97,7 @@ public class Bmo {
      * Starts the application.
      */
     public static void main(String[] args) {
-        String BMO_FILE_PATH = "data/bmo.txt";
-        new Bmo(BMO_FILE_PATH).run();
+        String bmoFilePath = "data/bmo.txt";
+        new Bmo(bmoFilePath).run();
     }
 }

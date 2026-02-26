@@ -2,18 +2,24 @@ package bmo.task;
 
 import java.time.LocalDateTime;
 
-import bmo.exception.StorageCorruptedException;
 import bmo.storage.StorageParser;
 
 /**
- * Represents a specific task with a deadline. A <code>Deadline</code> object 
- * corresponds to a task represented by its description e.g., <code>return book</code> 
+ * Represents a specific task with a deadline. A <code>Deadline</code> object
+ * corresponds to a task represented by its description e.g., <code>return book</code>
  * and a datetime for the task to be completed by e.g., <code>5-3-2026 1234</code>
  */
 public class Deadline extends Task {
 
     protected LocalDateTime due;
 
+    /**
+     * Initializes a <code>Deadline</code> object which stores the description of the deadline
+     * and the date and time that it is due.
+     *
+     * @param description The String containing a description of the deadline
+     * @param due The LocalDateTime corresponding to the due date and time of the deadline
+     */
     public Deadline(String description, LocalDateTime due) {
         super(description);
         this.due = due;

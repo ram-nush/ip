@@ -6,10 +6,10 @@ import bmo.command.ListCommand;
 /**
  * Represents a specific command parser which returns the respective command.
  * A <code>ListCommandParser</code> object corresponds to a parser for a command with
- * the specific CommandWord e.g., <code>CommandWord.LIST</code>. 
+ * the specific CommandWord e.g., <code>CommandWord.LIST</code>.
  */
 public class ListCommandParser extends CommandParser {
-    
+
     ListCommandParser() {
         super(CommandWord.LIST);
     }
@@ -17,7 +17,7 @@ public class ListCommandParser extends CommandParser {
     /**
      * Returns a Command object created based on the string of parameters.
      *
-     * @param parameters A string containing parameters 
+     * @param parameters A string containing parameters
      *                   corresponding to a ListCommand object.
      * @return A Command object corresponding to CommandWord.LIST.
      */

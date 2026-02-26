@@ -2,12 +2,11 @@ package bmo.parser;
 
 import bmo.command.ByeCommand;
 import bmo.command.Command;
-import bmo.exception.BmoException;
 
 /**
  * Represents a specific command parser which returns the respective command.
  * A <code>ByeCommandParser</code> object corresponds to a parser for a command with
- * the specific CommandWord e.g., <code>CommandWord.BYE</code>. 
+ * the specific CommandWord e.g., <code>CommandWord.BYE</code>.
  */
 public class ByeCommandParser extends CommandParser {
 
@@ -18,7 +17,7 @@ public class ByeCommandParser extends CommandParser {
     /**
      * Returns a Command object created based on the string of parameters.
      *
-     * @param parameters A string containing parameters 
+     * @param parameters A string containing parameters
      *                   corresponding to a ByeCommand object.
      * @return A Command object corresponding to CommandWord.BYE.
      */
