@@ -31,16 +31,21 @@ public class Ui {
      *
      * @param message The list of tasks which have been retrieved from the save file.
      */
-    public void showRetrieveMessage(String message) {
+    public String showRetrieveMessage(String message) {
         String output = String.format("%s\n%s", RETRIEVE_STRING, message);
+        
         this.printMessage(output);
+        return output;
     }
 
     /**
      * Displays a welcome message to the user on app startup.
      */
-    public void showWelcomeMessage() {
-        this.printMessage(WELCOME_STRING);
+    public String showWelcomeMessage() {
+        String output = WELCOME_STRING;
+        
+        this.printMessage(output);
+        return output;
     }
 
     /**
@@ -48,9 +53,11 @@ public class Ui {
      *
      * @param tasks The list of tasks.
      */
-    public void showTasks(TaskList tasks) {
+    public String showTasks(TaskList tasks) {
         String output = String.format("%s\n%s", LIST_STRING, tasks.listTasks());
+        
         this.printMessage(output);
+        return output;
     }
 
     /**
@@ -59,9 +66,11 @@ public class Ui {
      *
      * @param tasks The list of tasks.
      */
-    public void showMatchingTasks(TaskList tasks) {
-        String message = String.format("%s\n%s", FIND_STRING, tasks.listTasks());
-        this.printMessage(message);
+    public String showMatchingTasks(TaskList tasks) {
+        String output = String.format("%s\n%s", FIND_STRING, tasks.listTasks());
+        
+        this.printMessage(output);
+        return output;
     }
 
     /**
@@ -70,9 +79,11 @@ public class Ui {
      * @param addTask Task to be added.
      * @param tasks The list of tasks.
      */
-    public void showAddMessage(Task addTask, TaskList tasks) {
+    public String showAddMessage(Task addTask, TaskList tasks) {
         String output = String.format(ADD_STRING, addTask, tasks.getTotal());
+        
         this.printMessage(output);
+        return output;
     }
 
     /**
@@ -80,9 +91,11 @@ public class Ui {
      *
      * @param markTask Task to be marked as done.
      */
-    public void showMarkMessage(Task markTask) {
+    public String showMarkMessage(Task markTask) {
         String output = String.format(MARK_STRING, markTask);
+        
         this.printMessage(output);
+        return output;
     }
 
     /**
@@ -90,9 +103,11 @@ public class Ui {
      *
      * @param unmarkTask Task to be marked as not done.
      */
-    public void showUnmarkMessage(Task unmarkTask) {
+    public String showUnmarkMessage(Task unmarkTask) {
         String output = String.format(UNMARK_STRING, unmarkTask);
+        
         this.printMessage(output);
+        return output;
     }
 
     /**
@@ -101,23 +116,31 @@ public class Ui {
      * @param deleteTask Task to be deleted from the task list.
      * @param tasks The list of tasks.
      */
-    public void showDeleteMessage(Task deleteTask, TaskList tasks) {
+    public String showDeleteMessage(Task deleteTask, TaskList tasks) {
         String output = String.format(DELETE_STRING, deleteTask, tasks.getTotal());
+        
         this.printMessage(output);
+        return output;
     }
 
     /**
      * Displays an error message to the user when it is thrown.
      */
-    public void showErrorMessage(BmoException e) {
-        this.printMessage(e.toString());
+    public String showErrorMessage(BmoException e) {
+        String output = e.toString();
+        
+        this.printMessage(output);
+        return output;
     }
 
     /**
      * Displays a default message to the user when an unknown command is entered.
      */
-    public void showDefaultMessage() {
-        this.printMessage(DEFAULT_STRING);
+    public String showDefaultMessage() {
+        String output = DEFAULT_STRING;
+        
+        this.printMessage(output);
+        return output;
     }
 
     /**
@@ -125,16 +148,21 @@ public class Ui {
      *
      * @param message The list of tasks which have been saved to the save file.
      */
-    public void showSaveMessage(String message) {
+    public String showSaveMessage(String message) {
         String output = String.format("%s\n%s", SAVE_STRING, message);
+        
         this.printMessage(output);
+        return output;
     }
 
     /**
      * Displays a closing message to the user on app startup.
      */
-    public void showByeMessage() {
-        this.printMessage(BYE_STRING);
+    public String showByeMessage() {
+        String output = BYE_STRING;
+        
+        this.printMessage(output);
+        return output;
     }
 
     public void showLine() {
