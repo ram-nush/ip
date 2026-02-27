@@ -11,12 +11,15 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import bmo.Bmo;
+
 public class Main extends Application {
+
+    private static final String BMO_FILE_PATH = "data/bmo.txt";
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
     private Image bmoImage = new Image(this.getClass().getResourceAsStream("/images/bmo.png"));
-    
-    private static final String BMO_FILE_PATH = "data/bmo.txt";
+    private Bmo bmo = new Bmo(BMO_FILE_PATH);
 
     private ScrollPane scrollPane;
     private VBox dialogContainer;
@@ -101,7 +104,12 @@ public class Main extends Application {
      * the dialog container. Clears the user input after processing.
      */
     private void handleUserInput() {
-        dialogContainer.getChildren().addAll(new DialogBox(userInput.getText(), userImage));
+        String userText = userInput.getText();
+        String bmoText = bmo.getResponse(userInput.getText());
+        dialogContainer.getChildren().addAll(
+                new DialogBox(userText, userImage),
+                new DialogBox(bmoText, bmoImage)
+        );
         userInput.clear();
     }
 }

@@ -100,4 +100,11 @@ public class Bmo {
         String bmoFilePath = "data/bmo.txt";
         new Bmo(bmoFilePath).run();
     }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        return "Bmo heard: " + input;
+    }
 }
