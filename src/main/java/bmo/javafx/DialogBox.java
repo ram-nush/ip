@@ -3,6 +3,7 @@ package bmo.javafx;
 import java.io.IOException;
 import java.util.Collections;
 
+import bmo.parser.CommandWord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -46,6 +47,15 @@ public class DialogBox extends HBox {
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
+        dialog.getStyleClass().add("reply-label");
+    }
+
+    private void changeDialogStyle(CommandWord commandWord) {
+        switch (commandWord) {
+        case TODO, DEADLINE, EVENT -> dialog.getStyleClass().add("add-label");
+        case MARK, UNMARK, FIND -> dialog.getStyleClass().add("marked-label");
+        case DELETE -> dialog.getStyleClass().add("delete-label");
+        }
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
@@ -53,8 +63,13 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getBmoDialog(String text, Image img) {
+        return getBmoDialog(text, img, CommandWord.UNKNOWN);
+    }
+
+    public static DialogBox getBmoDialog(String text, Image img, CommandWord commandWord) {
         var db = new DialogBox(text, img);
         db.flip();
+        db.changeDialogStyle(commandWord);
         return db;
     }
 }

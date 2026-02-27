@@ -2,6 +2,7 @@ package bmo.javafx;
 
 import bmo.Bmo;
 import bmo.exception.BmoException;
+import bmo.parser.CommandWord;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -32,7 +33,7 @@ public class MainWindow extends AnchorPane {
     private Image bmoImage = new Image(this.getClass().getResourceAsStream("/images/bmo.png"));
 
     @FXML
-    public void initialize() {        
+    public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
@@ -43,7 +44,7 @@ public class MainWindow extends AnchorPane {
         String loadingMessage = bmo.getLoadingErrors();
         String welcomeMessage = bmo.getWelcomeMessage();
         String commandFormats = bmo.getCommandFormats();
-        
+
         if (!loadingMessage.isEmpty()) {
             dialogContainer.getChildren().addAll(
                     DialogBox.getBmoDialog(loadingMessage, bmoImage)
@@ -63,33 +64,35 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        
+        CommandWord commandWord = CommandWord.UNKNOWN;
+
         try {
             String response = bmo.getResponse(input);
+            commandWord = bmo.getCommandWord();
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage),
-                    DialogBox.getBmoDialog(response, bmoImage)
+                    DialogBox.getBmoDialog(response, bmoImage, commandWord)
             );
 
             if (bmo.isExitInput(input)) {
                 String closingMessage = bmo.getClosingMessage();
                 dialogContainer.getChildren().addAll(
-                        DialogBox.getBmoDialog(closingMessage, bmoImage)
+                        DialogBox.getBmoDialog(closingMessage, bmoImage, commandWord)
                 );
-                
+
                 // Create delay timer
                 PauseTransition delay = new PauseTransition(Duration.seconds(3));
-                
+
                 // Link it to closing the application
                 delay.setOnFinished(e -> Platform.exit());
-                
+
                 // Start the timer
                 delay.play();
             }
         } catch (BmoException e) {
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage),
-                    DialogBox.getBmoDialog(e.toString(), bmoImage)
+                    DialogBox.getBmoDialog(e.toString(), bmoImage, commandWord)
             );
         } finally {
             userInput.clear();

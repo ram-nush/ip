@@ -6,6 +6,7 @@ import java.util.Scanner;
 import bmo.command.Command;
 import bmo.exception.BmoException;
 import bmo.exception.StorageCorruptedException;
+import bmo.parser.CommandWord;
 import bmo.parser.TaskListParser;
 import bmo.storage.Storage;
 import bmo.storage.StorageParser;
@@ -23,8 +24,9 @@ public class Bmo {
     private TaskList taskList;
     private Ui ui;
     private TaskListParser taskListParser;
-    
+
     private String loadingMessage;
+    private CommandWord commandWord;
 
     /**
      * Initializes a <code>Bmo</code> object which creates instances of the major components.
@@ -34,7 +36,7 @@ public class Bmo {
      */
     public Bmo(String filePath) {
         loadingMessage = "";
-        
+
         try {
             // Initialize components
             storage = new Storage(filePath);
@@ -58,11 +60,11 @@ public class Bmo {
             taskList = new TaskList();
         }
     }
-    
+
     public String getLoadingErrors() {
         return loadingMessage;
     }
-    
+
     public String getWelcomeMessage() {
         String messages = "";
 
@@ -74,16 +76,16 @@ public class Bmo {
         messages += ui.showWelcomeMessage();
         return messages;
     }
-    
+
     public String getCommandFormats() {
         String commandFormatsText = String.join("\n", TaskListParser.COMMAND_FORMATS);
         return String.format(BmoException.BMO_INVALID_COMMAND_SUGGESTION, commandFormatsText);
     }
-    
+
     public String getClosingMessage() {
         return ui.showByeMessage();
     }
-    
+
     public boolean isExitInput(String input) throws BmoException {
         // Parse user input to create a Command object
         Command command = taskListParser.parseCommand(input, ui, taskList, storage);
@@ -103,7 +105,14 @@ public class Bmo {
 
         // Retrieve the string from executing the command
         String response = command.execute(taskList, ui, storage);
-        
+
+        // Get the type of command
+        commandWord = command.getCommandWord();
+
         return response;
+    }
+
+    public CommandWord getCommandWord() {
+        return commandWord;
     }
 }

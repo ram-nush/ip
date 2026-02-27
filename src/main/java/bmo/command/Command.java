@@ -19,6 +19,10 @@ public abstract class Command {
         this.isExit = isExit;
     }
 
+    public CommandWord getCommandWord() {
+        return this.commandWord;
+    }
+
     public boolean isExit() {
         return this.isExit;
     }
