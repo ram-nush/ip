@@ -1,5 +1,6 @@
 package bmo;
 
+import java.util.List;
 import java.util.Scanner;
 
 import bmo.command.Command;
@@ -22,6 +23,8 @@ public class Bmo {
     private TaskList taskList;
     private Ui ui;
     private TaskListParser taskListParser;
+    
+    private String startupMessage;
 
     /**
      * Initializes a <code>Bmo</code> object which creates instances of the major components.
@@ -30,6 +33,8 @@ public class Bmo {
      * @param filePath The string which corresponds to the file path where the tasks are stored.
      */
     public Bmo(String filePath) {
+        startupMessage = "";
+        
         try {
             // Initialize components
             storage = new Storage(filePath);
@@ -44,67 +49,60 @@ public class Bmo {
         } catch (StorageCorruptedException e) {
             // Corrupted lines exist, display error message to user
             // taskList will contain tasks from non-corrupted lines
-            ui.showErrorMessage(e);
+            startupMessage += ui.showErrorMessage(e);
         } catch (BmoException e) {
             // Cannot read from file
-            ui.showErrorMessage(e);
+            startupMessage += ui.showErrorMessage(e);
 
             // Create empty task list
             taskList = new TaskList();
         }
     }
-
-    /**
-     * Runs the main logic of the app.
-     * Handles reading user input inside a loop until the exit command is received.
-     */
-    public void run() {
-        Scanner scanner = new Scanner(System.in);
+    
+    public String getStartupErrors() {
+        return startupMessage;
+    }
+    
+    public String getWelcomeMessage() {
+        String messages = "";
 
         // Display retrieved tasks to user
         String retrieveText = taskList.toString();
-        ui.showRetrieveMessage(retrieveText);
+        messages += ui.showRetrieveMessage(retrieveText);
 
         // Display welcome message to user
-        ui.showWelcomeMessage();
-
-        boolean isExit = false;
-        while (!isExit) {
-            // Previous command was not the final command
-            try {
-                // Read user input
-                String userInput = scanner.nextLine();
-
-                // Parse user input to create a Command object
-                Command command = taskListParser.parseCommand(userInput, ui, taskList, storage);
-
-                // Execute the command on the other components
-                command.execute(taskList, ui, storage);
-
-                // Determine whether this is a final command
-                isExit = command.isExit();
-            } catch (BmoException e) {
-                ui.showErrorMessage(e);
-            }
-        }
-
-        // Display closing message to user
-        ui.showByeMessage();
-        scanner.close();
+        messages += ui.showWelcomeMessage();
+        return messages;
     }
+    
+    public String getCommandFormats() {
+        return String.join("\n", TaskListParser.COMMAND_FORMATS);
+    }
+    
+    public String getClosingMessage() {
+        return ui.showByeMessage();
+    }
+    
+    public boolean isExitInput(String input) throws BmoException {
+        // Parse user input to create a Command object
+        Command command = taskListParser.parseCommand(input, ui, taskList, storage);
 
-    /**
-     * Starts the application.
-     */
-    public static void main(String[] args) {
-        String bmoFilePath = "data/bmo.txt";
-        new Bmo(bmoFilePath).run();
+        // Determine whether this is a final command
+        boolean isExit = command.isExit();
+
+        return isExit;
     }
 
     /**
      * Generates a response for the user's chat message.
      */
-    public String getResponse(String input) {
-        return "Bmo heard: " + input;
+    public String getResponse(String input) throws BmoException {
+        // Parse user input to create a Command object
+        Command command = taskListParser.parseCommand(input, ui, taskList, storage);
+
+        // Retrieve the string from executing the command
+        String response = command.execute(taskList, ui, storage);
+        
+        return response;
     }
 }

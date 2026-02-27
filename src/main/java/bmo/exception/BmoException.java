@@ -18,7 +18,7 @@ public class BmoException extends Exception {
     public static final String BMO_INVALID_INTEGER_SUGGESTION_EXISTING = "You currently have %d tasks."
             + " Choose a number between 1 and %d.";
 
-    public static final String BMO_INVALID_COMMAND_MESSAGE = "%s is not a valid command type!";
+    public static final String BMO_INVALID_COMMAND_MESSAGE = "%s\n%s is not a valid command type!";
     public static final String BMO_INVALID_COMMAND_SUGGESTION = "Enter one of the following commands"
             + " in the given format.\n%s";
 

@@ -40,16 +40,16 @@ public class UnknownCommand extends Command {
      * @throws BmoException This command does not match any other command.
      */
     @Override
-    public void execute(TaskList taskList, Ui ui, Storage storage) throws BmoException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws BmoException {
         // Display user input does not match a command to user
-        ui.showDefaultMessage();
+        String messages = ui.showDefaultMessage();
 
         // Store the list of command formats as a message
         String commandFormatsText = String.join("\n", TaskListParser.COMMAND_FORMATS);
 
         // Create an exception to handle the unknown command
-        String message = String.format(BmoException.BMO_INVALID_COMMAND_MESSAGE, this.unknownInput);
-        String suggestion = String.format(BmoException.BMO_INVALID_COMMAND_SUGGESTION, commandFormatsText);
-        throw new BmoException(message, suggestion);
+        String exMessage = String.format(BmoException.BMO_INVALID_COMMAND_MESSAGE, messages, this.unknownInput);
+        String exSuggestion = String.format(BmoException.BMO_INVALID_COMMAND_SUGGESTION, commandFormatsText);
+        throw new BmoException(exMessage, exSuggestion);
     }
 }
