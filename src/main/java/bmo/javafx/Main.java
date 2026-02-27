@@ -107,8 +107,8 @@ public class Main extends Application {
         String userText = userInput.getText();
         String bmoText = bmo.getResponse(userInput.getText());
         dialogContainer.getChildren().addAll(
-                new DialogBox(userText, userImage),
-                new DialogBox(bmoText, bmoImage)
+                DialogBox.getUserDialog(userText, userImage),
+                DialogBox.getDukeDialog(bmoText, bmoImage)
         );
         userInput.clear();
     }
