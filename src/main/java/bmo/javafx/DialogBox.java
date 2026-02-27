@@ -54,7 +54,8 @@ public class DialogBox extends HBox {
         switch (commandWord) {
         case TODO, DEADLINE, EVENT -> dialog.getStyleClass().add("add-label");
         case MARK, UNMARK, FIND -> dialog.getStyleClass().add("marked-label");
-        case DELETE -> dialog.getStyleClass().add("delete-label");
+        case DELETE, UNKNOWN -> dialog.getStyleClass().add("delete-label");
+        default -> dialog.getStyleClass().add("response-label");
         }
     }
 
@@ -63,7 +64,7 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getBmoDialog(String text, Image img) {
-        return getBmoDialog(text, img, CommandWord.UNKNOWN);
+        return getBmoDialog(text, img, CommandWord.LIST);
     }
 
     public static DialogBox getBmoDialog(String text, Image img, CommandWord commandWord) {

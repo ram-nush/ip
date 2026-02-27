@@ -11,6 +11,10 @@
     -fx-border-radius: 1em 1em 1em 0;
 }
 
+.response-label {
+    -fx-background-color: cyan;
+}
+
 .add-label {
     -fx-background-color: yellow;
 }
