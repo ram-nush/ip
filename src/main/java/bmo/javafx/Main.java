@@ -18,7 +18,7 @@ public class Main extends Application {
     private static final String BMO_FILE_PATH = "data/bmo.txt";
 
     private Bmo bmo = new Bmo(BMO_FILE_PATH);
-    
+
     @Override
     public void start(Stage stage) {
         try {
@@ -26,6 +26,10 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+
+            stage.setMinHeight(220);
+            stage.setMinWidth(417);
+
             fxmlLoader.<MainWindow>getController().setBmo(bmo);  // inject the Bmo instance
             stage.show();
         } catch (IOException e) {
