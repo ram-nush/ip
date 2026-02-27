@@ -24,7 +24,7 @@ public class Bmo {
     private Ui ui;
     private TaskListParser taskListParser;
     
-    private String startupMessage;
+    private String loadingMessage;
 
     /**
      * Initializes a <code>Bmo</code> object which creates instances of the major components.
@@ -33,7 +33,7 @@ public class Bmo {
      * @param filePath The string which corresponds to the file path where the tasks are stored.
      */
     public Bmo(String filePath) {
-        startupMessage = "";
+        loadingMessage = "";
         
         try {
             // Initialize components
@@ -49,18 +49,18 @@ public class Bmo {
         } catch (StorageCorruptedException e) {
             // Corrupted lines exist, display error message to user
             // taskList will contain tasks from non-corrupted lines
-            startupMessage += ui.showErrorMessage(e);
+            loadingMessage = ui.showErrorMessage(e);
         } catch (BmoException e) {
             // Cannot read from file
-            startupMessage += ui.showErrorMessage(e);
+            loadingMessage += ui.showErrorMessage(e);
 
             // Create empty task list
             taskList = new TaskList();
         }
     }
     
-    public String getStartupErrors() {
-        return startupMessage;
+    public String getLoadingErrors() {
+        return loadingMessage;
     }
     
     public String getWelcomeMessage() {
@@ -76,7 +76,8 @@ public class Bmo {
     }
     
     public String getCommandFormats() {
-        return String.join("\n", TaskListParser.COMMAND_FORMATS);
+        String commandFormatsText = String.join("\n", TaskListParser.COMMAND_FORMATS);
+        return String.format(BmoException.BMO_INVALID_COMMAND_SUGGESTION, commandFormatsText);
     }
     
     public String getClosingMessage() {

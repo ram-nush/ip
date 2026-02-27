@@ -40,13 +40,13 @@ public class MainWindow extends AnchorPane {
     public void setBmo(Bmo b) {
         bmo = b;
 
-        String startupMessage = bmo.getStartupErrors();
+        String loadingMessage = bmo.getLoadingErrors();
         String welcomeMessage = bmo.getWelcomeMessage();
         String commandFormats = bmo.getCommandFormats();
         
-        if (!startupMessage.isEmpty()) {
+        if (!loadingMessage.isEmpty()) {
             dialogContainer.getChildren().addAll(
-                    DialogBox.getBmoDialog(startupMessage, bmoImage)
+                    DialogBox.getBmoDialog(loadingMessage, bmoImage)
             );
         }
 
