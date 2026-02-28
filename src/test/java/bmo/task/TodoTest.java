@@ -1,0 +1,29 @@
+package bmo.task;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+/**
+ * Represents the test class for the <code>Todo</code> class.
+ */
+public class TodoTest {
+    @Test
+    public void toString_todoTask_success() {
+        Todo todo = new Todo("read book");
+        assertEquals("[T][ ] read book", todo.toString());
+    }
+
+    @Test
+    public void saveString_todoTask_success() {
+        Todo todo = new Todo("read book");
+        assertEquals("T | 0 | read book", todo.saveString());
+    }
+
+    @Test
+    public void markAsDone_todoTask_success() {
+        Todo todo = new Todo("read book");
+        todo.markAsDone();
+        assertEquals("[T][X] read book", todo.toString());
+        assertEquals("T | 1 | read book", todo.saveString());
+    }
+}

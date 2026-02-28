@@ -110,7 +110,8 @@ public class TaskList {
     public String listTasks() {
         return IntStream.rangeClosed(1, this.getTotal())
                 .mapToObj(i -> String.format("%d. %s", i, this.tasks.get(i - 1)))
-                .reduce("", (s1, s2) -> String.format("%s\n%s", s1, s2));
+                .reduce("", (s1, s2) -> String.format("%s\n%s", s1, s2))
+                .strip();
     }
 
     /**
@@ -139,7 +140,8 @@ public class TaskList {
     public String saveString() {
         return this.tasks.stream()
                 .map(task -> task.saveString())
-                .reduce("", (s1, s2) -> String.format("%s\n%s", s1, s2));
+                .reduce("", (s1, s2) -> String.format("%s\n%s", s1, s2))
+                .strip();
     }
 
     /**
@@ -152,6 +154,7 @@ public class TaskList {
     public String toString() {
         return this.tasks.stream()
                 .map(task -> task.toString())
-                .reduce("", (s1, s2) -> String.format("%s\n%s", s1, s2));
+                .reduce("", (s1, s2) -> String.format("%s\n%s", s1, s2))
+                .strip();
     }
 }

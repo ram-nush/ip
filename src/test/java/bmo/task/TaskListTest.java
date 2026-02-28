@@ -25,7 +25,7 @@ public class TaskListTest {
         TaskList taskList = new TaskList();
         Task task = new Todo("read book");
         taskList.addTask(task);
-        assertEquals("\n[T][ ] read book", taskList.toString());
+        assertEquals("[T][ ] read book", taskList.toString());
     }
 
     /**
@@ -41,7 +41,7 @@ public class TaskListTest {
                 TaskListParser.INPUT_FORMATTER);
         Task task = new Deadline("return book", due);
         taskList.addTask(task);
-        assertEquals("\n[D][ ] return book (by: Mar 5 2026 1200)", taskList.toString());
+        assertEquals("[D][ ] return book (by: Mar 5 2026 1200)", taskList.toString());
     }
 
     /**
@@ -59,7 +59,7 @@ public class TaskListTest {
                 TaskListParser.INPUT_FORMATTER);
         Task task = new Event("project meeting", start, end);
         taskList.addTask(task);
-        assertEquals("\n[E][ ] project meeting (from: Mar 5 2026 1300, to: Mar 6 2026 1400)", taskList.toString());
+        assertEquals("[E][ ] project meeting (from: Mar 5 2026 1300, to: Mar 6 2026 1400)", taskList.toString());
     }
 
     /**
@@ -84,9 +84,76 @@ public class TaskListTest {
         List<Task> tasks = List.<Task>of(task1, task2, task3);
         TaskList taskList = new TaskList(tasks);
 
-        assertEquals("\n1. [T][ ] read book\n"
+        assertEquals("1. [T][ ] read book\n"
                 + "2. [D][ ] return book (by: Mar 5 2026 1200)\n"
                 + "3. [E][ ] project meeting (from: Mar 5 2026 1300, to: Mar 6 2026 1400)",
                 taskList.listTasks());
+    }
+
+    @Test
+    public void isEmpty_success() {
+        TaskList taskList = new TaskList();
+        assertEquals(true, taskList.isEmpty());
+        taskList.addTask(new Todo("read book"));
+        assertEquals(false, taskList.isEmpty());
+    }
+
+    @Test
+    public void getTotal_success() {
+        TaskList taskList = new TaskList();
+        assertEquals(0, taskList.getTotal());
+        taskList.addTask(new Todo("read book"));
+        assertEquals(1, taskList.getTotal());
+    }
+
+    @Test
+    public void isInRange_success() {
+        TaskList taskList = new TaskList();
+        taskList.addTask(new Todo("read book"));
+        assertEquals(true, taskList.isInRange(1));
+        assertEquals(false, taskList.isInRange(0));
+        assertEquals(false, taskList.isInRange(2));
+    }
+
+    @Test
+    public void markTask_success() {
+        TaskList taskList = new TaskList();
+        taskList.addTask(new Todo("read book"));
+        taskList.markTask(1);
+        assertEquals("[T][X] read book", taskList.toString());
+    }
+
+    @Test
+    public void unmarkTask_success() {
+        TaskList taskList = new TaskList();
+        taskList.addTask(new Todo("read book"));
+        taskList.markTask(1);
+        taskList.unmarkTask(1);
+        assertEquals("[T][ ] read book", taskList.toString());
+    }
+
+    @Test
+    public void deleteTask_success() {
+        TaskList taskList = new TaskList();
+        taskList.addTask(new Todo("read book"));
+        taskList.deleteTask(1);
+        assertEquals(0, taskList.getTotal());
+    }
+
+    @Test
+    public void listMatchingTasks_success() {
+        TaskList taskList = new TaskList();
+        taskList.addTask(new Todo("read book"));
+        taskList.addTask(new Todo("study math"));
+        TaskList matchingTasks = taskList.listMatchingTasks("read");
+        assertEquals(1, matchingTasks.getTotal());
+        assertEquals("[T][ ] read book", matchingTasks.toString());
+    }
+
+    @Test
+    public void saveString_success() {
+        TaskList taskList = new TaskList();
+        taskList.addTask(new Todo("read book"));
+        assertEquals("T | 0 | read book", taskList.saveString());
     }
 }
