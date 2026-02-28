@@ -21,7 +21,7 @@ public class FindCommand extends Command {
      * @param keyword The String containing a keyword to be matched
      */
     public FindCommand(String keyword) {
-        super(CommandWord.FIND, false);
+        super(CommandWord.FIND);
         this.keyword = keyword;
     }
 

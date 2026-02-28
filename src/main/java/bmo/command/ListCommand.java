@@ -12,7 +12,7 @@ import bmo.ui.Ui;
 public class ListCommand extends Command {
 
     public ListCommand() {
-        super(CommandWord.LIST, false);
+        super(CommandWord.LIST);
     }
 
     /**

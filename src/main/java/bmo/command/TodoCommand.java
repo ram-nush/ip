@@ -23,7 +23,7 @@ public class TodoCommand extends Command {
      * @param description The String containing a description of the task
      */
     public TodoCommand(String description) {
-        super(CommandWord.TODO, false);
+        super(CommandWord.TODO);
         this.description = description;
     }
 

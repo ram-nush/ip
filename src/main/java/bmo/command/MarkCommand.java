@@ -22,7 +22,7 @@ public class MarkCommand extends Command {
      * @param index The index corresponding to the task to be marked as done
      */
     public MarkCommand(int index) {
-        super(CommandWord.MARK, false);
+        super(CommandWord.MARK);
         this.index = index;
     }
 

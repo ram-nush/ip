@@ -24,7 +24,7 @@ public class UnknownCommand extends Command {
      * @param unknownInput The string entered by the user which could not be resolved to a command.
      */
     public UnknownCommand(String unknownInput) {
-        super(CommandWord.UNKNOWN, false);
+        super(CommandWord.UNKNOWN);
         this.unknownInput = unknownInput;
     }
 

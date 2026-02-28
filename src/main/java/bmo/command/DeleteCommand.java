@@ -23,7 +23,7 @@ public class DeleteCommand extends Command {
      * @param index The index corresponding to the task to be deleted
      */
     public DeleteCommand(int index) {
-        super(CommandWord.DELETE, false);
+        super(CommandWord.DELETE);
         this.index = index;
     }
 

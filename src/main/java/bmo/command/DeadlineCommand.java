@@ -28,7 +28,7 @@ public class DeadlineCommand extends Command {
      * @param due The LocalDateTime object corresponding to the date and time the task is due
      */
     public DeadlineCommand(String description, LocalDateTime due) {
-        super(CommandWord.DEADLINE, false);
+        super(CommandWord.DEADLINE);
         this.description = description;
         this.due = due;
     }

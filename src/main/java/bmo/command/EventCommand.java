@@ -30,7 +30,7 @@ public class EventCommand extends Command {
      * @param end The LocalDateTime object corresponding to the date and time the event ends
      */
     public EventCommand(String description, LocalDateTime start, LocalDateTime end) {
-        super(CommandWord.EVENT, false);
+        super(CommandWord.EVENT);
         this.description = description;
         this.start = start;
         this.end = end;

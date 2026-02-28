@@ -22,7 +22,7 @@ public class UnmarkCommand extends Command {
      * @param index The index corresponding to the task to be marked as not done
      */
     public UnmarkCommand(int index) {
-        super(CommandWord.UNMARK, false);
+        super(CommandWord.UNMARK);
         this.index = index;
     }
 

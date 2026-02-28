@@ -11,19 +11,13 @@ import bmo.ui.Ui;
  */
 public abstract class Command {
     protected CommandWord commandWord;
-    protected boolean isExit;
 
-    Command(CommandWord commandWord, boolean isExit) {
+    Command(CommandWord commandWord) {
         this.commandWord = commandWord;
-        this.isExit = isExit;
     }
 
     public CommandWord getCommandWord() {
         return this.commandWord;
-    }
-
-    public boolean isExit() {
-        return this.isExit;
     }
 
     /**

@@ -12,7 +12,7 @@ import bmo.ui.Ui;
 public class ByeCommand extends Command {
 
     public ByeCommand() {
-        super(CommandWord.BYE, true);
+        super(CommandWord.BYE);
     }
 
     /**
