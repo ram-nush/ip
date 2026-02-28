@@ -94,6 +94,7 @@ public class TaskListParser {
         // Command name does not match any other command
         // Provide command name to parser for reference
         case UNKNOWN -> new UnknownCommandParser(commandName);
+        default -> throw new AssertionError(commandName);
         };
 
         // Parse the parameterText to return a Command
