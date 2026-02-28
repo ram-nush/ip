@@ -42,13 +42,14 @@ public class Task {
     }
 
     /**
-     * Returns whether the description of this task contains the provided keyword.
+     * Returns whether the description of this task contains all characters
+     * of the provided keyword.
      * This match is case-insensitive and ignores non-alphanumeric characters.
      *
      * @param keyword a String that represents the keyword to match
-     * @return true if the description contains the keyword, otherwise false
+     * @return true if the description contains the full keyword, otherwise false
      */
-    public boolean hasMatch(String keyword) {
+    public boolean hasFullMatch(String keyword) {
         // Remove non-alphanumeric characters and converts description to lowercase
         String description = this.description.toLowerCase();
         String cleanedDescription = description.replaceAll(REMOVE_SYMBOL_REGEX, "");
@@ -64,6 +65,32 @@ public class Task {
 
         // Checks whether the cleaned description contains the cleaned keyword
         return cleanedDescription.contains(cleanedKeyword);
+    }
+
+    /**
+     * Returns whether the description of this task contains a prefix of the
+     * provided keyword (at least the first character appears somewhere).
+     * This match is case-insensitive and ignores non-alphanumeric characters.
+     *
+     * @param keyword a String that represents the keyword to match
+     * @return true if the description contains a prefix of the keyword, otherwise false
+     */
+    public boolean hasPartialMatch(String keyword) {
+        // Remove non-alphanumeric characters and converts description to lowercase
+        String description = this.description.toLowerCase();
+        String cleanedDescription = description.replaceAll(REMOVE_SYMBOL_REGEX, "");
+
+        // Converts keyword to lowercase
+        keyword = keyword.toLowerCase();
+        String cleanedKeyword = keyword.replaceAll(REMOVE_SYMBOL_REGEX, "");
+
+        // If only non-alphanumeric characters in keyword, use the given keyword
+        if (cleanedKeyword.isEmpty()) {
+            return description.contains(keyword.substring(0, 1));
+        }
+
+        // Checks whether the cleaned description contains the first character of cleaned keyword
+        return cleanedDescription.contains(cleanedKeyword.substring(0, 1));
     }
 
     /**

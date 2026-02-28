@@ -123,7 +123,7 @@ public class TaskList {
     public TaskList listMatchingTasks(String keyword) {
         // Filter the list for tasks which contain the keyword
         List<Task> matchingTasks = this.tasks.stream()
-                .filter(task -> task.hasMatch(keyword))
+                .filter(task -> task.hasFullMatch(keyword) || task.hasPartialMatch(keyword))
                 .toList();
 
         // Create a TaskList using the filtered list

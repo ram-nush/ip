@@ -3,6 +3,7 @@ package bmo;
 import bmo.command.Command;
 import bmo.command.CommandWord;
 import bmo.exception.BmoException;
+import bmo.exception.StorageCorruptedException;
 import bmo.parser.TaskListParser;
 import bmo.storage.Storage;
 import bmo.storage.StorageParser;
@@ -45,7 +46,12 @@ public class Bmo {
             // Determine if there exist corrupted lines stored
             StorageParser.checkCorruptedLinesExist(storage);
 
-        } catch (BmoException e) {
+        } catch (StorageCorruptedException e) {
+            loadingMessage = ui.getErrorMessage(e);
+
+            // there may exist tasks in taskList, keep them as it is
+        }
+        catch (BmoException e) {
             loadingMessage = ui.getErrorMessage(e);
 
             // Create empty task list
