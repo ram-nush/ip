@@ -3,6 +3,7 @@ package bmo.parser;
 import java.time.LocalDateTime;
 
 import bmo.command.Command;
+import bmo.command.CommandWord;
 import bmo.command.DeadlineCommand;
 import bmo.exception.BmoException;
 

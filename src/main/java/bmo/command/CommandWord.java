@@ -1,4 +1,4 @@
-package bmo.parser;
+package bmo.command;
 
 /**
  * Represents a command determined by a line of user input. A <code>CommandWord</code>

@@ -3,7 +3,7 @@ package bmo.javafx;
 import java.io.IOException;
 import java.util.Collections;
 
-import bmo.parser.CommandWord;
+import bmo.command.CommandWord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

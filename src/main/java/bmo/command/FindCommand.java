@@ -1,6 +1,5 @@
 package bmo.command;
 
-import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.TaskList;
 import bmo.ui.Ui;

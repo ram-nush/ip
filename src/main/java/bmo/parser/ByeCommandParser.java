@@ -2,6 +2,7 @@ package bmo.parser;
 
 import bmo.command.ByeCommand;
 import bmo.command.Command;
+import bmo.command.CommandWord;
 
 /**
  * Represents a specific command parser which returns the respective command.

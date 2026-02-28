@@ -2,7 +2,6 @@ package bmo.command;
 
 import java.time.LocalDateTime;
 
-import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.Event;
 import bmo.task.Task;

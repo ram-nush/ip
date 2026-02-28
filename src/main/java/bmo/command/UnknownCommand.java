@@ -1,7 +1,6 @@
 package bmo.command;
 
 import bmo.exception.BmoException;
-import bmo.parser.CommandWord;
 import bmo.parser.TaskListParser;
 import bmo.storage.Storage;
 import bmo.task.TaskList;

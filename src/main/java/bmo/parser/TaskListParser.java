@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import bmo.command.Command;
+import bmo.command.CommandWord;
 import bmo.exception.BmoException;
 import bmo.storage.Storage;
 import bmo.task.TaskList;
