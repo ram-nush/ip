@@ -86,14 +86,8 @@ public class Bmo {
         return ui.showByeMessage();
     }
 
-    public boolean isExitInput(String input) throws BmoException {
-        // Parse user input to create a Command object
-        Command command = taskListParser.parseCommand(input, ui, taskList, storage);
-
-        // Determine whether this is a final command
-        boolean isExit = command.isExit();
-
-        return isExit;
+    public boolean hasExitInput() throws BmoException {
+        return commandWord.isExitWord();
     }
 
     /**

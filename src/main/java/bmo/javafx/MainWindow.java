@@ -63,8 +63,13 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
-        String input = userInput.getText();
+        String input = userInput.getText().strip();
         CommandWord commandWord = CommandWord.UNKNOWN;
+
+        if (input.isEmpty()) {
+            userInput.clear();
+            return;
+        }
 
         try {
             String response = bmo.getResponse(input);
@@ -74,7 +79,7 @@ public class MainWindow extends AnchorPane {
                     DialogBox.getBmoDialog(response, bmoImage, commandWord)
             );
 
-            if (bmo.isExitInput(input)) {
+            if (bmo.hasExitInput()) {
                 String closingMessage = bmo.getClosingMessage();
                 dialogContainer.getChildren().addAll(
                         DialogBox.getBmoDialog(closingMessage, bmoImage, commandWord)

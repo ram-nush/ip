@@ -6,16 +6,26 @@ package bmo.parser;
  * <code>CommandWord.LIST</code>
  */
 public enum CommandWord {
-    LIST,
-    TODO,
-    DEADLINE,
-    EVENT,
-    FIND,
-    MARK,
-    UNMARK,
-    DELETE,
-    BYE,
-    UNKNOWN;
+    LIST(false),
+    TODO(false),
+    DEADLINE(false),
+    EVENT(false),
+    FIND(false),
+    MARK(false),
+    UNMARK(false),
+    DELETE(false),
+    BYE(true),
+    UNKNOWN(false);
+
+    private final boolean isExit;
+
+    CommandWord(boolean isExit) {
+        this.isExit = isExit;
+    }
+
+    public boolean isExitWord() {
+        return this.isExit;
+    }
 
     /**
      * Returns the lowercase name of the CommandWord

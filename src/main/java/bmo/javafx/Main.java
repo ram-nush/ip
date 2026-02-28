@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import bmo.Bmo;
 
 /**
- * A GUI for Duke using FXML.
+ * A GUI for Bmo using FXML.
  */
 public class Main extends Application {
 
