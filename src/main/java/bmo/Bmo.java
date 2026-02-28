@@ -73,7 +73,7 @@ public class Bmo {
         messages += ui.showRetrieveMessage(retrieveText);
 
         // Display welcome message to user
-        messages += ui.showWelcomeMessage();
+        messages += "\n" + ui.showWelcomeMessage();
         return messages;
     }
 
