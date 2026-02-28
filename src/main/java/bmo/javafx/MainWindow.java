@@ -47,7 +47,7 @@ public class MainWindow extends AnchorPane {
 
         if (!loadingMessage.isEmpty()) {
             dialogContainer.getChildren().addAll(
-                    DialogBox.getBmoDialog(loadingMessage, bmoImage)
+                    DialogBox.getBmoDialog(loadingMessage, bmoImage, CommandWord.UNKNOWN)
             );
         }
 
@@ -97,6 +97,7 @@ public class MainWindow extends AnchorPane {
 
             // Start the timer
             delay.play();
+
         } catch (BmoException e) {
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage),

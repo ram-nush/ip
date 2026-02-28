@@ -15,6 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 /**
  * Represents a dialog box consisting of an ImageView to represent the speaker's face
@@ -24,7 +26,7 @@ public class DialogBox extends HBox {
     @FXML
     private Label dialog;
     @FXML
-    private ImageView displayPicture;
+    private Circle profileBubble;
 
     private DialogBox(String text, Image img) {
         try {
@@ -37,7 +39,7 @@ public class DialogBox extends HBox {
         }
 
         dialog.setText(text);
-        displayPicture.setImage(img);
+        profileBubble.setFill(new ImagePattern(img));
 
         dialog.setMinHeight(Region.USE_PREF_SIZE);
         this.setMinHeight(Region.USE_PREF_SIZE);
@@ -58,7 +60,11 @@ public class DialogBox extends HBox {
         switch (commandWord) {
         case TODO, DEADLINE, EVENT -> dialog.getStyleClass().add("add-label");
         case MARK, UNMARK, FIND -> dialog.getStyleClass().add("marked-label");
-        case DELETE, UNKNOWN -> dialog.getStyleClass().add("delete-label");
+        case DELETE -> dialog.getStyleClass().add("delete-label");
+        case UNKNOWN -> {
+            dialog.getStyleClass().add("unknown-label");
+            dialog.getStyleClass().add("error-label");
+        }
         case LIST, BYE -> dialog.getStyleClass().add("response-label");
         default -> throw new AssertionError(commandWord);
         }
