@@ -11,19 +11,21 @@ import bmo.task.TaskList;
  * unknown command.
  */
 public class Ui {
-    private static final String RETRIEVE_STRING = "The following tasks have been retrieved:";
+    private static final String RETRIEVE_STRING = "Processing... Data!"
+            + "\nHere are the tasks I found in my system!";
     private static final String WELCOME_STRING = "Hello! I'm BMO\nWhat can I do for you?";
-    private static final String LIST_STRING = "Here are the tasks in your list:";
-    private static final String FIND_STRING = "Here are the matching tasks in your list:";
-    private static final String ADD_STRING = "Got it. I've added this task:\n%s\n"
-            + "Now you have %d tasks in the list.";
-    private static final String MARK_STRING = "Nice! I've marked this task as done:\n%s";
-    private static final String UNMARK_STRING = "OK, I've marked this task as not done yet:\n%s";
-    private static final String DELETE_STRING = "Noted. I've removed this task:\n%s\n"
-            + "Now you have %d tasks in the list.";
-    private static final String DEFAULT_STRING = "OOPS!!! I'm sorry, but I don't know what that means :-(";
-    private static final String SAVE_STRING = "The following tasks will be saved:";
-    private static final String BYE_STRING = "Bye. Hope to see you again soon!";
+    private static final String LIST_STRING = "Look at all these tasks!";
+    private static final String FIND_STRING = "These tasks might be what you are looking for:";
+    private static final String ADD_STRING = "Another task? I'll make space for this task:\n%s\n"
+            + "Now you have %d tasks.";
+    private static final String MARK_STRING = "Awesome! I've marked this task as done:\n%s";
+    private static final String UNMARK_STRING = "Oh no, I've marked this task as not done yet:\n%s";
+    private static final String DELETE_STRING = "More space for me! I've removed this task:\n%s\n"
+            + "Now you have %d tasks.";
+    private static final String DEFAULT_STRING = "I am limited by my programming to"
+            + " understand what you are saying. Please try again!";
+    private static final String SAVE_STRING = "The following tasks will be stored in my system!";
+    private static final String BYE_STRING = "Battery low. Shutdown.";
 
     /**
      * Returns a formatted message with the list of tasks retrieved
