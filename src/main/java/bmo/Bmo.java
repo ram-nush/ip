@@ -40,20 +40,13 @@ public class Bmo {
             ui = new Ui();
             taskListParser = new TaskListParser();
 
-            // Load lines from storage into tasks
             taskList = new TaskList(storage.load());
 
-            // Determine if there exist corrupted lines stored
             StorageParser.checkCorruptedLinesExist(storage);
-        } catch (StorageCorruptedException e) {
-            // Corrupted lines exist, display error message to user
-            // taskList will contain tasks from non-corrupted lines
-            loadingMessage = ui.getErrorMessage(e);
-        } catch (BmoException e) {
-            // Cannot read from file
-            loadingMessage += ui.getErrorMessage(e);
 
-            // Create empty task list
+        } catch (BmoException e) {
+            loadingMessage = ui.getErrorMessage(e);
+
             taskList = new TaskList();
         }
     }
@@ -65,11 +58,9 @@ public class Bmo {
     public String getWelcomeMessage() {
         String messages = "";
 
-        // Display retrieved tasks to user
         String retrieveText = taskList.toString();
         messages += ui.getRetrieveMessage(retrieveText);
 
-        // Display welcome message to user
         messages += ui.getWelcomeMessage();
         return messages;
     }
@@ -91,16 +82,10 @@ public class Bmo {
      * Generates a response for the user's chat message.
      */
     public String getResponse(String input) throws BmoException {
-        // Parse user input to create a Command object
         Command command = taskListParser.parseCommand(input, ui, taskList, storage);
-
-        // Retrieve the string from executing the command
-        String response = command.execute(taskList, ui, storage);
-
-        // Get the type of command
         commandWord = command.getCommandWord();
 
-        return response;
+        return command.execute(taskList, ui, storage);
     }
 
     public CommandWord getCommandWord() {
