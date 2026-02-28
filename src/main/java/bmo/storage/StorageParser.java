@@ -76,7 +76,7 @@ public class StorageParser {
             }
         } catch (StorageCorruptedException e) {
             // Invalid task parameters, thrown from parsing specific tasks
-            // No additional info required, throw as it is
+            // No additional info required, throw to Storage
             throw e;
         }
 
@@ -92,6 +92,7 @@ public class StorageParser {
      */
     public static void checkCorruptedLinesExist(Storage storage)
             throws StorageCorruptedException {
+
         if (storage.hasCorruptedLines()) {
             // Some lines are corrupted
             String message = StorageCorruptedException.BMO_CORRUPTED_LINES_MESSAGE;
@@ -115,6 +116,7 @@ public class StorageParser {
      */
     public static void checkParamsLength(String[] parameters, int expectedLength)
             throws StorageCorruptedException {
+
         if (parameters.length != expectedLength) {
             // Parameter array does not match expected number of parameters
             String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
@@ -138,6 +140,7 @@ public class StorageParser {
      */
     public static void checkIsDoneValid(String[] parameters, String isDone)
             throws StorageCorruptedException {
+
         if (!isDone.equals("0") && !isDone.equals("1")) {
             // isDone property of Task is not a valid string
             String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
@@ -161,6 +164,7 @@ public class StorageParser {
      */
     public static void checkDescriptionValid(String[] parameters, String description)
             throws StorageCorruptedException {
+
         if (description.isEmpty()) {
             // Description parameter is not empty
             String message = StorageCorruptedException.BMO_CORRUPTED_LINE_MESSAGE;
@@ -225,7 +229,6 @@ public class StorageParser {
         checkIsDoneValid(parameters, isDone);
         checkDescriptionValid(parameters, description);
 
-        // Create task
         Task task = new Todo(description);
 
         // Mark task as done where necessary
@@ -260,7 +263,6 @@ public class StorageParser {
 
         LocalDateTime dueDateTime = parseDateTime(parameters, due);
 
-        // Create task
         Task task = new Deadline(description, dueDateTime);
 
         // Mark task as done where necessary
@@ -297,7 +299,6 @@ public class StorageParser {
         LocalDateTime startDateTime = parseDateTime(parameters, start);
         LocalDateTime endDateTime = parseDateTime(parameters, end);
 
-        // Create task
         Task task = new Event(description, startDateTime, endDateTime);
 
         // Mark task as done where necessary

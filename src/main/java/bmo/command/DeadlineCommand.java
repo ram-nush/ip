@@ -2,7 +2,6 @@ package bmo.command;
 
 import java.time.LocalDateTime;
 
-import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.Deadline;
 import bmo.task.Task;
@@ -29,7 +28,7 @@ public class DeadlineCommand extends Command {
      * @param due The LocalDateTime object corresponding to the date and time the task is due
      */
     public DeadlineCommand(String description, LocalDateTime due) {
-        super(CommandWord.DEADLINE, false);
+        super(CommandWord.DEADLINE);
         this.description = description;
         this.due = due;
     }
@@ -48,9 +47,8 @@ public class DeadlineCommand extends Command {
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) {
         Task deadlineTask = new Deadline(this.description, this.due);
-
         taskList.addTask(deadlineTask);
 
-        return ui.showAddMessage(deadlineTask, taskList);
+        return ui.getAddMessage(deadlineTask, taskList);
     }
 }

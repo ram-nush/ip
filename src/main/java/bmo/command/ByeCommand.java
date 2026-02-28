@@ -1,7 +1,6 @@
 package bmo.command;
 
 import bmo.exception.BmoException;
-import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.TaskList;
 import bmo.ui.Ui;
@@ -13,7 +12,7 @@ import bmo.ui.Ui;
 public class ByeCommand extends Command {
 
     public ByeCommand() {
-        super(CommandWord.BYE, true);
+        super(CommandWord.BYE);
     }
 
     /**
@@ -35,11 +34,11 @@ public class ByeCommand extends Command {
         String saveText = taskList.saveString();
 
         // Display lines of text to be stored to user
-        String messages = ui.showSaveMessage(saveText);
+        String messages = ui.getSaveMessage(saveText);
 
         // Store the lines in the save file
         storage.save(saveText);
-        
+
         return messages;
     }
 }

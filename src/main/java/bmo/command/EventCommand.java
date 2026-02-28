@@ -2,7 +2,6 @@ package bmo.command;
 
 import java.time.LocalDateTime;
 
-import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.Event;
 import bmo.task.Task;
@@ -31,7 +30,7 @@ public class EventCommand extends Command {
      * @param end The LocalDateTime object corresponding to the date and time the event ends
      */
     public EventCommand(String description, LocalDateTime start, LocalDateTime end) {
-        super(CommandWord.EVENT, false);
+        super(CommandWord.EVENT);
         this.description = description;
         this.start = start;
         this.end = end;
@@ -51,9 +50,8 @@ public class EventCommand extends Command {
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) {
         Task eventTask = new Event(this.description, this.start, this.end);
-
         taskList.addTask(eventTask);
 
-        return ui.showAddMessage(eventTask, taskList);
+        return ui.getAddMessage(eventTask, taskList);
     }
 }

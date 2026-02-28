@@ -1,6 +1,5 @@
 package bmo.command;
 
-import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.Task;
 import bmo.task.TaskList;
@@ -23,7 +22,7 @@ public class MarkCommand extends Command {
      * @param index The index corresponding to the task to be marked as done
      */
     public MarkCommand(int index) {
-        super(CommandWord.MARK, false);
+        super(CommandWord.MARK);
         this.index = index;
     }
 
@@ -41,6 +40,6 @@ public class MarkCommand extends Command {
     public String execute(TaskList taskList, Ui ui, Storage storage) {
         Task markTask = taskList.markTask(this.index);
 
-        return ui.showMarkMessage(markTask);
+        return ui.getMarkMessage(markTask);
     }
 }

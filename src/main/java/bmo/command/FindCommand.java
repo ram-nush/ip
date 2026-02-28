@@ -1,6 +1,5 @@
 package bmo.command;
 
-import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.TaskList;
 import bmo.ui.Ui;
@@ -22,7 +21,7 @@ public class FindCommand extends Command {
      * @param keyword The String containing a keyword to be matched
      */
     public FindCommand(String keyword) {
-        super(CommandWord.FIND, false);
+        super(CommandWord.FIND);
         this.keyword = keyword;
     }
 
@@ -42,6 +41,6 @@ public class FindCommand extends Command {
         TaskList filteredTasks = taskList.listMatchingTasks(this.keyword);
 
         // List the tasks inside the new TaskList
-        return ui.showMatchingTasks(filteredTasks);
+        return ui.getMatchingTasks(filteredTasks);
     }
 }

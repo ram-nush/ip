@@ -1,6 +1,5 @@
 package bmo.command;
 
-import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.Task;
 import bmo.task.TaskList;
@@ -23,7 +22,7 @@ public class UnmarkCommand extends Command {
      * @param index The index corresponding to the task to be marked as not done
      */
     public UnmarkCommand(int index) {
-        super(CommandWord.UNMARK, false);
+        super(CommandWord.UNMARK);
         this.index = index;
     }
 
@@ -41,6 +40,6 @@ public class UnmarkCommand extends Command {
     public String execute(TaskList taskList, Ui ui, Storage storage) {
         Task unmarkTask = taskList.unmarkTask(this.index);
 
-        return ui.showUnmarkMessage(unmarkTask);
+        return ui.getUnmarkMessage(unmarkTask);
     }
 }

@@ -1,6 +1,5 @@
 package bmo.command;
 
-import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.Task;
 import bmo.task.TaskList;
@@ -24,7 +23,7 @@ public class TodoCommand extends Command {
      * @param description The String containing a description of the task
      */
     public TodoCommand(String description) {
-        super(CommandWord.TODO, false);
+        super(CommandWord.TODO);
         this.description = description;
     }
 
@@ -42,9 +41,8 @@ public class TodoCommand extends Command {
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) {
         Task todoTask = new Todo(this.description);
-
         taskList.addTask(todoTask);
 
-        return ui.showAddMessage(todoTask, taskList);
+        return ui.getAddMessage(todoTask, taskList);
     }
 }
