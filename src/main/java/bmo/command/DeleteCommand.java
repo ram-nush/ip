@@ -1,6 +1,5 @@
 package bmo.command;
 
-import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.Task;
 import bmo.task.TaskList;
@@ -24,7 +23,7 @@ public class DeleteCommand extends Command {
      * @param index The index corresponding to the task to be deleted
      */
     public DeleteCommand(int index) {
-        super(CommandWord.DELETE, false);
+        super(CommandWord.DELETE);
         this.index = index;
     }
 
@@ -42,6 +41,6 @@ public class DeleteCommand extends Command {
     public String execute(TaskList taskList, Ui ui, Storage storage) {
         Task deleteTask = taskList.deleteTask(this.index);
 
-        return ui.showDeleteMessage(deleteTask, taskList);
+        return ui.getDeleteMessage(deleteTask, taskList);
     }
 }

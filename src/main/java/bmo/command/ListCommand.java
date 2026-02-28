@@ -1,6 +1,5 @@
 package bmo.command;
 
-import bmo.parser.CommandWord;
 import bmo.storage.Storage;
 import bmo.task.TaskList;
 import bmo.ui.Ui;
@@ -13,7 +12,7 @@ import bmo.ui.Ui;
 public class ListCommand extends Command {
 
     public ListCommand() {
-        super(CommandWord.LIST, false);
+        super(CommandWord.LIST);
     }
 
     /**
@@ -27,6 +26,6 @@ public class ListCommand extends Command {
      */
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) {
-        return ui.showTasks(taskList);
+        return ui.getTasks(taskList);
     }
 }

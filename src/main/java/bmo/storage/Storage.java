@@ -83,7 +83,6 @@ public class Storage {
                 tasks.add(task);
             } catch (StorageCorruptedException e) {
                 // Parsing a corrupted line can throw StorageCorruptedException
-                // No need to throw error, otherwise other valid tasks are lost
                 // Catch and save corrupted line to storage
                 this.corruptedLines.add(line);
             }

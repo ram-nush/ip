@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bmo.command.Command;
+import bmo.command.CommandWord;
 import bmo.exception.BmoException;
 
 /**

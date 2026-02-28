@@ -1,7 +1,6 @@
 package bmo.command;
 
 import bmo.exception.BmoException;
-import bmo.parser.CommandWord;
 import bmo.parser.TaskListParser;
 import bmo.storage.Storage;
 import bmo.task.TaskList;
@@ -25,7 +24,7 @@ public class UnknownCommand extends Command {
      * @param unknownInput The string entered by the user which could not be resolved to a command.
      */
     public UnknownCommand(String unknownInput) {
-        super(CommandWord.UNKNOWN, false);
+        super(CommandWord.UNKNOWN);
         this.unknownInput = unknownInput;
     }
 
@@ -42,7 +41,7 @@ public class UnknownCommand extends Command {
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) throws BmoException {
         // Display user input does not match a command to user
-        String messages = ui.showDefaultMessage();
+        String messages = ui.getDefaultMessage();
 
         // Store the list of command formats as a message
         String commandFormatsText = String.join("\n", TaskListParser.COMMAND_FORMATS);

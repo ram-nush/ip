@@ -3,6 +3,7 @@ package bmo.parser;
 import static bmo.task.Task.REMOVE_SYMBOL_REGEX;
 
 import bmo.command.Command;
+import bmo.command.CommandWord;
 import bmo.command.FindCommand;
 import bmo.exception.BmoException;
 

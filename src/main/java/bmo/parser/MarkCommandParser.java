@@ -1,6 +1,7 @@
 package bmo.parser;
 
 import bmo.command.Command;
+import bmo.command.CommandWord;
 import bmo.command.MarkCommand;
 import bmo.exception.BmoException;
 

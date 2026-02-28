@@ -2,7 +2,7 @@ package bmo.javafx;
 
 import bmo.Bmo;
 import bmo.exception.BmoException;
-import bmo.parser.CommandWord;
+import bmo.command.CommandWord;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -79,21 +79,24 @@ public class MainWindow extends AnchorPane {
                     DialogBox.getBmoDialog(response, bmoImage, commandWord)
             );
 
-            if (bmo.hasExitInput()) {
-                String closingMessage = bmo.getClosingMessage();
-                dialogContainer.getChildren().addAll(
-                        DialogBox.getBmoDialog(closingMessage, bmoImage, commandWord)
-                );
-
-                // Create delay timer
-                PauseTransition delay = new PauseTransition(Duration.seconds(3));
-
-                // Link it to closing the application
-                delay.setOnFinished(e -> Platform.exit());
-
-                // Start the timer
-                delay.play();
+            boolean canExit = bmo.hasExitInput();
+            if (!canExit) {
+                return;
             }
+
+            String closingMessage = bmo.getClosingMessage();
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getBmoDialog(closingMessage, bmoImage, commandWord)
+            );
+
+            // Create delay timer
+            PauseTransition delay = new PauseTransition(Duration.seconds(3));
+
+            // Link it to closing the application
+            delay.setOnFinished(e -> Platform.exit());
+
+            // Start the timer
+            delay.play();
         } catch (BmoException e) {
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage),
