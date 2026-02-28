@@ -25,6 +25,10 @@ public class Event extends Task {
      */
     public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description);
+
+        assert start != null : "Start datetime cannot be null";
+        assert end != null : "End datetime cannot be null";
+
         this.start = start;
         this.end = end;
     }
