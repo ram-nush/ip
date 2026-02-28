@@ -90,6 +90,7 @@ public class TaskListParser {
         }
         case BYE -> new ByeCommandParser();
         case UNKNOWN -> new UnknownCommandParser(commandName);
+        default -> throw new AssertionError(commandName);
         };
 
         return commandParser.parse(parameterText);

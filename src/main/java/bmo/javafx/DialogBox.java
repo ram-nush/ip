@@ -59,7 +59,8 @@ public class DialogBox extends HBox {
         case TODO, DEADLINE, EVENT -> dialog.getStyleClass().add("add-label");
         case MARK, UNMARK, FIND -> dialog.getStyleClass().add("marked-label");
         case DELETE, UNKNOWN -> dialog.getStyleClass().add("delete-label");
-        default -> dialog.getStyleClass().add("response-label");
+        case LIST, BYE -> dialog.getStyleClass().add("response-label");
+        default -> throw new AssertionError(commandWord);
         }
     }
 
