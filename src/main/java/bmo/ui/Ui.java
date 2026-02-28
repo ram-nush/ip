@@ -33,7 +33,7 @@ public class Ui {
      */
     public String showRetrieveMessage(String message) {
         String output = String.format("%s\n%s", RETRIEVE_STRING, message);
-        
+
         this.printMessage(output);
         return output;
     }
@@ -43,7 +43,7 @@ public class Ui {
      */
     public String showWelcomeMessage() {
         String output = WELCOME_STRING;
-        
+
         this.printMessage(output);
         return output;
     }
@@ -55,9 +55,9 @@ public class Ui {
      */
     public String showTasks(TaskList tasks) {
         String output = String.format("%s\n%s", LIST_STRING, tasks.listTasks());
-        
+
         this.printMessage(output);
-        return output;
+        return output.trim();
     }
 
     /**
@@ -68,9 +68,9 @@ public class Ui {
      */
     public String showMatchingTasks(TaskList tasks) {
         String output = String.format("%s\n%s", FIND_STRING, tasks.listTasks());
-        
+
         this.printMessage(output);
-        return output;
+        return output.trim();
     }
 
     /**
@@ -81,7 +81,7 @@ public class Ui {
      */
     public String showAddMessage(Task addTask, TaskList tasks) {
         String output = String.format(ADD_STRING, addTask, tasks.getTotal());
-        
+
         this.printMessage(output);
         return output;
     }
@@ -93,7 +93,7 @@ public class Ui {
      */
     public String showMarkMessage(Task markTask) {
         String output = String.format(MARK_STRING, markTask);
-        
+
         this.printMessage(output);
         return output;
     }
@@ -105,7 +105,7 @@ public class Ui {
      */
     public String showUnmarkMessage(Task unmarkTask) {
         String output = String.format(UNMARK_STRING, unmarkTask);
-        
+
         this.printMessage(output);
         return output;
     }
@@ -118,7 +118,7 @@ public class Ui {
      */
     public String showDeleteMessage(Task deleteTask, TaskList tasks) {
         String output = String.format(DELETE_STRING, deleteTask, tasks.getTotal());
-        
+
         this.printMessage(output);
         return output;
     }
@@ -128,7 +128,7 @@ public class Ui {
      */
     public String showErrorMessage(BmoException e) {
         String output = e.toString();
-        
+
         this.printMessage(output);
         return output;
     }
@@ -138,7 +138,7 @@ public class Ui {
      */
     public String showDefaultMessage() {
         String output = DEFAULT_STRING;
-        
+
         this.printMessage(output);
         return output;
     }
@@ -150,7 +150,7 @@ public class Ui {
      */
     public String showSaveMessage(String message) {
         String output = String.format("%s\n%s", SAVE_STRING, message);
-        
+
         this.printMessage(output);
         return output;
     }
@@ -160,7 +160,7 @@ public class Ui {
      */
     public String showByeMessage() {
         String output = BYE_STRING;
-        
+
         this.printMessage(output);
         return output;
     }

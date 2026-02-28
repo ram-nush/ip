@@ -31,12 +31,17 @@ public class FindCommandParser extends CommandParser {
         // Extract keyword parameter
         String keyword = parameters;
 
-        // Remove all non-alphanumeric characters
-        keyword = keyword.replaceAll(REMOVE_SYMBOL_REGEX, "");
-
-        // Ensure keyword has at least one alphanumeric character
+        // Ensure keyword has at least one character
         checkNonEmpty(keyword, this.paramNames[0], this.commandWord, TaskListParser.FIND_COMMAND_FORMAT);
 
-        return new FindCommand(keyword);
+        // Remove all non-alphanumeric characters (ignore when searching for matches)
+        String cleanedKeyword = keyword.replaceAll(REMOVE_SYMBOL_REGEX, "");
+
+        // If there are no non-alphanumeric characters, use the original keyword
+        if (cleanedKeyword.isEmpty()) {
+            return new FindCommand(keyword);
+        }
+
+        return new FindCommand(cleanedKeyword);
     }
 }

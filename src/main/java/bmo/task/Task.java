@@ -51,8 +51,7 @@ public class Task {
                 .toLowerCase();
 
         // Remove non-alphanumeric characters and converts keyword to lowercase
-        String cleanedKeyword = keyword.replaceAll(REMOVE_SYMBOL_REGEX, "")
-                .toLowerCase();
+        String cleanedKeyword = keyword.toLowerCase();
 
         // Checks whether the cleaned description contains the cleaned keyword
         return cleanedDescription.contains(cleanedKeyword);

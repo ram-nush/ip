@@ -105,7 +105,7 @@ public class TaskList {
         for (int i = 1; i <= this.tasks.size(); i++) {
             listOutput += String.format("%d. %s\n", i, this.tasks.get(i - 1));
         }
-        return listOutput.trim();
+        return listOutput;
     }
 
     /**
