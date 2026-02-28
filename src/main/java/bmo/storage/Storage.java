@@ -100,6 +100,8 @@ public class Storage {
      * @throws BmoException If save file cannot be read.
      */
     public void save(String saveText) throws BmoException {
+        saveText = saveText.strip();
+
         try {
             // Create directories if they do not exist
             if (path.getParent() != null) {
