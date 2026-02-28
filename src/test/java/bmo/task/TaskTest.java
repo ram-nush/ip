@@ -62,4 +62,30 @@ public class TaskTest {
         task.markAsNotDone();
         assertEquals("[ ] read book", task.toString());
     }
+
+    @Test
+    public void saveString_success() {
+        Task task = new Task("read book");
+        assertEquals("0 | read book", task.saveString());
+        task.markAsDone();
+        assertEquals("1 | read book", task.saveString());
+    }
+
+    @Test
+    public void hasFullMatch_success() {
+        Task task = new Task("Read Book!");
+        assertEquals(true, task.hasFullMatch("read book"));
+        assertEquals(true, task.hasFullMatch("READ BOOK"));
+        assertEquals(true, task.hasFullMatch("readbook"));
+        assertEquals(false, task.hasFullMatch("write book"));
+    }
+
+    @Test
+    public void hasPartialMatch_success() {
+        Task task = new Task("Read Book!");
+        assertEquals(true, task.hasPartialMatch("r"));
+        assertEquals(true, task.hasPartialMatch("R"));
+        assertEquals(true, task.hasPartialMatch("read"));
+        assertEquals(false, task.hasPartialMatch("w"));
+    }
 }
