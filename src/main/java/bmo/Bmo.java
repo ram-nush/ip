@@ -1,5 +1,8 @@
 package bmo;
 
+import java.util.List;
+import java.util.Scanner;
+
 import bmo.command.Command;
 import bmo.exception.BmoException;
 import bmo.exception.StorageCorruptedException;
@@ -40,13 +43,16 @@ public class Bmo {
             ui = new Ui();
             taskListParser = new TaskListParser();
 
+            // Load lines from storage into tasks
             taskList = new TaskList(storage.load());
 
+            // Determine if there exist corrupted lines stored
             StorageParser.checkCorruptedLinesExist(storage);
 
         } catch (BmoException e) {
             loadingMessage = ui.getErrorMessage(e);
 
+            // Create empty task list
             taskList = new TaskList();
         }
     }
@@ -58,10 +64,12 @@ public class Bmo {
     public String getWelcomeMessage() {
         String messages = "";
 
+        // Display retrieved tasks to user
         String retrieveText = taskList.toString();
         messages += ui.getRetrieveMessage(retrieveText);
 
-        messages += ui.getWelcomeMessage();
+        // Display welcome message to user
+        messages += "\n" + ui.getWelcomeMessage();
         return messages;
     }
 

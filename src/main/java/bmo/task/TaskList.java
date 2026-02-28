@@ -2,6 +2,8 @@ package bmo.task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Represents the list of tasks stored by the program. A <code>TaskList</code> object
@@ -107,11 +109,9 @@ public class TaskList {
      * @return A string storing all tasks displayed to the user.
      */
     public String listTasks() {
-        String listOutput = "";
-        for (int i = 1; i <= this.tasks.size(); i++) {
-            listOutput += String.format("%d. %s\n", i, this.tasks.get(i - 1));
-        }
-        return listOutput;
+        return IntStream.rangeClosed(1, this.getTotal())
+                .mapToObj(i -> String.format("%d. %s", i, this.tasks.get(i - 1)))
+                .reduce("", (s1, s2) -> String.format("%s\n%s", s1, s2));
     }
 
     /**
@@ -138,11 +138,9 @@ public class TaskList {
      * @return A string matching the save format of all tasks in the task list.
      */
     public String saveString() {
-        String saveOutput = "";
-        for (Task task : this.tasks) {
-            saveOutput += task.saveString() + "\n";
-        }
-        return saveOutput.trim();
+        return this.tasks.stream()
+                .map(task -> task.saveString())
+                .reduce("", (s1, s2) -> String.format("%s\n%s", s1, s2));
     }
 
     /**
@@ -153,10 +151,8 @@ public class TaskList {
      */
     @Override
     public String toString() {
-        String stringOutput = "";
-        for (Task task : this.tasks) {
-            stringOutput += task.toString() + "\n";
-        }
-        return stringOutput;
+        return this.tasks.stream()
+                .map(task -> task.toString())
+                .reduce("", (s1, s2) -> String.format("%s\n%s", s1, s2));
     }
 }
