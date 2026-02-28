@@ -62,17 +62,14 @@ public class TaskListParser {
      */
     public Command parseCommand(String userInput, Ui ui, TaskList tasks, Storage storage)
             throws BmoException {
-        // Remove surrounding whitespaces from user input
-        userInput = userInput.strip();
 
         // Split input into command name and parametersText
+        userInput = userInput.strip();
         String[] parts = CommandParser.splitParameters(userInput, new String[]{ " " });
         String commandName = parts[0];
         CommandWord commandWord = CommandWord.fromString(commandName);
-
         String parameterText = parts[1];
 
-        // Create specific command parser based on command word
         CommandParser commandParser = switch (commandWord) {
         case LIST -> new ListCommandParser();
         case TODO -> new TodoCommandParser();
@@ -92,12 +89,9 @@ public class TaskListParser {
             yield new DeleteCommandParser(totalTasks);
         }
         case BYE -> new ByeCommandParser();
-        // Command name does not match any other command
-        // Provide command name to parser for reference
         case UNKNOWN -> new UnknownCommandParser(commandName);
         };
 
-        // Parse the parameterText to return a Command
         return commandParser.parse(parameterText);
     }
 }
