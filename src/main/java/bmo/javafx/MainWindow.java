@@ -1,8 +1,8 @@
 package bmo.javafx;
 
 import bmo.Bmo;
-import bmo.exception.BmoException;
 import bmo.command.CommandWord;
+import bmo.exception.BmoException;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

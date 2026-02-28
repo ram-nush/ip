@@ -1,7 +1,5 @@
 package bmo.ui;
 
-import java.util.List;
-
 import bmo.exception.BmoException;
 import bmo.task.Task;
 import bmo.task.TaskList;

@@ -25,7 +25,7 @@ public class TaskListTest {
         TaskList taskList = new TaskList();
         Task task = new Todo("read book");
         taskList.addTask(task);
-        assertEquals("[T][ ] read book\n", taskList.toString());
+        assertEquals("\n[T][ ] read book", taskList.toString());
     }
 
     /**
@@ -41,7 +41,7 @@ public class TaskListTest {
                 TaskListParser.INPUT_FORMATTER);
         Task task = new Deadline("return book", due);
         taskList.addTask(task);
-        assertEquals("[D][ ] return book (by: Mar 5 2026 1200)\n", taskList.toString());
+        assertEquals("\n[D][ ] return book (by: Mar 5 2026 1200)", taskList.toString());
     }
 
     /**
@@ -59,7 +59,7 @@ public class TaskListTest {
                 TaskListParser.INPUT_FORMATTER);
         Task task = new Event("project meeting", start, end);
         taskList.addTask(task);
-        assertEquals("[E][ ] project meeting (from: Mar 5 2026 1300, to: Mar 6 2026 1400)\n", taskList.toString());
+        assertEquals("\n[E][ ] project meeting (from: Mar 5 2026 1300, to: Mar 6 2026 1400)", taskList.toString());
     }
 
     /**
@@ -84,9 +84,9 @@ public class TaskListTest {
         List<Task> tasks = List.<Task>of(task1, task2, task3);
         TaskList taskList = new TaskList(tasks);
 
-        assertEquals("1. [T][ ] read book\n"
+        assertEquals("\n1. [T][ ] read book\n"
                 + "2. [D][ ] return book (by: Mar 5 2026 1200)\n"
-                + "3. [E][ ] project meeting (from: Mar 5 2026 1300, to: Mar 6 2026 1400)\n",
+                + "3. [E][ ] project meeting (from: Mar 5 2026 1300, to: Mar 6 2026 1400)",
                 taskList.listTasks());
     }
 }

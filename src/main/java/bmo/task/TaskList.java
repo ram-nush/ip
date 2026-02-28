@@ -3,7 +3,6 @@ package bmo.task;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Represents the list of tasks stored by the program. A <code>TaskList</code> object

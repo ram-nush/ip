@@ -1,12 +1,8 @@
 package bmo;
 
-import java.util.List;
-import java.util.Scanner;
-
 import bmo.command.Command;
-import bmo.exception.BmoException;
-import bmo.exception.StorageCorruptedException;
 import bmo.command.CommandWord;
+import bmo.exception.BmoException;
 import bmo.parser.TaskListParser;
 import bmo.storage.Storage;
 import bmo.storage.StorageParser;
