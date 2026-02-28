@@ -7,9 +7,10 @@ import bmo.task.Task;
 import bmo.task.TaskList;
 
 /**
- * Represents the user interface of the program. A <code>Ui</code> object
- * displays messages based on the respective commands entered. It also displays
- * error messages when unexpected events occur e.g., user enters an unknown command
+ * Represents the response formatter of the program. A <code>Ui</code> object
+ * formats messages based on the respective commands entered. It also crafts
+ * relevant error messages when unexpected events occur e.g., user enters an
+ * unknown command.
  */
 public class Ui {
     private static final String RETRIEVE_STRING = "The following tasks have been retrieved:";
@@ -34,8 +35,7 @@ public class Ui {
      * @return A formatted message with the list of tasks.
      */
     public String getRetrieveMessage(String message) {
-        String output = String.format("%s\n%s", RETRIEVE_STRING, message);
-        return output;
+        return String.format("%s\n%s", RETRIEVE_STRING, message);
     }
 
     /**
@@ -44,8 +44,7 @@ public class Ui {
      * @return A message greeting the user.
      */
     public String getWelcomeMessage() {
-        String output = WELCOME_STRING;
-        return output;
+        return WELCOME_STRING;
     }
 
     /**
@@ -55,8 +54,7 @@ public class Ui {
      * @return A formatted message with the list of tasks.
      */
     public String getTasks(TaskList tasks) {
-        String output = String.format("%s\n%s", LIST_STRING, tasks.listTasks());
-        return output.trim();
+        return String.format("%s\n%s", LIST_STRING, tasks.listTasks());
     }
 
     /**
@@ -67,8 +65,7 @@ public class Ui {
      * @return A formatted message with the list of tasks matching the keyword.
      */
     public String getMatchingTasks(TaskList tasks) {
-        String output = String.format("%s\n%s", FIND_STRING, tasks.listTasks());
-        return output.trim();
+        return String.format("%s\n%s", FIND_STRING, tasks.listTasks()).trim();
     }
 
     /**
@@ -79,8 +76,7 @@ public class Ui {
      * @return A formatted message to the user after their task has been added.
      */
     public String getAddMessage(Task addTask, TaskList tasks) {
-        String output = String.format(ADD_STRING, addTask, tasks.getTotal());
-        return output;
+        return String.format(ADD_STRING, addTask, tasks.getTotal());
     }
 
     /**
@@ -90,8 +86,7 @@ public class Ui {
      * @return A formatted message to the user after their task has been marked as done.
      */
     public String getMarkMessage(Task markTask) {
-        String output = String.format(MARK_STRING, markTask);
-        return output;
+        return String.format(MARK_STRING, markTask);
     }
 
     /**
@@ -101,8 +96,7 @@ public class Ui {
      * @return A formatted message to the user after their task has been marked as not done.
      */
     public String getUnmarkMessage(Task unmarkTask) {
-        String output = String.format(UNMARK_STRING, unmarkTask);
-        return output;
+        return String.format(UNMARK_STRING, unmarkTask);
     }
 
     /**
@@ -113,8 +107,7 @@ public class Ui {
      * @return A formatted message to the user after their task has been deleted.
      */
     public String getDeleteMessage(Task deleteTask, TaskList tasks) {
-        String output = String.format(DELETE_STRING, deleteTask, tasks.getTotal());
-        return output;
+        return String.format(DELETE_STRING, deleteTask, tasks.getTotal());
     }
 
     /**
@@ -123,8 +116,7 @@ public class Ui {
      * @return An error message describing the error.
      */
     public String getErrorMessage(BmoException e) {
-        String output = e.toString();
-        return output;
+        return e.toString();
     }
 
     /**
@@ -133,8 +125,7 @@ public class Ui {
      * @return A message telling the user they entered an unknown command.
      */
     public String getDefaultMessage() {
-        String output = DEFAULT_STRING;
-        return output;
+        return DEFAULT_STRING;
     }
 
     /**
@@ -144,8 +135,7 @@ public class Ui {
      * @return A formatted message with the saved list of tasks.
      */
     public String getSaveMessage(String message) {
-        String output = String.format("%s\n%s", SAVE_STRING, message);
-        return output;
+        return String.format("%s\n%s", SAVE_STRING, message);
     }
 
     /**
@@ -154,37 +144,6 @@ public class Ui {
      * @return A closing message bidding the user goodbye.
      */
     public String getByeMessage() {
-        String output = BYE_STRING;
-        return output;
-    }
-
-    public void showLine() {
-        System.out.println("____________________________________________________________");
-    }
-
-    /**
-     * Displays a message to the user enclosed by lines.
-     *
-     * @param message The text to display to the user.
-     */
-    public void printMessage(String message) {
-        this.showLine();
-        System.out.println(message);
-        this.showLine();
-        System.out.print("\n");
-    }
-
-    /**
-     * Displays a list of messages to the user, one on each line, enclosed by lines.
-     *
-     * @param messages The messages to display to the user.
-     */
-    public void printMessage(List<String> messages) {
-        this.showLine();
-        for (String message : messages) {
-            System.out.println(message);
-        }
-        this.showLine();
-        System.out.print("\n");
+        return BYE_STRING;
     }
 }
