@@ -50,7 +50,6 @@ public class EventCommand extends Command {
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) {
         Task eventTask = new Event(this.description, this.start, this.end);
-
         taskList.addTask(eventTask);
 
         return ui.getAddMessage(eventTask, taskList);
