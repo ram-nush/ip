@@ -44,6 +44,6 @@ public class TodoCommand extends Command {
 
         taskList.addTask(todoTask);
 
-        return ui.showAddMessage(todoTask, taskList);
+        return ui.getAddMessage(todoTask, taskList);
     }
 }

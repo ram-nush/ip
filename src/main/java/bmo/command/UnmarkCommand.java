@@ -40,6 +40,6 @@ public class UnmarkCommand extends Command {
     public String execute(TaskList taskList, Ui ui, Storage storage) {
         Task unmarkTask = taskList.unmarkTask(this.index);
 
-        return ui.showUnmarkMessage(unmarkTask);
+        return ui.getUnmarkMessage(unmarkTask);
     }
 }

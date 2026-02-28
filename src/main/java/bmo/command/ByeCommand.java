@@ -34,7 +34,7 @@ public class ByeCommand extends Command {
         String saveText = taskList.saveString();
 
         // Display lines of text to be stored to user
-        String messages = ui.showSaveMessage(saveText);
+        String messages = ui.getSaveMessage(saveText);
 
         // Store the lines in the save file
         storage.save(saveText);

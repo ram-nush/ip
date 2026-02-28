@@ -53,6 +53,6 @@ public class EventCommand extends Command {
 
         taskList.addTask(eventTask);
 
-        return ui.showAddMessage(eventTask, taskList);
+        return ui.getAddMessage(eventTask, taskList);
     }
 }

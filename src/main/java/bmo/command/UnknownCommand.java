@@ -41,7 +41,7 @@ public class UnknownCommand extends Command {
     @Override
     public String execute(TaskList taskList, Ui ui, Storage storage) throws BmoException {
         // Display user input does not match a command to user
-        String messages = ui.showDefaultMessage();
+        String messages = ui.getDefaultMessage();
 
         // Store the list of command formats as a message
         String commandFormatsText = String.join("\n", TaskListParser.COMMAND_FORMATS);

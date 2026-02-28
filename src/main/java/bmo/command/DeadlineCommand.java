@@ -50,6 +50,6 @@ public class DeadlineCommand extends Command {
 
         taskList.addTask(deadlineTask);
 
-        return ui.showAddMessage(deadlineTask, taskList);
+        return ui.getAddMessage(deadlineTask, taskList);
     }
 }

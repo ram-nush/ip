@@ -48,10 +48,10 @@ public class Bmo {
         } catch (StorageCorruptedException e) {
             // Corrupted lines exist, display error message to user
             // taskList will contain tasks from non-corrupted lines
-            loadingMessage = ui.showErrorMessage(e);
+            loadingMessage = ui.getErrorMessage(e);
         } catch (BmoException e) {
             // Cannot read from file
-            loadingMessage += ui.showErrorMessage(e);
+            loadingMessage += ui.getErrorMessage(e);
 
             // Create empty task list
             taskList = new TaskList();
@@ -67,10 +67,10 @@ public class Bmo {
 
         // Display retrieved tasks to user
         String retrieveText = taskList.toString();
-        messages += ui.showRetrieveMessage(retrieveText);
+        messages += ui.getRetrieveMessage(retrieveText);
 
         // Display welcome message to user
-        messages += ui.showWelcomeMessage();
+        messages += ui.getWelcomeMessage();
         return messages;
     }
 
@@ -80,7 +80,7 @@ public class Bmo {
     }
 
     public String getClosingMessage() {
-        return ui.showByeMessage();
+        return ui.getByeMessage();
     }
 
     public boolean hasExitInput() throws BmoException {

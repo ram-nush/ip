@@ -40,6 +40,6 @@ public class MarkCommand extends Command {
     public String execute(TaskList taskList, Ui ui, Storage storage) {
         Task markTask = taskList.markTask(this.index);
 
-        return ui.showMarkMessage(markTask);
+        return ui.getMarkMessage(markTask);
     }
 }

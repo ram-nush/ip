@@ -41,6 +41,6 @@ public class FindCommand extends Command {
         TaskList filteredTasks = taskList.listMatchingTasks(this.keyword);
 
         // List the tasks inside the new TaskList
-        return ui.showMatchingTasks(filteredTasks);
+        return ui.getMatchingTasks(filteredTasks);
     }
 }
