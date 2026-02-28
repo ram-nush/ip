@@ -47,11 +47,17 @@ public class Task {
      */
     public boolean hasMatch(String keyword) {
         // Remove non-alphanumeric characters and converts description to lowercase
-        String cleanedDescription = this.description.replaceAll(REMOVE_SYMBOL_REGEX, "")
-                .toLowerCase();
+        String description = this.description.toLowerCase();
+        String cleanedDescription = description.replaceAll(REMOVE_SYMBOL_REGEX, "");
 
-        // Remove non-alphanumeric characters and converts keyword to lowercase
-        String cleanedKeyword = keyword.toLowerCase();
+        // Converts keyword to lowercase
+        keyword = keyword.toLowerCase();
+        String cleanedKeyword = keyword.replaceAll(REMOVE_SYMBOL_REGEX, "");
+
+        // If only non-alphanumeric characters in keyword, match the full keyword
+        if (cleanedKeyword.isEmpty()) {
+            return description.contains(keyword);
+        }
 
         // Checks whether the cleaned description contains the cleaned keyword
         return cleanedDescription.contains(cleanedKeyword);
