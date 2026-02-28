@@ -65,6 +65,8 @@ public class TaskList {
      * @return A task corresponding to the index given, marked as done.
      */
     public Task markTask(int index) {
+        assert index >= 1 && index <= this.getTotal() : "Task index out of range";
+
         Task markTask = this.tasks.get(index - 1);
         markTask.markAsDone();
         return markTask;
@@ -78,6 +80,8 @@ public class TaskList {
      * @return A task corresponding to the index given, marked as not done.
      */
     public Task unmarkTask(int index) {
+        assert index >= 1 && index <= this.getTotal() : "Task index out of range";
+
         Task unmarkTask = this.tasks.get(index - 1);
         unmarkTask.markAsNotDone();
         return unmarkTask;
@@ -91,6 +95,8 @@ public class TaskList {
      * @return A task corresponding to the index given.
      */
     public Task deleteTask(int index) {
+        assert index >= 1 && index <= this.getTotal() : "Task index out of range";
+
         Task deleteTask = this.tasks.get(index - 1);
         this.tasks.remove(index - 1);
         return deleteTask;
