@@ -54,10 +54,10 @@ Notice how the app mentions that there are issues loading from file. The reason 
 6. Type the command in the command box (bottom-left) and press Enter to execute it. e.g. typing `list` and pressing Enter will show the current list of tasks.
 
    Some example commands you can try:
-  * `list`: Lists all tasks.
-  * `todo read book`: Adds a todo task named `read book` to the list of tasks.
-  * `mark 2`: marks the 2nd task in the list as done.
-  * `bye`: saves the current list of tasks and exits the app.
+   * `list`: Lists all tasks.
+   * `todo read book`: Adds a todo task named `read book` to the list of tasks.
+   * `mark 2`: marks the 2nd task in the list as done.
+   * `bye`: saves the current list of tasks and exits the app.
 
 7. Refer to the [Features](#features) below for details of each command.
 
