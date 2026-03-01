@@ -246,7 +246,7 @@ Task data are saved as a text file `[JAR file location]/data/bmo.txt`. Experienc
 
 ## FAQ
 
-**Q**: How do I transfer my data to another laptop or PC?
+**Q**: How do I transfer my data to another laptop or PC?<br>
 **A**: Download the jar file in the other laptop / PC. Create a data folder within the same folder as the jar file and place your text file inside the data folder.
 
 ---
