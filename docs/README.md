@@ -1,6 +1,6 @@
 # BMO User Guide
 
-![](Ui.png)
+<img src="Ui.png" width="300" />
 
 Have you been 
 * struggling to do your... todos? 
@@ -18,12 +18,12 @@ BMO is a desktop app for managing tasks, optimized for use via a Command Line In
   * Adding an event task: `event`
   * Listing all tasks: `list`
   * Finding a task by keyword: `find`
-  * Mark a task as done: `mark`
-  * Mark a task as not done: `unmark`
-  * Delete a task: `delete`
+  * Marking a task as done: `mark`
+  * Marking a task as not done: `unmark`
+  * Deleting a task: `delete`
+  * Listing command summary: any other command word
   * Exiting the program: `bye`
-  * List command summary: any other command word
-  * Saving the file
+  * Saving the data
   * Editing the data file
 * FAQ
 * Known issues
@@ -47,7 +47,7 @@ BMO is a desktop app for managing tasks, optimized for use via a Command Line In
 5. Use the `java -jar bmo.jar` command to run the application. A GUI similar to the one below should appear in a few seconds.
 
 
-![](first_use.png)
+<img src="first_use.png" width="300" />
 
 Notice how the app mentions that there are issues loading from file. The reason is that there is no save file yet. This is expected during your first use of the app.
 
@@ -66,24 +66,16 @@ Notice how the app mentions that there are issues loading from file. The reason 
 ## Features
 
 > [!NOTE]
-> Notes about the command format:
-> * Words in `<>` are the parameters to be supplied by the user.
+> Words in `<>` are the parameters to be supplied by the user.
 >
 > e.g. in `todo <description>`, `description` is a parameter which can be used as in `todo read book`.
-> 
-> * Extraneous parameters for commands that do not take in parameters (such as `list`, `bye`) will be ignored.
-> 
-> e.g. if the command specifies `list 123`, it will be interpreted as `list`.
 
 ### Adding a todo task: `todo`
 
 You can add tasks with no other information, using the `todo` command. You just need the task description.
 
-Format: `todo <description>`
-
+Format: `todo <description>`<br>
 Example: `todo read book`
-
-BMO will add the deadline task to its list, and inform you that it has added the task, along with the number of tasks you have now.
 
 ```
 Another task? I'll make space for this task:
@@ -96,16 +88,11 @@ Now you have 1 tasks.
 You can also add tasks which have deadlines, using the `deadline` command. You would need the task description as well as the date and time the task is due.
 
 The date and time need to be in a standard datetime format: `d-M-uuuu HHmm`. <br>
-Here are some examples of datetimes which match the input format:
-* `5-3-2026 1500`
-* `06-03-2026 2300`
-* `12-9-2026 0000`
+Here are some examples of datetimes which match the input format:<br>
+`5-3-2026 1500`, `06-03-2026 2300`, `12-9-2026 0000`
 
-Format: `deadline <description> /by <due>`
-
+Format: `deadline <description> /by <due>`<br>
 Example: `deadline clean house /by 5-3-2026 1800`
-
-BMO will add the deadline task to its list, and inform you that it has added the task, along with the number of tasks you have now.
 
 ```
 Another task? I'll make space for this task:
@@ -113,19 +100,15 @@ Another task? I'll make space for this task:
 Now you have 2 tasks.
 ```
 
-Notice that the datetime is displayed in a different datetime format. This is for readability.
-
 ### Adding an event task: `event`
 
 Additionally, you can add tasks which have a start and an end, using the `event` command. You would need the task description, the date and time the task starts and ends.
 
-Similar to deadline tasks, the date and time need to be in the same datetime format: `d-M-uuuu HHmm`.
+Similar to deadline tasks, the date and time need to be in the same datetime format: `d-M-uuuu HHmm`.<br>
+Please ensure that your start date and time is not after your end date and time. Otherwise, BMO will not let you add this event.
 
-Format: `event <description> /from <start> /to <end>`
-
+Format: `event <description> /from <start> /to <end>`<br>
 Example: `event meet friends /from 3-3-2026 1800 /to 4-3-2026 0400`
-
-BMO will add the event task to its list, and inform you that it has added the task, along with the number of tasks you have now.
 
 ```
 Another task? I'll make space for this task:
@@ -139,25 +122,153 @@ Now you have 3 tasks.
 > e.g. if the command specifies `deadline clean house/by5-3-2026 1800`,
 > it is interpreted as `deadline clean house /by 5-3-2026 1800`
 
-## Feature ABC
+### Listing all tasks: `list`
 
-// Describe the action and its outcome.
+You can list the current tasks stored in BMO's system.
 
-<>
-
-// Give examples of usage
-
-Format : ``
-Example: ``
-
-// A description of the expected outcome goes here
-
-<>
+Format: `list`
 
 ```
-<>
+Look at all these tasks!
+1. [T][ ] read book
+2. [D][ ] clean house (by: Mar 5 2026 1800)
+3. [E][ ] meet friends (from: Mar 3 2026 1800, to: Mar 4 2026 0400)
 ```
 
-## Feature XYZ
+### Finding a task by keyword: `find`
 
-// Feature details
+You can find the tasks where their descriptions match the given keyword.
+
+Format : `find <keyword>`<br>
+Example: `find friend`
+
+* The search is case-insensitive. e.g. `Book` in description will match the `book` keyword.
+* The search ignores symbols and spaces unless the keyword only contains symbols. e.g. `todo` keyword will be matched by `to do`, `to-do`, `TO.DO` in descriptions.
+* The search is a partial match, meaning all descriptions which contain a prefix of the keyword will be returned. e.g. `hello` keyword will be matched by `helmet`, `heart` and `home` in descriptions.
+
+```
+These tasks might be what you are looking for:
+1. [E][ ] meet friends (from: Mar 3 2026 1800, to: Mar 4 2026 0400)
+```
+
+### Marking a task as done: `mark`
+
+Once the task is complete, you can mark a task as done. You need the index of the task. The index refers to the number shown beside the task in the list. The index must be a positive integer from 1 to the total number of tasks.
+
+Format : `mark <index>`<br>
+Example: `mark 2`
+
+```
+Awesome! I've marked this task as done:
+[D][X] clean house (by: Mar 5 2026 1800)
+```
+
+### Marking a task as not done: `unmark`
+
+If you decide that the task has not been completed, you can mark a task as not done. You need the index of the task.
+
+Format : `unmark <index>`<br>
+Example: `unmark 2`
+
+```
+Oh no, I've marked this task as not done yet:
+[D][ ] clean house (by: Mar 5 2026 1800)
+```
+
+### Deleting a task: `delete`
+
+If you don't want to see a task again, you can delete it from the list. You need the index of the task.
+
+Format : `delete <index>`<br>
+Example: `delete 1`
+
+```
+More space for me! I've removed this task:
+[T][ ] read book
+Now you have 2 tasks.
+```
+
+### Listing command summary: any other command word
+
+If you are not sure of what commands you can use, you can enter any command word which does not match any of the command words. A command word is the first word of a command (separated by space).
+
+This will list the format of each command.
+
+Format : `<any word other than the ones mentioned>`<br>
+Example: `bmo`
+
+```
+I am limited by my programming to understand what you are saying. Please try again!
+bmo is not a valid command type!
+TIP: Enter one of the following commands in the given format.
+list
+todo <description>
+deadline <description> /by <due>
+event <description> /from <start> /to <end>
+find <keyword>
+mark <index>
+unmark <index>
+delete <index>
+bye
+Note: <due>, <start>, <end> are in d-M-uuuu HHmm datetime format
+```
+
+### Exiting the program: `bye`
+
+When you are done updating your tasks, you may exit the program. BMO will save the list of tasks and show them to you before exiting.
+
+Format : `bye`
+
+```
+The following tasks will be stored in my system!
+D | 0 | clean house | Mar 5 2026 1800
+E | 0 | meet friends | Mar 3 2026 1800 | Mar 4 2026 0400
+
+Battery low. Shutdown.
+```
+
+### Saving the data
+
+The list of tasks are saved to a data file, on entering the `bye` command.
+
+If you made changes in the app and do not wish to save them, you may close the app using the X button.
+
+### Editing the data file
+
+Task data are saved as a text file `[JAR file location]/data/bmo.txt`. Experienced users are welcome to update data directly by editing that data file.
+
+> [!CAUTION]
+> If your changes to the data make its format invalid, BMO will identify such lines as corrupted. During the next startup, BMO will remind you to save these lines somewhere else, otherwise they will be overwritten with the current list of tasks.
+> 
+> BMO is smart enough to retrieve the lines with valid format to show the user.
+
+---
+
+## FAQ
+
+**Q**: How do I transfer my data to another laptop or PC?
+**A**: Download the jar file in the other laptop / PC. Create a data folder within the same folder as the jar file and place your text file inside the data folder.
+
+---
+
+## Known issues
+
+* **Editing the data file to have the start date and time of an event be after the end date and time of the event**: On the next startup, BMO simply reads this event, without checking for this condition.
+* **When the user has one task, messages still use the plural form**: e.g. "Now you have 1 tasks."
+
+---
+
+## Command summary
+
+| Action              | Format, Examples                                                                                                 |
+|---------------------|------------------------------------------------------------------------------------------------------------------|
+| **Add Todo**        | `todo <description>`<br>e.g. `todo read book`                                                                    |
+| **Add Deadline**    | `deadline <description> /by <due>`<br>e.g. `deadline clean house /by 5-3-2026 1800`                              |
+| **Add Event**       | `event <description> /from <start> /to <end>`<br>e.g. `event meet friends /from 3-3-2026 1800 /to 4-3-2026 0400` |
+| **List**            | `list`                                                                                                           |
+| **Find**            | `find <keyword>`<br>e.g. `find friend`                                                                           |
+| **Mark**            | `mark <index>`<br>e.g. `mark 2`                                                                                  |
+| **Unmark**          | `unmark <index>`<br>e.g. `mark 2`                                                                                |
+| **Delete**          | `delete <index>`<br>e.g. `mark 2`                                                                                |
+| **Command Formats** | any other command word                                                                                           |
+| **Exit**            | `bye`                                                                                                            |
