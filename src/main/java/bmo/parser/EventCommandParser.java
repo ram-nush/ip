@@ -1,6 +1,7 @@
 package bmo.parser;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 import bmo.command.Command;
 import bmo.command.CommandWord;
@@ -53,6 +54,28 @@ public class EventCommandParser extends CommandParser {
         LocalDateTime endDateTime = parseDateTime(end, this.paramNames[2],
                 this.commandWord, TaskListParser.EVENT_COMMAND_FORMAT);
 
+        // Ensure start datetime is not after end datetime
+        checkStartNotAfterEnd(startDateTime, endDateTime);
+
         return new EventCommand(description, startDateTime, endDateTime);
+    }
+
+    /**
+     * Checks whether a given start datetime is not after an end datetime.
+     * If the start datetime is after the end datetime, a BmoException will be thrown.
+     *
+     * @param startDateTime A parameter extracted from splitting user input.
+     * @param endDateTime The name of the parameter.
+     * @throws BmoException If startDateTime is after endDateTime
+     */
+    public static void checkStartNotAfterEnd(LocalDateTime startDateTime, LocalDateTime endDateTime)
+            throws BmoException {
+
+        boolean isStartAfterEnd = startDateTime.isAfter(endDateTime);
+
+        if (isStartAfterEnd) {
+            throw new BmoException(BmoException.BMO_START_AFTER_END_MESSAGE,
+                    BmoException.BMO_START_AFTER_END_SUGGESTION);
+        }
     }
 }
