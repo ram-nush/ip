@@ -34,6 +34,10 @@ public class BmoException extends Exception {
     public static final String BMO_RETRIEVE_DATETIME_SUGGESTION = "Follow the saved datetime format"
             + " in the save file!\ne.g. %s";
 
+    public static final String BMO_START_AFTER_END_MESSAGE = "Event cannot start after it ends!";
+    public static final String BMO_START_AFTER_END_SUGGESTION = "Ensure the start datetime is"
+            + " not after the end datetime";
+
     public static final String BMO_WRITE_FILE_MESSAGE = "Issues with saving to file at %s";
     public static final String BMO_WRITE_FILE_SUGGESTION_VIEW = "Check this file to see the tasks saved.";
     public static final String BMO_FILE_SUGGESTION_EXIST = "Check whether this file exists.";
