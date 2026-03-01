@@ -1,26 +1,34 @@
-# Duke project template
+# BMO
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+> "I think I am dying. But that's okay, BMO always bounces back!" – BMO, Adventure Time ([source](https://adventuretime.fandom.com/wiki/BMO_(episode)/Transcript#:~:text=I%20think%20I'm%20dying.%20But%20that's%20okay.%20BMO%20always%20bounces%20back.))
 
-## Setting up in Intellij
+BMO is your loyal, trusting and helpful robot who also handles your endless list of tasks.
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+It is
+- text-based
+- easy to learn
+- ~FAST~ *SUPER FAST* to use
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+All you need to do is,
+1. download it from [here](https://github.com/ram-nush/ip/releases).
+2. double-click it.
+3. add your tasks.
+4. let BMO manage your tasks for you
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+so that you can continue fighting your battles 🛡️⚔️
+
+And it works **OFFLINE**!
+
+Features:
+- [x] Managing tasks
+- [ ] Managing deadlines (coming soon)
+- [ ] Reminders (coming soon)
+
+If you are a Java programmer, you can use it to practice Java too. Here's the main method:
+```java
+public class Launcher {
+    public static void main(String[] args) {
+        Application.launch(Main.class, args);
+    }
+}
+```
