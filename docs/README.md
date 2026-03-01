@@ -1,6 +1,11 @@
 # BMO User Guide
 
-<img src="Ui.png" width="300" />
+<img src="Ui.png" width="300" /><br><br>
+Credits:
+* [Background](https://www.pinterest.com/pin/297026537905674787/): Rookey825 (Pinterest)
+* [BMO Profile](https://www.artstation.com/artwork/b5nZOG): cinnabxnny (ArtStation)
+* [Jake Profile](https://multiversus.fandom.com/wiki/Jake_(Profile_Icon)): IyzMoe (MultiVerses Wiki)
+* [BMO Icon](https://icons8.com/icon/5RSNkT2QWYy3/bmo): Icons8
 
 Have you been 
 * struggling to do your... todos? 
